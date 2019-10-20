@@ -1,155 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
+<head>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content=""> 
 
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>ABTM - Organizador de torneos</title>
+  <title>FEBATEM</title>
 
-    
-
-    <!-- Bootstrap core CSS -->
-    <link href="<?=base_url()?>bootstraptemplate/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom fonts for this template -->
-    <link href="<?=base_url()?>bootstraptemplate/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-    <!-- Plugin CSS -->
-    <link href="<?=base_url()?>bootstraptemplate/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
-
-    
-
-    <!-- Custom styles for this template -->
-    <link href="<?=base_url()?>bootstraptemplate/css/sb-admin.css" rel="stylesheet">
-
-    <link href="<?=base_url()?>bootstraptemplate/css/llave.css" rel="stylesheet">
-    <link href="<?=base_url()?>bootstraptemplate/css/tablero.css" rel="stylesheet">
+  <!-- Custom fonts for this template-->
+  <link href="<?=base_url()?>assets_template/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
 
-  </head>
+  <!-- Custom styles for this template-->
+  <link href="<?=base_url()?>assets_template/css/sb-admin-2.min.css" rel="stylesheet">
+  <link href="<?=base_url()?>assets_template/css/llave.css" rel="stylesheet">
+   <!-- Custom styles for this page -->
+  <link href="<?=base_url()?>assets_template/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
-  <body class="fixed-nav sticky-footer bg-dark" id="page-top">
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-      <a class="navbar-brand" href="<?=base_url()?>"><i class="fa fa-fw fa-user-o" aria-hidden="true"></i>
-ABTM - Organizador de torneos</a>
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-          
-          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Torneos">
-            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseTorneos" data-parent="#exampleAccordion">
-              <i class="fa fa-fw fa-trophy"></i>
-              <span class="nav-link-text">
-                Torneos</span>
-            </a>
-            <ul class="sidenav-second-level collapse" id="collapseTorneos">
-              <li>
-                <a href="<?=base_url()?>Welcome/crear_torneo">Nuevo torneo</a>
-              </li>
-              <li>
-                <a href="<?=base_url()?>Welcome/buscar_torneos">Ver torneos</a>
-              </li>
-            </ul>
-          </li>
 
-          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Inscripciones">
-            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseInscripciones" data-parent="#exampleAccordion">
-              <i class="fa fa-fw fa-arrow-right"></i>
-              <span class="nav-link-text">
-                Inscripciones</span>
-            </a>
-            <ul class="sidenav-second-level collapse" id="collapseInscripciones">
-              <li>
-                <a href="<?=base_url()?>Welcome/inscripciones">Nueva inscripción</a>
-              </li>
-              <li>
-                <a href="<?=base_url()?>Welcome/buscarInscripciones">Ver inscripciones</a>
-              </li>
-            </ul>
-          </li>
-         
-          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Llaves">
-            <a class="nav-link" href="<?=base_url()?>Welcome/llaves">
-              <i class="fa fa-fw fa-sitemap"></i>
-              <span class="nav-link-text">
-                Llaves</span>
-            </a>
-          </li>
-             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Partidos de llave">
-            <a class="nav-link" href="<?=base_url()?>Welcome/partidos_de_llave">
-              <i class="fa fa-fw fa-list-ul"></i>
-              <span class="nav-link-text">
-                Partidos de llave</span>
-            </a>
-          </li>
-          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Zonas">
-            <a class="nav-link" href="<?=base_url()?>Welcome/zonas">
-              <i class="fa fa-fw fa-table"></i>
-              <span class="nav-link-text">
-                Zonas</span>
-            </a>
-          </li>
-           <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Partidos de zona">
-            <a class="nav-link" href="<?=base_url()?>Welcome/partidos">
-              <i class="fa fa-fw fa-list-ul"></i>
-              <span class="nav-link-text">
-                Partidos de zona</span>
-            </a>
-          </li>
-             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Ranking">
-            <a class="nav-link" href="<?=base_url()?>Welcome/ranking">
-              <i class="fa fa-fw fa-list-ul"></i>
-              <span class="nav-link-text">
-                Ranking</span>
-            </a>
-          </li>
-          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Contabilidad">
-            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
-              <i class="fa fa-fw fa-usd"></i>
-              <span class="nav-link-text">
-                Contabilidad</span>
-            </a>
-            <ul class="sidenav-second-level collapse" id="collapseComponents">              
-              <li>
-                <a href="#">Balances</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Reportes">
-            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
-              <i class="fa fa-fw fa-file"></i>
-              <span class="nav-link-text">
-                Reportes</span>
-            </a>
-            <ul class="sidenav-second-level collapse" id="collapseExamplePages">
-              <li>
-                <a href="login.html">reporte</a>
-              </li>
-              
-            </ul>
-          </li>
-           <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Plantilla de llaves">
-            <a class="nav-link" href="<?=base_url()?>Welcome/plantilla_llaves">
-              <i class="fa fa-fw fa-list-ul"></i>
-              <span class="nav-link-text">
-                Plantilla de llaves</span>
-            </a>
-          </li>
-        
-        </ul>
-        <ul class="navbar-nav sidenav-toggler">
-          <li class="nav-item">
-            <a class="nav-link text-center" id="sidenavToggler">
-              <i class="fa fa-fw fa-angle-left"></i>
-            </a>
-          </li>
-        </ul>
+
+</head>
+
+<body id="page-top">
+
+  <?php  $rol = $this->session->userdata('rol'); ?>
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+      <!-- Sidebar - Brand -->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?=base_url()?>">
+        <div class="sidebar-brand-icon rotate-n-15">
+            <i class="fas fa-table-tennis"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">FEBATEM</div>
+      </a>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <!-- Nav Item - Dashboard x
+      <li class="nav-item active">
+        <a class="nav-link" href="index.html">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Obtener un turno</span></a>
+      </li>
+      -->
+
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+
+       <?php          
+          if ($rol == 'ROLE_CLIENT_USER') {                                    
+      ?>
+      <div class="sidebar-heading">
+        Turnos
+      </div>
+
+      
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGestionar" aria-expanded="true" aria-controls="collapseGestionar">
+          <i class="fas fa-tasks"></i>
+          <span>Gestionar</span>
+        </a>
+        <div id="collapseGestionar" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <!--6 class="collapse-header">Custom Components:</h6-->
+            <a class="collapse-item" href="<?=base_url()?>Welcome/obtener_turno">Obtener turno</a>
+            <a class="collapse-item" href="<?=base_url()?>Welcome/ver_turnos">Ver turnos</a>
+            <a class="collapse-item" href="cards.html">Cancelar turno</a>
+          </div>
+        </div>
+      </li>
+       
+
+      <hr class="sidebar-divider">
+      <?php          
+          }           
+      ?>
+
+
+       <?php          
+          if ($rol == 'ROLE_SYSTEM_ADMIN') {                                    
+      ?>
+      <div class="sidebar-heading">
+        Torneos
+      </div>
+
+      
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAdministrar" aria-expanded="true" aria-controls="collapseAdministrar">
+          <i class="fas fa-tasks"></i>
+          <span>Administrar</span>
+        </a>
+        <div id="collapseAdministrar" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <!--6 class="collapse-header">Custom Components:</h6-->
+            <a class="collapse-item" href="<?=base_url()?>Welcome/crear_torneo">Crear torneo</a>
+            <a class="collapse-item" href="<?=base_url()?>Welcome/zonas">Zonas</a>
+            <a class="collapse-item" href="<?=base_url()?>Welcome/partidos_zona">Partidos de zona</a>
+            <a class="collapse-item" href="<?=base_url()?>Welcome/llave">Llave</a>
+            <a class="collapse-item" href="<?=base_url()?>Welcome/usuarios">Usuarios</a>
+            <a class="collapse-item" href="<?=base_url()?>Welcome/jugadores">Jugadores</a>
+          </div>
+        </div>
+      </li>      
+     
+      <hr class="sidebar-divider">
+
+      <div class="sidebar-heading">
+        Ranking
+      </div>
+
+      
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRanking" aria-expanded="true" aria-controls="collapseRanking">
+          <i class="fas fa-tasks"></i>
+          <span>Categoria</span>
+        </a>
+        <div id="collapseRanking" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <!--6 class="collapse-header">Custom Components:</h6-->
+            <a class="collapse-item" href="<?=base_url()?>Welcome/ranking/0">SD</a>
+            <a class="collapse-item" href="<?=base_url()?>Welcome/ranking/1">Primera</a>
+            <a class="collapse-item" href="<?=base_url()?>Welcome/ranking/2">Segunda</a>
+            <a class="collapse-item" href="<?=base_url()?>Welcome/ranking/3">Tercera</a>
+            <a class="collapse-item" href="<?=base_url()?>Welcome/ranking/4">Cuarta</a>
+            <a class="collapse-item" href="<?=base_url()?>Welcome/ranking/5">Quinta</a>            
+          </div>
+        </div>
+      </li>      
+      <?php          
+          }           
+      ?>
+
+      <!-- Heading -->
+      <div class="sidebar-heading">
+        Opciones
+      </div>
+
+      <?php          
+          if ($rol == 'ROLE_CLIENT_USER' | $rol == 'ROLE_SYSTEM_ADMIN') {                                    
+      ?>
+      
+     
+      <li class="nav-item">
+        <a class="nav-link" href="<?=base_url()?>Welcome/plantilla_llaves">
+          <i class="fas fa-lock"></i>
+          <span>Plantilla llaves</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="<?=base_url()?>Welcome/cambiar_contrasenia">
+          <i class="fas fa-lock"></i>
+          <span>Cambiar contraseña</span></a>
+      </li>
+      <?php          
+          }           
+      ?>
+
+      <!-- Nav Item - Tables -->
+      <li class="nav-item">
+        <a class="nav-link" href="<?=base_url()?>Login/logout">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Salir</span></a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider d-none d-md-block">
+
+      <!-- Sidebar Toggler (Sidebar) -->
+      <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+      </div>
+
+    </ul>
+    <!-- End of Sidebar -->

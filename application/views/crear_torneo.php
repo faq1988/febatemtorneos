@@ -1,157 +1,117 @@
+ <!-- Begin Page Content -->
+        <div class="container-fluid">
 
-
-    <div class="content-wrapper">
-
-      <div class="container-fluid">
-
-        <!-- Breadcrumbs -->
+ <!-- Breadcrumbs -->
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="#">ABTM</a>
+            <a href="#">FEBATEM</a>
           </li>
           <li class="breadcrumb-item active">Crear torneo</li>
         </ol>
 
-      
+          <!-- Page Heading -->
+          <!--h1 class="h3 mb-4 text-gray-800">Bienvenidos</h1-->
+ <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Crear torneo</h6>
+            </div>
+            <div class="card-body">
 
-
-
-<center>
-
-
-<?php //echo validation_errors();?>
-
-<?php 
-echo form_open('Torneoscontroller/crear_torneo');
-
-
-$nom = array(
-    'name' => 'nom',
-    'id'  => 'nom',
-    'value' => '',
-    'maxlength' => '30',
-    'size'  =>  '30',
-    'style' =>  'width:50%',
-    'class' => 'form-control',
-
-  );
-
-
-$lug = array(
-    'name' => 'lug',
-    'id'  => 'lug',
-    'value' => '',
-    'maxlength' => '30',
-    'size'  =>  '30',
-    'style' =>  'width:50%',
-    'class' => 'form-control',
-
-  );
-
-
-
-
-echo form_label('Nombre', 'nom');
-
-echo form_input($nom);
-
-
-
-echo form_label('Lugar', 'lug');
-
-echo form_input($lug);
-
-echo '</br>';
-
-
-echo form_label('Super división');
-echo form_checkbox('categorias[]', 'sd', FALSE);
-echo '   ';
-echo form_label('Primera');
-echo form_checkbox('categorias[]', 'primera', FALSE);
-echo '   ';
-echo form_label('Segunda');
-echo form_checkbox('categorias[]', 'segunda', FALSE);
-echo '   ';
-echo form_label('Tercera');
-echo form_checkbox('categorias[]', 'tercera', FALSE);
-echo '   ';
-echo form_label('Cuarta');
-echo form_checkbox('categorias[]', 'cuarta', FALSE);
-
-echo '</br>';
-
-echo form_submit('enviar','Enviar');
-
-
-echo form_close();
-
-
-?>
-</center>
-
-
-
-
-      
-
-     
-
-     
-      </div>
-      <!-- /.container-fluid -->
-
-    </div>
-    <!-- /.content-wrapper -->
-
-    <footer class="sticky-footer">
-      <div class="container">
-        <div class="text-center">
-          <small>Copyright &copy; ABTM Organizador de torneos 2017</small>
-        </div>
-      </div>
-    </footer>
-
-    <!-- Scroll to Top Button -->
-    <a class="scroll-to-top rounded" href="#page-top">
-      <i class="fa fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            Select "Logout" below if you are ready to end your current session.
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="login.html">Logout</a>
-          </div>
-        </div>
-      </div>
+         <!-- Default form login -->
+         <div class="container">
+<!--form class="text-center border border-light p-5" action="#!"-->
+  <?php echo form_open('Turnos/confirmar_turno', 'class= "text-center border border-light p-5"'); ?>
+<div class="col-lg-12">
+   
+    
+    <div class="form-group">    
+    <input type="text" name="nombre" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Nombre">
     </div>
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="<?=base_url()?>bootstraptemplate/vendor/jquery/jquery.min.js"></script>
-    <script src="<?=base_url()?>bootstraptemplate/vendor/popper/popper.min.js"></script>
-    <script src="<?=base_url()?>bootstraptemplate/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <div class="form-group">    
+    <input type="text" name="apellido" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Apellido">
+    </div>  
 
-    <!-- Plugin JavaScript -->
-    <script src="<?=base_url()?>bootstraptemplate/vendor/jquery-easing/jquery.easing.min.js"></script>
-    <script src="<?=base_url()?>bootstraptemplate/vendor/chart.js/Chart.min.js"></script>
-    <script src="<?=base_url()?>bootstraptemplate/vendor/datatables/jquery.dataTables.js"></script>
-    <script src="<?=base_url()?>bootstraptemplate/vendor/datatables/dataTables.bootstrap4.js"></script>
+    <div class="form-group">    
+    <select class="form-control" name="tipo_doc" id="tipo_doc">
+      <option value="0">Tipo de documento</option>           
 
-    <!-- Custom scripts for this template -->
-    <script src="<?=base_url()?>bootstraptemplate/js/sb-admin.min.js"></script>
+              <option value="DNI">DNI</option>
+              <option value="CEDULA">Cédula de identidad</option>
+              <option value="PASAPORTE">Pasaporte</option>
+              <option value="ENROLAMIENTO">Libreta enrolamiento</option>
+              <option value="CIVICA">Libreta cívica</option>              
+    </select>
+    </div>
 
-  </body>
+    <div class="form-group">    
+    <input type="text" name="nro_doc" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Número de documento">
+    </div>
+
+    <div class="form-group">    
+    <input type="text" name="telefono" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Número de teléfono">
+    </div>
+
+    <div class="form-group">    
+    <select class="form-control" name="cobertura" id="cobertura">
+      <option value="0">Cobertura</option>           
+
+              <option value="1">OSDE</option>
+              <option value="2">Galeno</option>
+              <option value="3">Privado</option>              
+    </select>
+    </div>
+    
+    
+
+    <!-- Sign in button -->
+    <button class="btn btn-primary btn-block my-4" type="submit">Crear Torneo</button>
+
+    
+
+</div>
+</form>
+
+   </div>
+          </div>
+
+</div>
+
+<!-- Default form login -->
+
+
+
+        </div>        
+        <!-- /.container-fluid -->
+
+       
+
+      </div>
+      <!-- End of Main Content -->
+
+      <?php include 'footer.php'; ?>
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+ 
+ 
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="<?=base_url()?>assets_template/vendor/jquery/jquery.min.js"></script>
+  <script src="<?=base_url()?>assets_template/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="<?=base_url()?>assets_template/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="<?=base_url()?>assets_template/js/sb-admin-2.min.js"></script>
+
+ 
+
+</body>
 
 </html>

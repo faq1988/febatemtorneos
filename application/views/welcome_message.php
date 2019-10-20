@@ -1,79 +1,78 @@
+ <!-- Begin Page Content -->
+        <div class="container-fluid">
 
- 
+          <!-- Page Heading -->
+          <!--h1 class="h3 mb-4 text-gray-800">Bienvenidos</h1-->
 
-    <div class="content-wrapper">
+          <!--div class="row">
+           
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">Cómo obtener un turno?</h6>
+                </div>
+                <div class="card-body">
+                  <div class="text-center">
+                    <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="<?=base_url()?>assets_template/img/undraw_posting_photo.svg" alt="">
+                  </div>
+                  <p>Podrá adquirir un turno con el profesional que desee en tan solo 3 simples pasos desde cualquier dispositivo con acceso a internet. En primer lugar deberá elegir el profesional con el que desea atenderse, luego seleccionar alguno de los horarios disponibles y por último completar los datos del paciente. Muy simple!</p>
 
-      <div class="container-fluid">
+                  <a target="_blank" rel="nofollow" href="https://undraw.co/">Quiero obtener un turno ahora mismo! &rarr;</a>
+                </div>
+              </div>
+          </div-->
 
-        <!-- Breadcrumbs -->
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a href="#">ABTM</a>
-          </li>
-          <li class="breadcrumb-item active">Inicio</li>
-        </ol>
 
-      
 
-      
+        </div>        
+        <!-- /.container-fluid -->
 
-     
+       
 
-     
       </div>
-      <!-- /.container-fluid -->
+      <!-- End of Main Content -->
+
+      <?php include 'footer.php'; ?>
 
     </div>
-    <!-- /.content-wrapper -->
+    <!-- End of Content Wrapper -->
 
-    <footer class="sticky-footer">
-      <div class="container">
-        <div class="text-center">
-          <small>Copyright &copy; ABTM Organizador de torneos 2017</small>
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
         </div>
-      </div>
-    </footer>
-
-    <!-- Scroll to Top Button -->
-    <a class="scroll-to-top rounded" href="#page-top">
-      <i class="fa fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            Select "Logout" below if you are ready to end your current session.
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="login.html">Logout</a>
-          </div>
+        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-primary" href="login.html">Logout</a>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="<?=base_url()?>bootstraptemplate/vendor/jquery/jquery.min.js"></script>
-    <script src="<?=base_url()?>bootstraptemplate/vendor/popper/popper.min.js"></script>
-    <script src="<?=base_url()?>bootstraptemplate/vendor/bootstrap/js/bootstrap.min.js"></script>
+  <!-- Bootstrap core JavaScript-->
+  <script src="<?=base_url()?>assets_template/vendor/jquery/jquery.min.js"></script>
+  <script src="<?=base_url()?>assets_template/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Plugin JavaScript -->
-    <script src="<?=base_url()?>bootstraptemplate/vendor/jquery-easing/jquery.easing.min.js"></script>
-    <script src="<?=base_url()?>bootstraptemplate/vendor/chart.js/Chart.min.js"></script>
-    <script src="<?=base_url()?>bootstraptemplate/vendor/datatables/jquery.dataTables.js"></script>
-    <script src="<?=base_url()?>bootstraptemplate/vendor/datatables/dataTables.bootstrap4.js"></script>
+  <!-- Core plugin JavaScript-->
+  <script src="<?=base_url()?>assets_template/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Custom scripts for this template -->
-    <script src="<?=base_url()?>bootstraptemplate/js/sb-admin.min.js"></script>
+  <!-- Custom scripts for all pages-->
+  <script src="<?=base_url()?>assets_template/js/sb-admin-2.min.js"></script>
 
-  </body>
+</body>
 
 </html>

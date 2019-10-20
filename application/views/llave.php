@@ -1,58 +1,24 @@
 
 
-    <div class="content-wrapper">
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
 
-      <div class="container-fluid">
-
-        <!-- Breadcrumbs -->
+          <!-- Breadcrumbs -->
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="#">ABTM</a>
+            <a href="#">FEBATEM</a>
           </li>
-          <li class="breadcrumb-item active">Llaves</li>
+          <li class="breadcrumb-item active">Llave</li>
         </ol>
 
-      
-<!-- Nav tabs -->
-<ul class="nav nav-tabs nav-justified" role="tablist">
-  
- 
-  <li class="nav-item">    
-    <a class="nav-link active" data-toggle="tab" href="#sd" role="tab">Super división</a>
-  </li>
-
-  <li class="nav-item">
-    <a class="nav-link" data-toggle="tab" href="#primera" role="tab">Primera</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" data-toggle="tab" href="#segunda" role="tab">Segunda</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" data-toggle="tab" href="#tercera" role="tab">Tercera</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" data-toggle="tab" href="#cuarta" role="tab">Cuarta</a>
-  </li>
-</ul>
-
-
-      
-
-<!-- Tab panes -->
-<div class="tab-content">
-  <div class="tab-pane active" id="sd" role="tabpanel">
-
-                      
-
-</div>
-
-
-<div class="tab-pane" id="primera" role="tabpanel">
-
-
-
-
-              <?php 
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Llave</h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                 <?php 
               if ($cant_inscriptos_primera > 0) {
 
               if ($cant_inscriptos_primera < 17) {
@@ -132,7 +98,7 @@
 
                   <table summary="Tournament Bracket">
                        <tr>
-                        <td><p>1. <?php echo $llave[0]->jugador;?></p></td>
+                        <td><p>1. team name</p></td>
                         <td rowspan="2"><p>2 team name</p></td>
                         <td rowspan="4"><p>3 team name</p></td>
                         <td rowspan="8"><p>4 team name</p></td>
@@ -265,83 +231,59 @@
                   <?php } }?>
 
 
+              </div>
+            </div>
+          </div>
 
+        </div>
+        <!-- /.container-fluid -->
 
-</div>
-
-<div class="tab-pane" id="segunda" role="tabpanel">
-</div>
-
-<div class="tab-pane" id="tercera" role="tabpanel">
-</div>
-
-<div class="tab-pane" id="cuarta" role="tabpanel">
-</div>
-
-
-</div>
-
-
-
-
-
-     
-
-     
       </div>
-      <!-- /.container-fluid -->
+      <!-- End of Main Content -->
+
+      <?php include 'footer.php'; ?>
 
     </div>
-    <!-- /.content-wrapper -->
+    <!-- End of Content Wrapper -->
 
-    <footer class="sticky-footer">
-      <div class="container">
-        <div class="text-center">
-          <small>Copyright &copy; ABTM Organizador de torneos 2017</small>
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
         </div>
-      </div>
-    </footer>
-
-    <!-- Scroll to Top Button -->
-    <a class="scroll-to-top rounded" href="#page-top">
-      <i class="fa fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            Select "Logout" below if you are ready to end your current session.
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="login.html">Logout</a>
-          </div>
+        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-primary" href="login.html">Logout</a>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="<?=base_url()?>bootstraptemplate/vendor/jquery/jquery.min.js"></script>
-    <script src="<?=base_url()?>bootstraptemplate/vendor/popper/popper.min.js"></script>
-    <script src="<?=base_url()?>bootstraptemplate/vendor/bootstrap/js/bootstrap.min.js"></script>
+  <!-- Bootstrap core JavaScript-->
+  <script src="<?=base_url()?>assets_template/vendor/jquery/jquery.min.js"></script>
+  <script src="<?=base_url()?>assets_template/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Plugin JavaScript -->
-    <script src="<?=base_url()?>bootstraptemplate/vendor/jquery-easing/jquery.easing.min.js"></script>
-    <script src="<?=base_url()?>bootstraptemplate/vendor/chart.js/Chart.min.js"></script>
-    <script src="<?=base_url()?>bootstraptemplate/vendor/datatables/jquery.dataTables.js"></script>
-    <script src="<?=base_url()?>bootstraptemplate/vendor/datatables/dataTables.bootstrap4.js"></script>
+  <!-- Core plugin JavaScript-->
+  <script src="<?=base_url()?>assets_template/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Custom scripts for this template -->
-    <script src="<?=base_url()?>bootstraptemplate/js/sb-admin.min.js"></script>
+  <!-- Custom scripts for all pages-->
+  <script src="<?=base_url()?>assets_template/js/sb-admin-2.min.js"></script>
 
-  </body>
+
+</body>
 
 </html>

@@ -2,7 +2,7 @@
 
 if (! defined('BASEPATH')) exit('No direct script access allowed');
 
-class torneo_model extends CI_Model {
+class Torneo_model extends CI_Model {
 	
 	function __construct(){
 		parent::__construct();
@@ -23,6 +23,14 @@ class torneo_model extends CI_Model {
 		if ($query->num_rows() >0 ) return $query;
 		
 
+	}
+
+	
+	public function obtener_jugadores(){
+		$this->db->select('*');
+		$this->db->from('jugador t');		
+		$q = $this->db->get('');
+		if ($q->num_rows() >0 ) return $q;//->result();
 	}
 	
 
@@ -181,7 +189,7 @@ class torneo_model extends CI_Model {
 
 	function obtener_ranking($categoria){
 		   
-		$this->db->select('p.id, j1.nombre as jugador, p.puntos');
+		$this->db->select('p.posicion, j1.nombre as nombre, j1.apellido as apellido, p.puntos');
 		if ($categoria == 0)
 			$this->db->from('ranking_sd as p');				
 		if ($categoria == 1)
@@ -191,7 +199,9 @@ class torneo_model extends CI_Model {
 		if ($categoria == 3)
 			$this->db->from('ranking_tercera as p');				
 		if ($categoria == 4)
-			$this->db->from('ranking_cuarta as p');				
+			$this->db->from('ranking_cuarta as p');	
+		if ($categoria == 5)
+			$this->db->from('ranking_quinta as p');				
 		$this->db->join('jugador as j1', 'j1.id = p.jugador');		
 		$this->db->order_by('p.puntos', 'DESC'); 
 		
