@@ -8,38 +8,31 @@
           <li class="breadcrumb-item">
             <a href="#">FEBATEM</a>
           </li>
-          <li class="breadcrumb-item active">Jugadores</li>
+          <li class="breadcrumb-item active">Torneos</li>
         </ol>
-
-
-        <ul class="nav nav-pills">
-          <li class="nav-item">
-            <a class="nav-link active" href="<?=base_url()?>Welcome/crear_jugador"> <i class="fas fa-plus-circle"></i> Agregar Jugador</a>
-          </li> 
-        </ul>
-
-
-
 
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Jugadores</h6>
+              <h6 class="m-0 font-weight-bold text-primary">Torneos</h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
-                    <tr>
-                      <th>DNI</th>
+                    <tr>                      
                       <th>Nombre</th>
-                      <th>Apellido</th>
-                      <th>Email</th>
-                      <th>Telefono</th>                      
-                      <th>Fecha Nac</th>                      
-                      <th>Categoria</th>                      
-                      <th>Provincia</th>                      
-                      <th>Ciudad</th>   
+                      <th>Lugar</th>
+                      <th>Fecha</th>
+                      <th>Estado</th>                      
+                      <th>Cant Mesas</th>                      
+                      <th>Creado por</th>                      
+                      <th>SD</th>                      
+                      <th>Primera</th>                      
+                      <th>Segunda</th>                      
+                      <th>Tercera</th>                      
+                      <th>Cuarta</th>                      
+                      <th>Quinta</th>
                       <th>Opciones</th>                      
                     </tr>
                   </thead>
@@ -47,20 +40,23 @@
                   <tbody>
 
                   <?php
-                    if (isset($jugadores)){
-                     for($i=0; $i<count($jugadores); $i++){ 
+                    if (isset($torneos)){
+                     for($i=0; $i<count($torneos); $i++){ 
                   ?>
-
+                  
                     <tr>
-                      <td><?php echo $jugadores[$i]['dni'];?></td>
-                      <td><?php echo $jugadores[$i]['nombre'];?></td>
-                      <td><?php echo $jugadores[$i]['apellido'];?></td>
-                      <td><?php echo $jugadores[$i]['email'];?></td>
-                      <td><?php echo $jugadores[$i]['telefono'];?></td>
-                      <td><?php echo $jugadores[$i]['fecha_nac'];?></td>
-                      <td><?php echo $jugadores[$i]['categoria'];?></td>
-                      <td><?php echo $jugadores[$i]['provincia'];?></td>
-                      <td><?php echo $jugadores[$i]['ciudad'];?></td>
+                      <td><?php echo $torneos[$i]['nombre'];?></td>
+                      <td><?php echo $torneos[$i]['lugar'];?></td>
+                      <td><?php echo $torneos[$i]['fecha'];?></td>
+                      <td><?php echo $torneos[$i]['estado'];?></td>
+                      <td><?php echo $torneos[$i]['cant_mesas'];?></td>
+                      <td><?php echo $torneos[$i]['usuario'];?></td>
+                      <td><?php echo $torneos[$i]['superdivision'];?></td>
+                      <td><?php echo $torneos[$i]['primera'];?></td>
+                      <td><?php echo $torneos[$i]['segunda'];?></td>
+                      <td><?php echo $torneos[$i]['tercera'];?></td>
+                      <td><?php echo $torneos[$i]['cuarta'];?></td>
+                      <td><?php echo $torneos[$i]['quinta'];?></td>
                       <td>Eliminar</td>
                       
                     </tr>

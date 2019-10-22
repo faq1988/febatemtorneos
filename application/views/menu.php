@@ -92,40 +92,78 @@
        <?php          
           if ($rol == 'ROLE_SYSTEM_ADMIN') {                                    
       ?>
-      <div class="sidebar-heading">
+      <!--div class="sidebar-heading">
         Torneos
-      </div>
+      </div-->
 
       
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAdministrar" aria-expanded="true" aria-controls="collapseAdministrar">
-          <i class="fas fa-tasks"></i>
-          <span>Administrar</span>
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTorneos" aria-expanded="true" aria-controls="collapseTorneos">
+          <i class="fas fa-trophy"></i>
+          <span>Torneos</span>
         </a>
-        <div id="collapseAdministrar" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="collapseTorneos" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <!--6 class="collapse-header">Custom Components:</h6-->
             <a class="collapse-item" href="<?=base_url()?>Welcome/crear_torneo">Crear torneo</a>
-            <a class="collapse-item" href="<?=base_url()?>Welcome/zonas">Zonas</a>
-            <a class="collapse-item" href="<?=base_url()?>Welcome/partidos_zona">Partidos de zona</a>
-            <a class="collapse-item" href="<?=base_url()?>Welcome/llave">Llave</a>
-            <a class="collapse-item" href="<?=base_url()?>Welcome/usuarios">Usuarios</a>
-            <a class="collapse-item" href="<?=base_url()?>Welcome/jugadores">Jugadores</a>
+            <a class="collapse-item" href="<?=base_url()?>Welcome/torneos">Ver torneos</a>
+            <a class="collapse-item" href="<?=base_url()?>Welcome/inscripcion">Inscripción</a>            
           </div>
         </div>
       </li>      
      
       <hr class="sidebar-divider">
 
-      <div class="sidebar-heading">
+      <!--div class="sidebar-heading">
+        Partidos
+      </div-->      
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePartidos" aria-expanded="true" aria-controls="collapsePartidos">
+          <i class="fas fa-table-tennis"></i>
+          <span>Partidos</span>
+        </a>
+        <div id="collapsePartidos" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <!--6 class="collapse-header">Custom Components:</h6-->            
+            <a class="collapse-item" href="<?=base_url()?>Welcome/zonas">Zonas</a>
+            <a class="collapse-item" href="<?=base_url()?>Welcome/partidos_zona">Partidos de zona</a>
+            <a class="collapse-item" href="<?=base_url()?>Welcome/llave">Llaves</a>
+            <a class="collapse-item" href="<?=base_url()?>Welcome/llave">Partidos de llave</a>
+          </div>
+        </div>
+      </li>      
+     
+      <hr class="sidebar-divider">
+
+
+      <!--div class="sidebar-heading">
+        Clubes
+      </div-->      
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseClubes" aria-expanded="true" aria-controls="collapseClubes">
+          <i class="fas fa-shield-alt"></i>
+          <span>Clubes</span>
+        </a>
+        <div id="collapseClubes" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <!--6 class="collapse-header">Custom Components:</h6-->  
+            <a class="collapse-item" href="<?=base_url()?>Welcome/jugadores">Jugadores</a>                      
+            <a class="collapse-item" href="<?=base_url()?>Welcome/usuarios">Usuarios</a>            
+          </div>
+        </div>
+      </li>             
+
+      <hr class="sidebar-divider">
+
+      <!--div class="sidebar-heading">
         Ranking
-      </div>
+      </div-->
 
       
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRanking" aria-expanded="true" aria-controls="collapseRanking">
-          <i class="fas fa-tasks"></i>
-          <span>Categoria</span>
+          <i class="fas fa-list"></i>
+          <span>Ranking</span>
         </a>
         <div id="collapseRanking" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
@@ -143,6 +181,8 @@
           }           
       ?>
 
+      <hr class="sidebar-divider">
+
       <!-- Heading -->
       <div class="sidebar-heading">
         Opciones
@@ -155,7 +195,7 @@
      
       <li class="nav-item">
         <a class="nav-link" href="<?=base_url()?>Welcome/plantilla_llaves">
-          <i class="fas fa-lock"></i>
+          <i class="fas fa-key"></i>
           <span>Plantilla llaves</span></a>
       </li>
       <li class="nav-item">

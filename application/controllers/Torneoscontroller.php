@@ -30,12 +30,13 @@ class Torneoscontroller extends CI_Controller {
 
 	public function crear_torneo()
 	{
-		$categorias= $this->input->post('categorias');
+		$categorias= $this->input->post('categorias');		
 		$sd=FALSE;
 		$primera=FALSE;
 		$segunda=FALSE;
 		$tercera=FALSE;
 		$cuarta=FALSE;
+		$quinta=FALSE;
 		if (isset($categorias)){
              for($i=0; $i<sizeof($categorias); $i++)
              {
@@ -49,24 +50,31 @@ class Torneoscontroller extends CI_Controller {
              		$tercera=TRUE;
              	if ($categorias[$i]=='cuarta')
              		$cuarta=TRUE;
+             	if ($categorias[$i]=='quinta')
+             		$quinta=TRUE;
              }
          }
+
 		
 			$data = array(		    
-			'nombre' => $this->input->post('nom'),
-			'lugar' => $this->input->post('lug'),
+			'nombre' => $this->input->post('nombre'),
+			'lugar' => $this->input->post('lugar'),
+			'usuario' => $this->session->userdata('id_usuario'), 
+			'cant_mesas' => $this->input->post('cant_mesas'),
 			'superdivision' => $sd,
 			'primera' => $primera,
 			'segunda' => $segunda,
 			'tercera' => $tercera,
 			'cuarta' => $cuarta,
-			'activo' => TRUE,			
+			'quinta' => $quinta,
+			'activo' => TRUE,		
+			'estado' => "CREADO",	
 			);
 
-			$this->torneo_model->desactivar_torneos();
+			$this->torneo_model->desactivar_torneos($this->session->userdata('id_usuario'));
 			
 			$this->torneo_model->crearTorneo($data);
-			redirect('welcome/buscar_torneos');
+			redirect('Welcome/crear_torneo');
 	}
 
 
@@ -75,19 +83,36 @@ class Torneoscontroller extends CI_Controller {
 	public function crear_inscripcion()
 	{
 		//obtengo el torneo activo actual
-		$torneo = $this->torneo_model->obtenerTorneoActual();
-
+		$torneo = $this->torneo_model->obtenerTorneoActual();		
 		$row = $torneo->first_row();	
+
+		$categorias= $this->input->post('categorias');		
 		
-			$data = array(		    
-			'nombre' => $this->input->post('nom'),			
-			'categoria' => $this->input->post('categoria'),			
+		$data = array(		    			
+			'categoria' => $this->input->post('categoria'),	
+			'comentario' => $this->input->post('comentario'),
+			'jugador' => $this->input->post('id_jugador'),			
 			);
 
-			
-			$this->torneo_model->crearInscripcion($data, $row->id);
+		if (isset($categorias)){
+             for($i=0; $i<sizeof($categorias); $i++)
+             {
+             	if ($categorias[$i]=='sd')
+             		$this->torneo_model->crearInscripcion($data, $row->id, 'SD');
+             	if ($categorias[$i]=='primera')
+             		$this->torneo_model->crearInscripcion($data, $row->id, 'Primera');
+             	if ($categorias[$i]=='segunda')
+             		$this->torneo_model->crearInscripcion($data, $row->id, 'Segunda');
+             	if ($categorias[$i]=='tercera')
+             		$this->torneo_model->crearInscripcion($data, $row->id, 'Tercera');
+             	if ($categorias[$i]=='cuarta')
+             		$this->torneo_model->crearInscripcion($data, $row->id, 'Cuarta');
+             	if ($categorias[$i]=='quinta')
+             		$this->torneo_model->crearInscripcion($data, $row->id, 'Quinta');
+             }
+         }			
 
-			redirect(welcome);
+			redirect('Welcome/inscripcion');
 	}
 
 
@@ -100,15 +125,12 @@ class Torneoscontroller extends CI_Controller {
 		$row = $torneo->first_row();		
 
 		//obtengo inscriptos al torneo actual, categoria primera
-		$inscriptos=  $this->torneo_model->obtenerInscripcion($row->id, 1);
-
+		$inscriptos=  $this->torneo_model->obtenerInscripcion($row->id, 'Primera');
 
 		$cantPrimera = sizeof($inscriptos->result());				
 		$modulo = $cantPrimera % 3;
 		$cantZonas3 = 0;
 		$cantZonas4 = 0;
-
-
 
 		if($modulo == 0)
 				{
@@ -117,8 +139,7 @@ class Torneoscontroller extends CI_Controller {
 					echo "caso cero Para ". $cantPrimera." jugadores se armaron ". $cantZonas3." zonas de 3 y ". $cantZonas4." zonas de 4";
 					echo '</br>';
 
-				}
-				
+				}				
 				else
 					if ($modulo == 1)
 					{
@@ -143,18 +164,17 @@ class Torneoscontroller extends CI_Controller {
 	echo 'cantidad de cabezas de zona '. ($cantZonas3+$cantZonas4);
 	echo '</br>';
 	
-	$cabezas = $this->buscarCabezasDeZona($cantZonas3+$cantZonas4, $inscriptos, 1);	
+	$cabezas = $this->buscarCabezasDeZona($cantZonas3+$cantZonas4, $inscriptos, 'Primera');	
 
 	for($i=0; $i<sizeof($cabezas); $i++)
 		{
 			echo 'lista de cabezas '. $cabezas[$i]->jugador;
 			echo '</br>';
-		}			
-	
+		}				
 
 	$inscriptos_sin_cabezas= $this->eliminar_cabezas_inscriptos($inscriptos, $cabezas);
 	
-	$this->armarZonas($row->id, $cantZonas3, $cantZonas4, $cabezas, $inscriptos_sin_cabezas);
+	$this->guardar_zonas($row->id, $cantZonas3, $cantZonas4, $cabezas, $inscriptos_sin_cabezas);
 
 	$this->armar_partidos($row->id, TRUE, 1);
 
@@ -165,12 +185,13 @@ class Torneoscontroller extends CI_Controller {
 	//elimina de los inscriptos los jugadores que son cabezas de zona
 	public function eliminar_cabezas_inscriptos($inscriptos, $cabezas)
 	{
+
 		$inscriptos_sin_cabezas= array();
 		$arreglo_inscriptos= $inscriptos->result();
 		
 			for($j=0; $j<sizeof($arreglo_inscriptos); $j++)
 			{
-				if ($this->es_cabeza($cabezas, $arreglo_inscriptos[$j]->jugador))
+				if ($this->es_cabeza($cabezas, $arreglo_inscriptos[$j]->id_jugador))
 				{}
 				else
 				{
@@ -182,7 +203,7 @@ class Torneoscontroller extends CI_Controller {
 		
 		for($i=0; $i<sizeof($inscriptos_sin_cabezas); $i++)
 		{
-			echo 'inscriptos sin cabezas '. $inscriptos_sin_cabezas[$i]->jugador;
+			echo 'inscriptos sin cabezas '. $inscriptos_sin_cabezas[$i]->id_jugador;
 			echo '</br>';
 		}
 
@@ -227,13 +248,12 @@ class Torneoscontroller extends CI_Controller {
 
 			$cabezas= $this->torneo_model->obtener_cabezas_ranking($id_inscriptos, $cantCabezas, $categoria);
 
-
 			return $cabezas;
 		}
 	
 
 		//armado de zonas
-		public function armarZonas($torneo, $cantZonas3,$cantZonas4,$cabezas, $inscriptos_sin_cabezas)
+		public function guardar_zonas($torneo, $cantZonas3,$cantZonas4,$cabezas, $inscriptos_sin_cabezas)
 		{
 			$letra= 'A';
 			$zonas;
@@ -246,12 +266,11 @@ class Torneoscontroller extends CI_Controller {
 						$cabeza= array_shift($cabezas)->jugador;
 						echo "zona de 3 ".$letra."------";
 
-						$jugador2= array_pop($inscriptos_sin_cabezas)->jugador;						
+						$jugador2= array_pop($inscriptos_sin_cabezas)->id_jugador;						
 						shuffle($inscriptos_sin_cabezas);						
-						$jugador3= array_pop($inscriptos_sin_cabezas)->jugador;
+						$jugador3= array_pop($inscriptos_sin_cabezas)->id_jugador;
 						
-
-
+						
 						$array = array(
 						    "letra" => $letra,
 						    "torneo" => $torneo,
@@ -260,6 +279,8 @@ class Torneoscontroller extends CI_Controller {
 						    "jugador2" => $jugador2,
 						    "jugador3" => $jugador3,
 						    "jugador4" => NULL,
+						    "jugador5" => NULL,
+						    "estado" => 'SIN JUGAR',
 						);
 
 					$this->torneo_model->crearZona($array);	
@@ -276,11 +297,11 @@ class Torneoscontroller extends CI_Controller {
 						$cabeza= array_shift($cabezas)->jugador;
 						echo "zona de 4".$letra."------";
 
-						$jugador2= array_pop($inscriptos_sin_cabezas)->jugador;						
+						$jugador2= array_pop($inscriptos_sin_cabezas)->id_jugador;						
 						shuffle($inscriptos_sin_cabezas);						
-						$jugador3= array_pop($inscriptos_sin_cabezas)->jugador;
+						$jugador3= array_pop($inscriptos_sin_cabezas)->id_jugador;
 						shuffle($inscriptos_sin_cabezas);						
-						$jugador4= array_pop($inscriptos_sin_cabezas)->jugador;
+						$jugador4= array_pop($inscriptos_sin_cabezas)->id_jugador;
 
 						$array = array(
 						    "letra" => $letra,
@@ -290,6 +311,8 @@ class Torneoscontroller extends CI_Controller {
 						    "jugador2" => $jugador2,
 						    "jugador3" => $jugador3,
 						    "jugador4" => $jugador4,
+						    "jugador5" => NULL,
+						    "estado" => 'SIN JUGAR',
 						);
 
 					$this->torneo_model->crearZona($array);	
@@ -2043,5 +2066,27 @@ class Torneoscontroller extends CI_Controller {
 
 			$this->torneo_model->crear_zona_unica($array);	
 		}
+
+
+
+		public function crear_jugador()
+	{			
+			$data = array(		    
+			'nombre' => $this->input->post('nombre'),
+			'apellido' => $this->input->post('apellido'),
+			'categoria' => $this->input->post('categoria'),
+			'dni' => $this->input->post('dni'),
+			'email' => $this->input->post('email'),
+			'telefono' => $this->input->post('telefono'),
+			'fecha_nac' => $this->input->post('fecha_nac'),
+			'provincia' => $this->input->post('provincia'),
+			'ciudad' => $this->input->post('ciudad'),
+			'usuario' => $this->session->userdata('id_usuario'), 			
+			'activo' => TRUE,						
+			);
+			
+			$this->torneo_model->crear_jugador($data);
+			redirect('Welcome/jugadores');
+	}
 
 }

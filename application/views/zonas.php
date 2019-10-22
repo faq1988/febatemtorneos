@@ -8,7 +8,7 @@
           <li class="breadcrumb-item">
             <a href="#">FEBATEM</a>
           </li>
-          <li class="breadcrumb-item active">Ranking</li>
+          <li class="breadcrumb-item active">Zonas</li>
         </ol>
 
           <!-- DataTales Example -->

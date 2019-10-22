@@ -6,14 +6,14 @@
           <li class="breadcrumb-item">
             <a href="#">FEBATEM</a>
           </li>
-          <li class="breadcrumb-item active">Crear torneo</li>
+          <li class="breadcrumb-item active">Crear jugador</li>
         </ol>
 
           <!-- Page Heading -->
           <!--h1 class="h3 mb-4 text-gray-800">Bienvenidos</h1-->
  <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Crear torneo</h6>
+              <h6 class="m-0 font-weight-bold text-primary">Crear jugador</h6>
             </div>
   
   
@@ -22,24 +22,22 @@
          <!-- Default form login -->
   <div class="container">
 <!--form class="text-center border border-light p-5" action="#!"-->
-  <?php echo form_open('Torneoscontroller/crear_torneo', 'class= "text-center "'); ?>
+  <?php echo form_open('Torneoscontroller/crear_jugador', 'class= "text-center "'); ?>
 <div class="form-row">
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-6">
       <label for="inputEmail4">Nombre</label>
       <input type="text" name="nombre" class="form-control" id="inputEmail4">
     </div>
     <div class="form-group col-md-6">
-      <label for="inputPassword4">Lugar</label>
-      <input type="text" name="lugar" class="form-control" id="inputPassword4">
-    </div>
-    <div class="form-group col-md-2">
-      <label for="inputZip">Cantidad de mesas</label>
-      <input type="text" name="cant_mesas" class="form-control" id="inputZip">
-    </div>
+      <label for="inputPassword4">Apellido</label>
+      <input type="text" name="apellido" class="form-control" id="inputPassword4">
+    </div>   
   </div>
-  <div class="form-group">
-    <label for="inputAddress">Categorías</label>
-    <select name="categorias[]" class="custom-select" multiple>  
+  <div class="form-row">
+    <div class="form-group col-md-3">
+    <label for="inputAddress">Categoría</label>
+    <select name="categoria" class="custom-select">  
+        <option value="nada">Seleccionar</option>
         <option value="sd">SD</option>
         <option value="primera">Primera</option>
         <option value="segunda">Segunda</option>
@@ -48,6 +46,36 @@
         <option value="quinta">Quinta</option>
     </select>
   </div>
+
+    <div class="form-group col-md-3">
+      <label for="inputEmail4">DNI</label>
+      <input type="text" name="dni" class="form-control" id="inputEmail4">
+    </div>
+    <div class="form-group col-md-3">
+      <label for="inputEmail4">Teléfono</label>
+      <input type="text" name="telefono" class="form-control" id="inputEmail4">
+    </div>
+    <div class="form-group col-md-3">
+      <label for="inputPassword4">Fecha nacimiento</label>
+      <input type="date" name="fecha_nac" class="form-control" id="inputPassword4">
+    </div>   
+      
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="inputPassword4">Email</label>
+      <input type="email" name="email" class="form-control" id="inputPassword4">
+    </div> 
+    <div class="form-group col-md-4">
+      <label for="inputEmail4">Provincia</label>
+      <input type="text" name="provincia" class="form-control" id="inputEmail4">
+    </div>
+    <div class="form-group col-md-4">
+      <label for="inputPassword4">Ciudad</label>
+      <input type="text" name="ciudad" class="form-control" id="inputPassword4">
+    </div>   
+  </div>
+  
   
  
   

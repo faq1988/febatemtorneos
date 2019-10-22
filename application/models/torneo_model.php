@@ -12,7 +12,15 @@ class Torneo_model extends CI_Model {
 
 	function crearTorneo($data){
 		$this->db->insert('torneo', array('nombre'=>$data['nombre'], 'lugar'=>$data['lugar'],
-			'superdivision'=>$data['superdivision'], 'primera'=>$data['primera'], 'segunda'=>$data['segunda'], 'tercera'=>$data['tercera'], 'cuarta'=>$data['cuarta'], 'activo'=>$data['activo']
+			'superdivision'=>$data['superdivision'], 'primera'=>$data['primera'], 'segunda'=>$data['segunda'], 'tercera'=>$data['tercera'], 'cuarta'=>$data['cuarta'], 'activo'=>$data['activo'], 'estado'=>$data['estado'], 'cant_mesas'=>$data['cant_mesas'], 'usuario'=>$data['usuario']
+			));
+
+	}
+
+
+	function crear_jugador($data){
+		$this->db->insert('jugador', array('nombre'=>$data['nombre'], 'apellido'=>$data['apellido'],
+			'dni'=>$data['dni'], 'email'=>$data['email'], 'telefono'=>$data['telefono'], 'fecha_nac'=>$data['fecha_nac'], 'categoria'=>$data['categoria'], 'activo'=>$data['activo'], 'provincia'=>$data['provincia'], 'ciudad'=>$data['ciudad'], 'usuario'=>$data['usuario']
 			));
 
 	}
@@ -21,8 +29,6 @@ class Torneo_model extends CI_Model {
 	function obtenerTorneo(){
 		$query = $this->db->get('torneo');
 		if ($query->num_rows() >0 ) return $query;
-		
-
 	}
 
 	
@@ -32,12 +38,16 @@ class Torneo_model extends CI_Model {
 		$q = $this->db->get('');
 		if ($q->num_rows() >0 ) return $q;//->result();
 	}
-	
 
-	function crearInscripcion($data, $torneo){
-		
-		$this->db->insert('inscripcion', array('nombre'=>$data['nombre'], 'categoria'=>$data['categoria'], 'torneo'=>$torneo));
+	public function obtener_jugador($id)
+	{
+	    $this->db->where('id =', $id);    
+	    $q= $this->db->get('jugador');
+	    if ($q->num_rows() >0 ) return $q;//->result();
+	}
 
+	function crearInscripcion($data, $torneo, $categoria){		
+		$this->db->insert('inscripcion', array('jugador'=>$data['jugador'], 'categoria'=>$categoria, 'torneo'=>$torneo, 'comentario'=>$data['comentario']));
 	}
 
 
@@ -49,7 +59,6 @@ class Torneo_model extends CI_Model {
 		$this->db->from('inscripcion as p');    
 		$query = $this->db->get();
 		if ($query->num_rows() >0 ) return $query;//->result();
-
 			}
 
 
@@ -163,16 +172,18 @@ class Torneo_model extends CI_Model {
 		$this->db->where_in('jugador', $id_inscriptos);
 		$this->db->order_by('puntos', 'DESC');    	
 		$this->db->limit($cant_cabezas);	
-		if ($categoria==0)
+		if ($categoria=='SD')
 			$query = $this->db->get('ranking_sd');
-		if ($categoria==1)
+		if ($categoria=='Primera')
 			$query = $this->db->get('ranking_primera');
-		if ($categoria==2)
+		if ($categoria=='Segunda')
 			$query = $this->db->get('ranking_segunda');
-		if ($categoria==3)
+		if ($categoria=='Tercera')
 			$query = $this->db->get('ranking_tercera');
-		if ($categoria==4)
+		if ($categoria=='Cuarta')
 			$query = $this->db->get('ranking_cuarta');
+		if ($categoria=='Quinta')
+			$query = $this->db->get('ranking_quinta');
 		if ($query->num_rows() >0 ) return $query->result();
 
 			}

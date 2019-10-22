@@ -6,14 +6,15 @@
           <li class="breadcrumb-item">
             <a href="#">FEBATEM</a>
           </li>
-          <li class="breadcrumb-item active">Crear torneo</li>
+          <li class="breadcrumb-item active">Inscripción</li>
+          <li class="breadcrumb-item active">Confirmar inscripción</li>
         </ol>
 
           <!-- Page Heading -->
           <!--h1 class="h3 mb-4 text-gray-800">Bienvenidos</h1-->
  <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Crear torneo</h6>
+              <h6 class="m-0 font-weight-bold text-primary">Confirmar inscripción</h6>
             </div>
   
   
@@ -22,22 +23,34 @@
          <!-- Default form login -->
   <div class="container">
 <!--form class="text-center border border-light p-5" action="#!"-->
-  <?php echo form_open('Torneoscontroller/crear_torneo', 'class= "text-center "'); ?>
-<div class="form-row">
-    <div class="form-group col-md-4">
-      <label for="inputEmail4">Nombre</label>
-      <input type="text" name="nombre" class="form-control" id="inputEmail4">
-    </div>
-    <div class="form-group col-md-6">
-      <label for="inputPassword4">Lugar</label>
-      <input type="text" name="lugar" class="form-control" id="inputPassword4">
-    </div>
-    <div class="form-group col-md-2">
-      <label for="inputZip">Cantidad de mesas</label>
-      <input type="text" name="cant_mesas" class="form-control" id="inputZip">
-    </div>
-  </div>
-  <div class="form-group">
+  <?php echo form_open('Torneoscontroller/crear_inscripcion', 'class= "text-center "'); ?>
+
+  <input type="hidden" id="id_jugador" name="id_jugador" value="<?php echo $jugador[0]['id'];?>">
+
+  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>DNI</th>
+                      <th>Nombre</th>
+                      <th>Apellido</th>                                      
+                    </tr>
+                  </thead>
+                 
+                  <tbody>
+
+                 
+                    <tr>
+                      <td><?php echo $jugador[0]['dni'];?></td>
+                      <td><?php echo $jugador[0]['nombre'];?></td>
+                      <td><?php echo $jugador[0]['apellido'];?></td>
+                      
+                      
+                    </tr>                   
+                  </tbody>
+                </table>
+
+
+  <div class="form-group col-md-6 offset-md-3">
     <label for="inputAddress">Categorías</label>
     <select name="categorias[]" class="custom-select" multiple>  
         <option value="sd">SD</option>
@@ -47,6 +60,11 @@
         <option value="cuarta">Cuarta</option>
         <option value="quinta">Quinta</option>
     </select>
+  </div>
+
+  <div class="form-group">
+            <label for="message-text" class="col-form-label">Comentario:</label>
+            <textarea class="form-control" id="message-text" name="comentario"></textarea>
   </div>
   
  

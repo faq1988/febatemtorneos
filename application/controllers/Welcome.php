@@ -75,14 +75,17 @@ class Welcome extends CI_Controller {
        
     $data=array();
     $this->load->model('usuario_model');
+    $this->load->model('torneo_model');
     $perfil=  $this->usuario_model->obtener_usuario_por_id($this->session->userdata('id_usuario'));
 
     
     if (isset($perfil))
     $data['perfil']= $perfil->result();
   
+    $torneo = $this->torneo_model->obtenerTorneoActual();   
+    $t['nombre_torneo'] = $torneo->first_row()->nombre;
     $this->load->view('menu');
-    $this->load->view('header');
+    $this->load->view('header', $t);
     $this->load->view('cambiar_contrasenia', $data);
   }
 
@@ -418,5 +421,91 @@ public function usuarios()
     $this->load->view('usuarios', $data);
   }
 
+
+
+public function inscripcion()
+  {
+    if (!$this->session->userdata('username'))
+    {
+      redirect('login');
+    }  
+    $data=array();
+    $this->load->model('torneo_model');
+    
+    $jugadores=  $this->torneo_model->obtener_jugadores();
+
+    if (isset($jugadores))
+    $data['jugadores']= $jugadores->result_array();
+
+    $torneo = $this->torneo_model->obtenerTorneoActual();   
+    $t['nombre_torneo'] = $torneo->first_row()->nombre;
+    $this->load->view('menu');
+    $this->load->view('header', $t);
+    $this->load->view('inscripcion', $data);
+  }
+
+
+
+public function inscribir_categoria()
+  {
+    if (!$this->session->userdata('username'))
+    {
+      redirect('login');
+    }  
+    $data=array();
+    $this->load->model('torneo_model');
+    $id_jugador = $this->uri->segment(3);   
+
+    $jugador= $this->torneo_model->obtener_jugador($id_jugador);
+
+    if (isset($jugador))
+      $data['jugador']= $jugador->result_array();
+
+    $torneo = $this->torneo_model->obtenerTorneoActual();   
+    $t['nombre_torneo'] = $torneo->first_row()->nombre;
+    $this->load->view('menu');
+    $this->load->view('header', $t);
+    $this->load->view('inscripcion_categoria', $data);
+  }
+
+
+
+public function torneos()
+  {
+    if (!$this->session->userdata('username'))
+    {
+      redirect('login');
+    }  
+    $data=array();
+    $this->load->model('torneo_model');
+    
+    $torneos=  $this->torneo_model->obtenerTorneo();
+
+    if (isset($torneos))
+    $data['torneos']= $torneos->result_array();
+
+    $torneo = $this->torneo_model->obtenerTorneoActual();   
+    $t['nombre_torneo'] = $torneo->first_row()->nombre;
+    $this->load->view('menu');
+    $this->load->view('header', $t);
+    $this->load->view('buscar_torneo', $data);
+  }
+
+
+public function crear_jugador()
+  {
+    if (!$this->session->userdata('username'))
+    {
+      redirect('login');
+    }  
+    $data=array();
+    $this->load->model('torneo_model');
+    
+    $torneo = $this->torneo_model->obtenerTorneoActual();   
+    $t['nombre_torneo'] = $torneo->first_row()->nombre;
+    $this->load->view('menu');
+    $this->load->view('header', $t);
+    $this->load->view('crear_jugador');
+  }
 
 }

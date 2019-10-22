@@ -8,23 +8,13 @@
           <li class="breadcrumb-item">
             <a href="#">FEBATEM</a>
           </li>
-          <li class="breadcrumb-item active">Jugadores</li>
+          <li class="breadcrumb-item active">Inscripción</li>
         </ol>
-
-
-        <ul class="nav nav-pills">
-          <li class="nav-item">
-            <a class="nav-link active" href="<?=base_url()?>Welcome/crear_jugador"> <i class="fas fa-plus-circle"></i> Agregar Jugador</a>
-          </li> 
-        </ul>
-
-
-
 
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Jugadores</h6>
+              <h6 class="m-0 font-weight-bold text-primary">Inscripción</h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -33,10 +23,7 @@
                     <tr>
                       <th>DNI</th>
                       <th>Nombre</th>
-                      <th>Apellido</th>
-                      <th>Email</th>
-                      <th>Telefono</th>                      
-                      <th>Fecha Nac</th>                      
+                      <th>Apellido</th>                                                                 
                       <th>Categoria</th>                      
                       <th>Provincia</th>                      
                       <th>Ciudad</th>   
@@ -54,15 +41,11 @@
                     <tr>
                       <td><?php echo $jugadores[$i]['dni'];?></td>
                       <td><?php echo $jugadores[$i]['nombre'];?></td>
-                      <td><?php echo $jugadores[$i]['apellido'];?></td>
-                      <td><?php echo $jugadores[$i]['email'];?></td>
-                      <td><?php echo $jugadores[$i]['telefono'];?></td>
-                      <td><?php echo $jugadores[$i]['fecha_nac'];?></td>
+                      <td><?php echo $jugadores[$i]['apellido'];?></td>                                           
                       <td><?php echo $jugadores[$i]['categoria'];?></td>
                       <td><?php echo $jugadores[$i]['provincia'];?></td>
                       <td><?php echo $jugadores[$i]['ciudad'];?></td>
-                      <td>Eliminar</td>
-                      
+                      <td><a class="btn btn-success" href="<?=base_url()?>Welcome/inscribir_categoria/<?php echo $jugadores[$i]['id']; ?>">Inscribir</a></td>
                     </tr>
                      <?php } }?>
                   </tbody>
@@ -75,6 +58,8 @@
         <!-- /.container-fluid -->
 
       </div>
+
+
       <!-- End of Main Content -->
 
       <?php include 'footer.php'; ?>
@@ -125,6 +110,12 @@
 
   <!-- Page level custom scripts -->
   <script src="<?=base_url()?>assets_template/js/demo/datatables-demo.js"></script>
+
+  <script type="text/javascript">
+  function form_submit() {
+    document.getElementById("form-modal").submit();
+   }    
+  </script>
 
 </body>
 
