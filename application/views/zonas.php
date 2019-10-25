@@ -13,6 +13,23 @@
 
           <!-- DataTales Example -->
 
+  <?php echo form_open('Welcome/zonas', 'class= "text-center "'); ?>
+  <div class="form-row">
+    <div class="form-group col-md-6 offset-md-3">
+    <label for="inputAddress">Categoría</label>
+    <select onchange="this.form.submit();" name="categoria" class="custom-select">  
+        <option value="-1">Seleccionar</option>
+        <option value="0">SD</option>
+        <option value="1">Primera</option>
+        <option value="2">Segunda</option>
+        <option value="3">Tercera</option>
+        <option value="4">Cuarta</option>
+        <option value="5">Quinta</option>
+    </select>
+  </div>
+</div>
+</form>
+
           <div class="row">
           <div class="col-lg-8 offset-md-2">
          
@@ -20,12 +37,12 @@
           <div class="panel panel-primary">
 
                         <?php
-                                    if (isset($zonas_sd)){
-                                     for($i=0; $i<sizeof($zonas_sd); $i++){ ?>
+                                    if (isset($zonas)){
+                                     for($i=0; $i<sizeof($zonas); $i++){ ?>
                         <div class="panel-heading">
-                            Zona: <?php echo $zonas_sd[$i]->letra;?>
+                            Zona: <?php echo $zonas[$i]->letra;?>
                             ---
-                            Estado: <?php echo $zonas_sd[$i]->estado;?>
+                            Estado: <?php echo $zonas[$i]->estado;?>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -33,27 +50,72 @@
                                 <table class="table table-bordered table-sm">
                                     <thead>
                                         <tr>                                            
-                                            <th>Jugador</th>                                            
+                                            <th>Jugador</th>
+                                            <th>vs</th>
+                                            <th>vs</th>
+                                            <th>vs</th>
+                                            <th>vs</th>
+                                            <th>Posición</th>
+                                            <th>
+                                            <a href="<?php echo base_url() ?>Welcome/editar_zona/<?php echo $zonas[$i]->id; ?>"> Cargar resultado</a> 
+                                            </th>                            
                                         </tr>
                                     </thead>
                                     <tbody>
                                     
                                         <tr>
-                                            <td><?php echo $zonas_sd[$i]->jugador1;?>
-                                            </td>                                                             
+                                            <td><?php echo $zonas[$i]->jugador1;?>
+                                            </td> 
+                                            <td style="background-color:black;">-
+                                            </td>
+                                            <td>-
+                                            </td>
+                                            <td>-
+                                            </td> 
+                                            <td>-
+                                            </td>                                                           
                                         </tr>
                                         <tr>
-                                            <td><?php echo $zonas_sd[$i]->jugador2;?>
-                                            </td>                                                             
+                                            <td><?php echo $zonas[$i]->jugador2;?>
+                                            </td> 
+                                            </td> 
+                                            <td>-
+                                            </td>
+                                            <td style="background-color:black;">-
+                                            </td>
+                                            <td>-
+                                            </td> 
+                                            <td>-
+                                            </td>                                                               
                                         </tr>
                                         <tr>
-                                            <td><?php echo $zonas_sd[$i]->jugador3;?>
-                                            </td>                                                             
+                                            <td><?php echo $zonas[$i]->jugador3;?>
+                                            </td>
+                                            </td> 
+                                            <td>-
+                                            </td>
+                                            <td>-
+                                            </td>
+                                            <td style="background-color:black;">-
+                                            </td> 
+                                            <td>-
+                                            </td>                                                                
                                         </tr>
+                                        <?php if (isset($zonas[$i]->jugador4)){ ?>
                                         <tr>
-                                            <td><?php echo $zonas_sd[$i]->jugador4;?>
-                                            </td>                                                             
+                                            <td><?php echo $zonas[$i]->jugador4;?>
+                                            </td> 
+                                            </td> 
+                                            <td>-
+                                            </td>
+                                            <td>-
+                                            </td>
+                                            <td>-
+                                            </td>
+                                            <td style="background-color:black;">-
+                                            </td>                                                                
                                         </tr>
+                                      <?php } ?>
                                        
                                     </tbody>
                                 </table>

@@ -18,14 +18,14 @@
           
 
                 <?php
-                                    if (isset($partidos_sd)){
-                                     for($i=0; $i<sizeof($partidos_sd); $i++){ ?>
+                                    if (isset($partidos_primera)){
+                                     for($i=0; $i<sizeof($partidos_primera); $i++){ ?>
                         <div class="panel-heading">
-                           Id de partido: <?php echo $partidos_sd[$i]->id;?>
+                           Id de partido: <?php echo $partidos_primera[$i]->id;?>
                            ---
-                           Zona: <?php echo $partidos_sd[$i]->zona;?>
+                           Zona: <?php echo $partidos_primera[$i]->zona;?>
                            ---
-                           Estado: <?php echo $partidos_sd[$i]->estado;?>
+                           Estado: <?php echo $partidos_primera[$i]->estado;?>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -41,26 +41,26 @@
                                             <th>Set 5</th>                                          
                                             <th>Resultado</th>
                                             <th rowspan="3">
-                                             <a href="<?php echo base_url() ?>Welcome/editarPartido/<?php echo $partidos_sd[$i]->id; ?>"> Cargar resultado</a>   
+                                             <a href="<?php echo base_url() ?>Welcome/editarPartido/<?php echo $partidos_primera[$i]->id; ?>"> Cargar resultado</a>   
                                              </th>                                           
                                         </tr>
                                     </thead>
                                     <tbody>
                                     
                                         <tr>
-                                            <td><?php echo $partidos_sd[$i]->jugador1;?>
+                                            <td><?php echo $partidos_primera[$i]->jugador1;?>
                                             </td>
-                                            <td><?php echo $partidos_sd[$i]->set11;?>
+                                            <td><?php echo $partidos_primera[$i]->set11;?>
                                             </td>
-                                            <td><?php echo $partidos_sd[$i]->set12;?>
+                                            <td><?php echo $partidos_primera[$i]->set12;?>
                                             </td>
-                                            <td><?php echo $partidos_sd[$i]->set13;?>
+                                            <td><?php echo $partidos_primera[$i]->set13;?>
                                             </td>
-                                            <td><?php echo $partidos_sd[$i]->set14;?>
+                                            <td><?php echo $partidos_primera[$i]->set14;?>
                                             </td>
-                                            <td><?php echo $partidos_sd[$i]->set15;?>
+                                            <td><?php echo $partidos_primera[$i]->set15;?>
                                             </td>
-                                            <td><?php echo $partidos_sd[$i]->resultado1;?>
+                                            <td><?php echo $partidos_primera[$i]->resultado1;?>
                                             </td> 
                                           
 
@@ -68,19 +68,19 @@
                                         </tr>
 
                                         <tr>
-                                            <td><?php echo $partidos_sd[$i]->jugador2;?>
+                                            <td><?php echo $partidos_primera[$i]->jugador2;?>
                                             </td>
-                                            <td><?php echo $partidos_sd[$i]->set21;?>
+                                            <td><?php echo $partidos_primera[$i]->set21;?>
                                             </td>
-                                            <td><?php echo $partidos_sd[$i]->set22;?>
+                                            <td><?php echo $partidos_primera[$i]->set22;?>
                                             </td>
-                                            <td><?php echo $partidos_sd[$i]->set23;?>
+                                            <td><?php echo $partidos_primera[$i]->set23;?>
                                             </td>
-                                            <td><?php echo $partidos_sd[$i]->set24;?>
+                                            <td><?php echo $partidos_primera[$i]->set24;?>
                                             </td>
-                                            <td><?php echo $partidos_sd[$i]->set25;?>
+                                            <td><?php echo $partidos_primera[$i]->set25;?>
                                             </td>
-                                            <td><?php echo $partidos_sd[$i]->resultado2;?>
+                                            <td><?php echo $partidos_primera[$i]->resultado2;?>
                                             </td>                                                             
                                         </tr>
                                         

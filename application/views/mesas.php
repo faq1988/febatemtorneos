@@ -8,52 +8,37 @@
           <li class="breadcrumb-item">
             <a href="#">FEBATEM</a>
           </li>
-          <li class="breadcrumb-item active">Inscripción</li>
+          <li class="breadcrumb-item active">Mesas</li>
         </ol>
 
-
-         <ul class="nav nav-pills">
-          <li class="nav-item">
-            <a class="nav-link active" href="<?=base_url()?>Torneoscontroller/armar_zonas"> <i class="fas fa-times-circle"></i> Cerrar inscripciones</a>
-          </li> 
-        </ul>
-
-
           <!-- DataTales Example -->
+
+          <div class="row">
+          <div class="col-lg-8 offset-md-2">
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Inscripción</h6>
+              <h6 class="m-0 font-weight-bold text-primary">Mesas</h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                      <th>DNI</th>
-                      <th>Nombre</th>
-                      <th>Apellido</th>                                                                 
-                      <th>Categoria</th>                      
-                      <th>Provincia</th>                      
-                      <th>Ciudad</th>   
-                      <th>Opciones</th>                      
+                      <th>Nro de mesa</th>
+                      <th>Estado</th>                      
                     </tr>
                   </thead>
                  
                   <tbody>
 
                   <?php
-                    if (isset($jugadores)){
-                     for($i=0; $i<count($jugadores); $i++){ 
+                    if (isset($mesas)){
+                     for($i=0; $i<count($mesas); $i++){ 
                   ?>
 
-                    <tr>
-                      <td><?php echo $jugadores[$i]['dni'];?></td>
-                      <td><?php echo $jugadores[$i]['nombre'];?></td>
-                      <td><?php echo $jugadores[$i]['apellido'];?></td>                                           
-                      <td><?php echo $jugadores[$i]['categoria'];?></td>
-                      <td><?php echo $jugadores[$i]['provincia'];?></td>
-                      <td><?php echo $jugadores[$i]['ciudad'];?></td>
-                      <td><a class="btn btn-success" href="<?=base_url()?>Welcome/inscribir_categoria/<?php echo $jugadores[$i]['id']; ?>">Inscribir</a></td>
+                    <tr>                            
+                      <td><?php echo $mesas[$i]['nro_mesa'];?></td>
+                      <td><?php echo $mesas[$i]['estado'];?></td>
                     </tr>
                      <?php } }?>
                   </tbody>
@@ -61,13 +46,12 @@
               </div>
             </div>
           </div>
-
+        </div>
+      </div>
         </div>
         <!-- /.container-fluid -->
 
       </div>
-
-
       <!-- End of Main Content -->
 
       <?php include 'footer.php'; ?>
@@ -112,18 +96,6 @@
   <!-- Custom scripts for all pages-->
   <script src="<?=base_url()?>assets_template/js/sb-admin-2.min.js"></script>
 
-  <!-- Page level plugins -->
-  <script src="<?=base_url()?>assets_template/vendor/datatables/jquery.dataTables.min.js"></script>
-  <script src="<?=base_url()?>assets_template/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-  <!-- Page level custom scripts -->
-  <script src="<?=base_url()?>assets_template/js/demo/datatables-demo.js"></script>
-
-  <script type="text/javascript">
-  function form_submit() {
-    document.getElementById("form-modal").submit();
-   }    
-  </script>
 
 </body>
 

@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+require('fpdf/fpdf.php');
+
 class Welcome extends CI_Controller {
 
 	/**
@@ -24,27 +26,6 @@ class Welcome extends CI_Controller {
 	}
 
 
-  public function ver_turnos()
-  {    
-
-      if (!$this->session->userdata('username'))
-    {
-      redirect('login');
-    }
-    $data=array();
-    $this->load->model('turnos_model');
-    $lista_turnos=  $this->turnos_model->obtener_turnos();
-
-    if (isset($lista_turnos))
-      $data['turnos']= $lista_turnos->result_array();
-
-    $this->load->view('menu');
-    $this->load->view('header');
-    $this->load->view('ver_turnos', $data);    
-  }
-
-
-
 	 public function login()
   {
     if (!$this->session->userdata('username'))
@@ -57,7 +38,10 @@ class Welcome extends CI_Controller {
     $usuario= $this->usuario_model->obtener_usuario($this->session->userdata('username')) ->result();
     
     $torneo = $this->torneo_model->obtenerTorneoActual();   
-    $data['nombre_torneo'] = $torneo->first_row()->nombre;
+    if (isset($torneo))
+      $data['nombre_torneo'] = $torneo->first_row()->nombre;
+    else
+      $data['nombre_torneo'] = "NINGUNO";
   
     $this->load->view('menu');
     $this->load->view('header', $data);
@@ -81,41 +65,16 @@ class Welcome extends CI_Controller {
     
     if (isset($perfil))
     $data['perfil']= $perfil->result();
-  
+      
     $torneo = $this->torneo_model->obtenerTorneoActual();   
-    $t['nombre_torneo'] = $torneo->first_row()->nombre;
+    if (isset($torneo))
+      $t['nombre_torneo'] = $torneo->first_row()->nombre;
+    else
+      $t['nombre_torneo'] = "NINGUNO";
     $this->load->view('menu');
     $this->load->view('header', $t);
     $this->load->view('cambiar_contrasenia', $data);
   }
-
-
-
-
-  public function obtener_turno()
-  {
-     if (!$this->session->userdata('username'))
-    {
-      redirect('login');
-    }   
-    $data=array();
-    $this->load->model('turnos_model');
-    $lista_especialidades= $this->turnos_model->obtener_especialidades();
-    $lista_profesionales= $this->turnos_model->obtener_profesionales();
-
-    if (isset($lista_especialidades))
-      $data['especialidades']= $lista_especialidades->result_array();
-    if (isset($lista_profesionales))
-      $data['profesionales']= $lista_profesionales->result_array();
-
-  
-    $this->load->view('menu');
-    $this->load->view('header');
-    $this->load->view('obtener_turno', $data);
-    
- 
-  }
-
 
 
 
@@ -134,7 +93,10 @@ class Welcome extends CI_Controller {
       $data['plantilla']= $plantilla->result();
 
     $torneo = $this->torneo_model->obtenerTorneoActual();   
-    $t['nombre_torneo'] = $torneo->first_row()->nombre;
+    if (isset($torneo))
+      $t['nombre_torneo'] = $torneo->first_row()->nombre;
+    else
+      $t['nombre_torneo'] = "NINGUNO";
     $this->load->view('menu');
     $this->load->view('header', $t);
     $this->load->view('plantilla_llaves', $data);
@@ -149,9 +111,7 @@ public function ranking()
     }  
 
     $this->load->model('torneo_model');
-    //$torneo = $this->torneo_model->obtenerTorneoActual();
-    $data=array();
-    //$row = $torneo->first_row();  
+    $data=array();  
     $categoria = $this->uri->segment(3); 
 
     $ranking=  $this->torneo_model->obtener_ranking($categoria);
@@ -159,9 +119,11 @@ public function ranking()
     if (isset($ranking))
       $data['ranking']= $ranking->result_array();
 
-//var_dump($data);exit;
     $torneo = $this->torneo_model->obtenerTorneoActual();   
-    $t['nombre_torneo'] = $torneo->first_row()->nombre;
+    if (isset($torneo))
+      $t['nombre_torneo'] = $torneo->first_row()->nombre;
+    else
+      $t['nombre_torneo'] = "NINGUNO";
     $this->load->view('menu');
     $this->load->view('header', $t);
     $this->load->view('ranking', $data);
@@ -173,14 +135,16 @@ public function ranking()
     if (!$this->session->userdata('username'))
     {
       redirect('login');
-    }  
-    $data=array();
+    }
     $this->load->model('torneo_model');
     $torneo = $this->torneo_model->obtenerTorneoActual();   
-    $data['nombre_torneo'] = $torneo->first_row()->nombre;
+    if (isset($torneo))
+      $t['nombre_torneo'] = $torneo->first_row()->nombre;
+    else
+      $t['nombre_torneo'] = "NINGUNO";
 
     $this->load->view('menu');
-    $this->load->view('header',$data);
+    $this->load->view('header',$t);
     $this->load->view('crear_torneo');
   }
 
@@ -201,7 +165,10 @@ public function jugadores()
     $data['jugadores']= $jugadores->result_array();
 
     $torneo = $this->torneo_model->obtenerTorneoActual();   
-    $t['nombre_torneo'] = $torneo->first_row()->nombre;
+    if (isset($torneo))
+      $t['nombre_torneo'] = $torneo->first_row()->nombre;
+    else
+      $t['nombre_torneo'] = "NINGUNO";
     $this->load->view('menu');
     $this->load->view('header', $t);
     $this->load->view('jugadores', $data);
@@ -219,35 +186,48 @@ public function jugadores()
     //obtengo el torneo activo actual
     $torneo = $this->torneo_model->obtenerTorneoActual();
 
-    $row = $torneo->first_row();  
+    if(isset($torneo))
+    {
+        $row = $torneo->first_row();  
 
-    $llave_32_primera=  $this->torneo_model->obtener_llave($row->id, 1, 32);
-    $llave_16_primera=  $this->torneo_model->obtener_llave($row->id, 1, 16);
-    $llave_8_primera=  $this->torneo_model->obtener_llave($row->id, 1, 8);
-    $llave_4_primera=  $this->torneo_model->obtener_llave($row->id, 1, 4);
-    $llave_2_primera=  $this->torneo_model->obtener_llave($row->id, 1, 2);
-
-
-    $cant_inscriptos_sd= $this->torneo_model->obtener_cant_inscriptos($row->id, 0);
-    $cant_inscriptos_primera= $this->torneo_model->obtener_cant_inscriptos($row->id, 1);
-    $cant_inscriptos_segunda= $this->torneo_model->obtener_cant_inscriptos($row->id, 2);
-    $cant_inscriptos_tercera= $this->torneo_model->obtener_cant_inscriptos($row->id, 3);
-    $cant_inscriptos_cuarta= $this->torneo_model->obtener_cant_inscriptos($row->id, 4);
-    
-    $data['cant_inscriptos_sd']= $cant_inscriptos_sd;
-    $data['cant_inscriptos_primera']= $cant_inscriptos_primera;
-    $data['cant_inscriptos_segunda']= $cant_inscriptos_segunda;
-    $data['cant_inscriptos_tercera']= $cant_inscriptos_tercera;
-    $data['cant_inscriptos_cuarta']= $cant_inscriptos_cuarta;
+        $llave_32_primera=  $this->torneo_model->obtener_llave($row->id, 1, 32);
+        $llave_16_primera=  $this->torneo_model->obtener_llave($row->id, 1, 16);
+        $llave_8_primera=  $this->torneo_model->obtener_llave($row->id, 1, 8);
+        $llave_4_primera=  $this->torneo_model->obtener_llave($row->id, 1, 4);
+        $llave_2_primera=  $this->torneo_model->obtener_llave($row->id, 1, 2);
 
 
-    $data['llave_32_primera']= $this->completar_llave($cant_inscriptos_primera, $llave_32_primera);
-    $data['llave_16_primera']= $this->completar_fase(8, $llave_16_primera);
-    $data['llave_8_primera']= $this->completar_fase(4, $llave_8_primera);
-    $data['llave_4_primera']= $this->completar_fase(2, $llave_4_primera);
-    $data['llave_2_primera']= $this->completar_fase(1, $llave_2_primera);
+        $cant_inscriptos_sd= $this->torneo_model->obtener_cant_inscriptos($row->id, 0);
+        $cant_inscriptos_primera= $this->torneo_model->obtener_cant_inscriptos($row->id, 1);
+        $cant_inscriptos_segunda= $this->torneo_model->obtener_cant_inscriptos($row->id, 2);
+        $cant_inscriptos_tercera= $this->torneo_model->obtener_cant_inscriptos($row->id, 3);
+        $cant_inscriptos_cuarta= $this->torneo_model->obtener_cant_inscriptos($row->id, 4);
+        
+        $data['cant_inscriptos_sd']= $cant_inscriptos_sd;
+        $data['cant_inscriptos_primera']= $cant_inscriptos_primera;
+        $data['cant_inscriptos_segunda']= $cant_inscriptos_segunda;
+        $data['cant_inscriptos_tercera']= $cant_inscriptos_tercera;
+        $data['cant_inscriptos_cuarta']= $cant_inscriptos_cuarta;
 
-    $t['nombre_torneo']=$row->nombre;
+
+        $data['llave_32_primera']= $this->completar_llave($cant_inscriptos_primera, $llave_32_primera);
+        $data['llave_16_primera']= $this->completar_fase(8, $llave_16_primera);
+        $data['llave_8_primera']= $this->completar_fase(4, $llave_8_primera);
+        $data['llave_4_primera']= $this->completar_fase(2, $llave_4_primera);
+        $data['llave_2_primera']= $this->completar_fase(1, $llave_2_primera);
+
+        $t['nombre_torneo']=$row->nombre;
+      }
+      else
+      {
+       $t['nombre_torneo']="NINGUNO";
+       $data['cant_inscriptos_sd']= 0;
+        $data['cant_inscriptos_primera']= 0;
+        $data['cant_inscriptos_segunda']= 0;
+        $data['cant_inscriptos_tercera']= 0;
+        $data['cant_inscriptos_cuarta']= 0;
+      }
+        
     $this->load->view('menu');    
     $this->load->view('header', $t);
     $this->load->view('llave', $data);
@@ -302,11 +282,8 @@ public function jugadores()
       
     }
 
-    //var_dump($completa);exit;
-
     return $completa;
   }
-
 
 
 
@@ -321,31 +298,38 @@ public function zonas()
 
     $torneo = $this->torneo_model->obtenerTorneoActual();
 
-    $row = $torneo->first_row();  
+    $categoria = $this->input->post('categoria');
 
-    $zonas_sd=  $this->torneo_model->obtenerZonas($row->id, 0);
-    $zonas_primera=  $this->torneo_model->obtenerZonas($row->id, 1);
-    $zonas_segunda=  $this->torneo_model->obtenerZonas($row->id, 2);
-    $zonas_tercera=  $this->torneo_model->obtenerZonas($row->id, 3);
-    $zonas_cuarta=  $this->torneo_model->obtenerZonas($row->id, 4);
-    
-    $data= array();
-    if (isset($zonas_sd))
-    $data['zonas_sd']= $zonas_sd->result();
+    if (isset($torneo) & $categoria != -1)
+    {
+        $row = $torneo->first_row();  
 
-    if (isset($zonas_primera))
-    $data['zonas_primera']= $zonas_primera->result();
+        $zonas=  $this->torneo_model->obtenerZonas($row->id, $categoria);
+        //$zonas_primera=  $this->torneo_model->obtenerZonas($row->id, 1);
+        //$zonas_segunda=  $this->torneo_model->obtenerZonas($row->id, 2);
+        //$zonas_tercera=  $this->torneo_model->obtenerZonas($row->id, 3);
+        //$zonas_cuarta=  $this->torneo_model->obtenerZonas($row->id, 4);
+                
+        if (isset($zonas))
+        $data['zonas']= $zonas->result();
+/*
+        if (isset($zonas_primera))
+        $data['zonas_primera']= $zonas_primera->result();
 
-    if (isset($zonas_segunda))
-    $data['zonas_segunda']= $zonas_segunda->result();
+        if (isset($zonas_segunda))
+        $data['zonas_segunda']= $zonas_segunda->result();
 
-    if (isset($zonas_tercera))
-    $data['zonas_tercera']= $zonas_tercera->result();
+        if (isset($zonas_tercera))
+        $data['zonas_tercera']= $zonas_tercera->result();
 
-    if (isset($zonas_cuarta))
-    $data['zonas_cuarta']= $zonas_cuarta->result();
-    
-    $t['nombre_torneo']=$row->nombre;
+        if (isset($zonas_cuarta))
+        $data['zonas_cuarta']= $zonas_cuarta->result();
+ */       
+        $t['nombre_torneo']=$row->nombre;
+    }
+    else
+        $t['nombre_torneo']="NINGUNO"; 
+
     $this->load->view('menu');
     $this->load->view('header', $t);
     $this->load->view('zonas', $data);
@@ -364,38 +348,39 @@ public function zonas()
 
     $torneo = $this->torneo_model->obtenerTorneoActual();
     $data=array();
-    $row = $torneo->first_row();  
+    if(isset($torneo))
+    {
+        $row = $torneo->first_row();  
 
-    $partidos_sd=  $this->torneo_model->obtenerPartidos($row->id, 0, 'ZONA');
-    $partidos_primera=  $this->torneo_model->obtenerPartidos($row->id, 1, 'ZONA');
-    $partidos_segunda=  $this->torneo_model->obtenerPartidos($row->id, 2, 'ZONA');
-    $partidos_tercera=  $this->torneo_model->obtenerPartidos($row->id, 3, 'ZONA');
-    $partidos_cuarta=  $this->torneo_model->obtenerPartidos($row->id, 4, 'ZONA');
-    
-    if (isset($partidos_sd))
-    $data['partidos_sd']= $partidos_sd->result();
+        $partidos_sd=  $this->torneo_model->obtenerPartidos($row->id, 0, 'ZONA');
+        $partidos_primera=  $this->torneo_model->obtenerPartidos($row->id, 1, 'ZONA');
+        $partidos_segunda=  $this->torneo_model->obtenerPartidos($row->id, 2, 'ZONA');
+        $partidos_tercera=  $this->torneo_model->obtenerPartidos($row->id, 3, 'ZONA');
+        $partidos_cuarta=  $this->torneo_model->obtenerPartidos($row->id, 4, 'ZONA');
+        
+        if (isset($partidos_sd))
+          $data['partidos_sd']= $partidos_sd->result();
 
-    if (isset($partidos_primera))
-    $data['partidos_primera']= $partidos_primera->result();
+        if (isset($partidos_primera))
+          $data['partidos_primera']= $partidos_primera->result();
 
-    if (isset($partidos_segunda))
-    $data['partidos_segunda']= $partidos_segunda->result();
+        if (isset($partidos_segunda))
+          $data['partidos_segunda']= $partidos_segunda->result();
 
-    if (isset($partidos_tercera))
-    $data['partidos_tercera']= $partidos_tercera->result();
+        if (isset($partidos_tercera))
+          $data['partidos_tercera']= $partidos_tercera->result();
 
-    if (isset($partidos_cuarta))
-    $data['partidos_cuarta']= $partidos_cuarta->result();
+        if (isset($partidos_cuarta))
+          $data['partidos_cuarta']= $partidos_cuarta->result();
+        $t['nombre_torneo']= $row->nombre;
+  }
+  else
+   $t['nombre_torneo']= "NINGUNO"; 
 
-//var_dump($data);exit;
-
-    $t['nombre_torneo']= $row->nombre;
     $this->load->view('menu');
     $this->load->view('header', $t);
     $this->load->view('partidos_zona', $data);
   }
-
-
 
 
 
@@ -415,7 +400,10 @@ public function usuarios()
     $data['usuarios']= $usuarios->result_array();
 
     $torneo = $this->torneo_model->obtenerTorneoActual();   
-    $t['nombre_torneo'] = $torneo->first_row()->nombre;
+    if (isset($torneo))
+      $t['nombre_torneo'] = $torneo->first_row()->nombre;
+    else
+      $t['nombre_torneo'] = "NINGUNO";
     $this->load->view('menu');
     $this->load->view('header', $t);
     $this->load->view('usuarios', $data);
@@ -438,7 +426,10 @@ public function inscripcion()
     $data['jugadores']= $jugadores->result_array();
 
     $torneo = $this->torneo_model->obtenerTorneoActual();   
-    $t['nombre_torneo'] = $torneo->first_row()->nombre;
+    if (isset($torneo))
+      $t['nombre_torneo'] = $torneo->first_row()->nombre;
+    else
+      $t['nombre_torneo'] = "NINGUNO";
     $this->load->view('menu');
     $this->load->view('header', $t);
     $this->load->view('inscripcion', $data);
@@ -462,7 +453,10 @@ public function inscribir_categoria()
       $data['jugador']= $jugador->result_array();
 
     $torneo = $this->torneo_model->obtenerTorneoActual();   
-    $t['nombre_torneo'] = $torneo->first_row()->nombre;
+    if (isset($torneo))
+      $t['nombre_torneo'] = $torneo->first_row()->nombre;
+    else
+      $t['nombre_torneo'] = "NINGUNO";
     $this->load->view('menu');
     $this->load->view('header', $t);
     $this->load->view('inscripcion_categoria', $data);
@@ -485,7 +479,10 @@ public function torneos()
     $data['torneos']= $torneos->result_array();
 
     $torneo = $this->torneo_model->obtenerTorneoActual();   
-    $t['nombre_torneo'] = $torneo->first_row()->nombre;
+    if (isset($torneo))
+      $t['nombre_torneo'] = $torneo->first_row()->nombre;
+    else
+      $t['nombre_torneo'] = "NINGUNO";
     $this->load->view('menu');
     $this->load->view('header', $t);
     $this->load->view('buscar_torneo', $data);
@@ -502,10 +499,77 @@ public function crear_jugador()
     $this->load->model('torneo_model');
     
     $torneo = $this->torneo_model->obtenerTorneoActual();   
-    $t['nombre_torneo'] = $torneo->first_row()->nombre;
+    if (isset($torneo))
+      $t['nombre_torneo'] = $torneo->first_row()->nombre;
+    else
+      $t['nombre_torneo'] = "NINGUNO";
     $this->load->view('menu');
     $this->load->view('header', $t);
     $this->load->view('crear_jugador');
   }
+
+
+  public function mesas()
+  {
+     if (!$this->session->userdata('username'))
+    {
+      redirect('login');
+    }   
+    $data=array();
+    $this->load->model('torneo_model');
+    $torneo = $this->torneo_model->obtenerTorneoActual();   
+    if (isset($torneo))
+      $t['nombre_torneo'] = $torneo->first_row()->nombre;
+    else
+      $t['nombre_torneo'] = "NINGUNO";
+
+    if (isset($torneo))
+      $mesas= $this->torneo_model->obtener_mesas($torneo->first_row()->id);    
+
+    if (isset($mesas))
+      $data['mesas']= $mesas->result_array();    
+  
+    $this->load->view('menu');
+    $this->load->view('header', $t);
+    $this->load->view('mesas', $data); 
+  }
+
+
+  public function editar_zona()
+  {
+    
+    $id_zona = $this->uri->segment(3);
+    $this->load->model('torneo_model');
+    $zona_en_cuestion=  $this->torneo_model->obtener_zona_por_id($id_zona);
+    $data['id_zona']=$id_zona;
+    $data['jugador1']= $zona_en_cuestion[0]->jugador1;
+    $data['jugador2']= $zona_en_cuestion[0]->jugador2;
+    $data['jugador3']= $zona_en_cuestion[0]->jugador3;
+    $data['jugador4']= $zona_en_cuestion[0]->jugador4;
+    
+    //var_dump($data_id);exit;
+    $torneo = $this->torneo_model->obtenerTorneoActual();   
+    if (isset($torneo))
+      $t['nombre_torneo'] = $torneo->first_row()->nombre;
+    else
+      $t['nombre_torneo'] = "NINGUNO";
+    $this->load->view('menu');
+    $this->load->view('header', $t);
+    $this->load->view('editar_zona', $data);
+  }
+
+
+  public function testpdf()
+  {
+    $pdf = new FPDF();
+    $pdf->AddPage();
+    $pdf->SetFont('Arial','B',16);
+    $pdf->Cell(40,10,'¡Hola, Mundo!');
+    $pdf->Output();
+
+  }
+
+
+
 
 }

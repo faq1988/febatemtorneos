@@ -26,7 +26,7 @@ class Torneo_model extends CI_Model {
 	}
 
 
-	function obtenerTorneo(){
+	function obtenerTorneo(){		
 		$query = $this->db->get('torneo');
 		if ($query->num_rows() >0 ) return $query;
 	}
@@ -65,6 +65,8 @@ class Torneo_model extends CI_Model {
 
 	public function obtenerTorneoActual()
 	{
+		$usuario = $this->session->userdata('id_usuario');		
+		$this->db->where('usuario = ', $usuario);
 	    $this->db->where('activo =', TRUE);    
 	    $q= $this->db->get('torneo');
 	    if ($q->num_rows() >0 ) return $q;//->result();
@@ -262,8 +264,6 @@ class Torneo_model extends CI_Model {
 		$this->db->where('id =', $id_llave);    		
 		$query = $this->db->get('llave');
 		if ($query->num_rows() >0 ) return $query->result();
-
-
 	}
 
 	function obtener_llave_oponente ($torneo, $categoria, $instancia, $orden)
@@ -335,6 +335,23 @@ class Torneo_model extends CI_Model {
 	{
 		$this->db->insert('zona_unica_sd', array('jugador1'=>$data['jugador1'], 'jugador2'=>$data['jugador2'], 'jugador3'=>$data['jugador3'], 'jugador4'=>$data['jugador4'],
 			'jugador5'=>$data['jugador5'], 'jugador6'=>$data['jugador6'], 'cant_jugadores'=>$data['cant_jugadores'],'estado'=>$data['estado'],'torneo'=>$data['torneo'])); 
+	}
+
+
+	function crear_mesas($cant_mesas, $torneo)
+	{
+		for($i=0; $i<$cant_mesas; $i++)
+		{
+			$this->db->insert('mesas', array('nro_mesa'=>$i, 'torneo'=>$torneo, 'estado'=>"LIBRE")); 
+		}
+	}
+
+
+	function obtener_mesas($torneo)
+	{				
+		$this->db->where('torneo =', $torneo);    		
+		$query = $this->db->get('mesas');
+		if ($query->num_rows() >0 ) return $query;
 	}
 
 }

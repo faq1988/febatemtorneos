@@ -74,6 +74,9 @@ class Torneoscontroller extends CI_Controller {
 			$this->torneo_model->desactivar_torneos($this->session->userdata('id_usuario'));
 			
 			$this->torneo_model->crearTorneo($data);
+			$torneo= $this->torneo_model->obtenerTorneoActual();
+			$this->torneo_model->crear_mesas($data['cant_mesas'], $torneo->first_row()->id);
+
 			redirect('Welcome/crear_torneo');
 	}
 
@@ -121,62 +124,79 @@ class Torneoscontroller extends CI_Controller {
 	{
 		//obtengo el torneo activo actual
 		$torneo = $this->torneo_model->obtenerTorneoActual();
+		$resumen="";
+		if(isset($torneo))
+		{
+			$row = $torneo->first_row();		
 
-		$row = $torneo->first_row();		
+			//obtengo inscriptos al torneo actual, categoria primera
+			$inscriptos=  $this->torneo_model->obtenerInscripcion($row->id, 'Primera');
 
-		//obtengo inscriptos al torneo actual, categoria primera
-		$inscriptos=  $this->torneo_model->obtenerInscripcion($row->id, 'Primera');
+			$cantPrimera = sizeof($inscriptos->result());				
+			$modulo = $cantPrimera % 3;
+			$cantZonas3 = 0;
+			$cantZonas4 = 0;			
 
-		$cantPrimera = sizeof($inscriptos->result());				
-		$modulo = $cantPrimera % 3;
-		$cantZonas3 = 0;
-		$cantZonas4 = 0;
-
-		if($modulo == 0)
-				{
-					$division = $cantPrimera / 3;
-					$cantZonas3 = $division;
-					echo "caso cero Para ". $cantPrimera." jugadores se armaron ". $cantZonas3." zonas de 3 y ". $cantZonas4." zonas de 4";
-					echo '</br>';
-
-				}				
-				else
-					if ($modulo == 1)
+			if($modulo == 0)
 					{
 						$division = $cantPrimera / 3;
-						$cantZonas3 = floor($division);
-						$cantZonas3 = $cantZonas3-1;
-						$cantZonas4 = 1; 
-						echo "caso uno Para ". $cantPrimera." jugadores se armaron ". $cantZonas3." zonas de 3 y ". $cantZonas4." zonas de 4";				
-						echo '</br>';
-					}
+						$cantZonas3 = $division;
+						$resumen= $resumen. "caso cero Para ". $cantPrimera." jugadores se armaron ". $cantZonas3." zonas de 3 y ". $cantZonas4." zonas de 4";
+						$resumen= $resumen. '</br>';
+
+					}				
 					else
-						if ($modulo == 2)
+						if ($modulo == 1)
 						{
 							$division = $cantPrimera / 3;
 							$cantZonas3 = floor($division);
-							$cantZonas3 = $cantZonas3-2;
-							$cantZonas4 = 2; 
-							echo "caso dos Para ". $cantPrimera." jugadores se armaron ". $cantZonas3." zonas de 3 y ". $cantZonas4." zonas de 4";	
-							echo '</br>';
+							$cantZonas3 = $cantZonas3-1;
+							$cantZonas4 = 1; 
+							$resumen= $resumen. "caso uno Para ". $cantPrimera." jugadores se armaron ". $cantZonas3." zonas de 3 y ". $cantZonas4." zonas de 4";				
+							$resumen= $resumen. '</br>';
 						}
-				
-	echo 'cantidad de cabezas de zona '. ($cantZonas3+$cantZonas4);
-	echo '</br>';
-	
-	$cabezas = $this->buscarCabezasDeZona($cantZonas3+$cantZonas4, $inscriptos, 'Primera');	
+						else
+							if ($modulo == 2)
+							{
+								$division = $cantPrimera / 3;
+								$cantZonas3 = floor($division);
+								$cantZonas3 = $cantZonas3-2;
+								$cantZonas4 = 2; 
+								$resumen= $resumen. "caso dos Para ". $cantPrimera." jugadores se armaron ". $cantZonas3." zonas de 3 y ". $cantZonas4." zonas de 4";	
+								$resumen= $resumen. '</br>';
+							}
+					
+		$resumen= $resumen. 'cantidad de cabezas de zona '. ($cantZonas3+$cantZonas4);
+		$resumen= $resumen. '</br>';
+		
+		$cabezas = $this->buscarCabezasDeZona($cantZonas3+$cantZonas4, $inscriptos, 'Primera');	
 
-	for($i=0; $i<sizeof($cabezas); $i++)
-		{
-			echo 'lista de cabezas '. $cabezas[$i]->jugador;
-			echo '</br>';
-		}				
+		for($i=0; $i<sizeof($cabezas); $i++)
+			{
+				$resumen= $resumen. 'lista de cabezas '. $cabezas[$i]->jugador;
+				$resumen= $resumen. '</br>';
+			}				
 
-	$inscriptos_sin_cabezas= $this->eliminar_cabezas_inscriptos($inscriptos, $cabezas);
-	
-	$this->guardar_zonas($row->id, $cantZonas3, $cantZonas4, $cabezas, $inscriptos_sin_cabezas);
+		$inscriptos_sin_cabezas= $this->eliminar_cabezas_inscriptos($inscriptos, $cabezas);
+		
+		$this->guardar_zonas($row->id, $cantZonas3, $cantZonas4, $cabezas, $inscriptos_sin_cabezas);
 
-	$this->armar_partidos($row->id, TRUE, 1);
+		$this->armar_partidos($row->id, TRUE, 1);
+	}
+	else
+	{
+		$resumen="No se ha realizado ninguna accion";
+	}
+
+		$data['resumen']= $resumen;
+		$torneo = $this->torneo_model->obtenerTorneoActual();   
+	    if (isset($torneo))
+	      $t['nombre_torneo'] = $torneo->first_row()->nombre;
+	    else
+	      $t['nombre_torneo'] = "NINGUNO";
+		$this->load->view('menu');
+    	$this->load->view('header', $t);
+    	$this->load->view('cierre_inscripcion', $data); 
 
 	}
 
@@ -200,13 +220,13 @@ class Torneoscontroller extends CI_Controller {
 				
 			}
 		
-		
+		/*
 		for($i=0; $i<sizeof($inscriptos_sin_cabezas); $i++)
 		{
 			echo 'inscriptos sin cabezas '. $inscriptos_sin_cabezas[$i]->id_jugador;
 			echo '</br>';
 		}
-
+		*/
 
 
 
@@ -264,7 +284,7 @@ class Torneoscontroller extends CI_Controller {
 			for($i=0; $i<$cantZonas3; $i++)
 					{
 						$cabeza= array_shift($cabezas)->jugador;
-						echo "zona de 3 ".$letra."------";
+						//echo "zona de 3 ".$letra."------";
 
 						$jugador2= array_pop($inscriptos_sin_cabezas)->id_jugador;						
 						shuffle($inscriptos_sin_cabezas);						
@@ -295,7 +315,7 @@ class Torneoscontroller extends CI_Controller {
 			for($i=0; $i<$cantZonas4; $i++)
 					{
 						$cabeza= array_shift($cabezas)->jugador;
-						echo "zona de 4".$letra."------";
+						//echo "zona de 4".$letra."------";
 
 						$jugador2= array_pop($inscriptos_sin_cabezas)->id_jugador;						
 						shuffle($inscriptos_sin_cabezas);						
@@ -918,9 +938,6 @@ class Torneoscontroller extends CI_Controller {
 
 
 
-
-
-
 			//si hay mas de 16 inscriptos, la instancia comienza en 32avos
 			if ($cant_inscriptos > 16 and $cant_inscriptos <33)
 			{
@@ -1007,7 +1024,7 @@ class Torneoscontroller extends CI_Controller {
 
 		$cant_sd = sizeof($inscriptos);		
 
-		echo "cantidad de jugadores en SD ".$cant_sd;
+		//echo "cantidad de jugadores en SD ".$cant_sd;
 
 		//zona unica todos contra todos
 		if ($cant_sd > 1 and $cant_sd < 7)
@@ -1019,7 +1036,7 @@ class Torneoscontroller extends CI_Controller {
 		if ($cant_sd == 7)
 		{
 						$letra= 'A';
-						echo "zona de 4".$letra."------";
+						//echo "zona de 4".$letra."------";
 						$sorteo = array();
 
 						$cabezas = $this->buscarCabezasDeZona($cant_sd, $inscriptos_sd, 0);						
@@ -1061,7 +1078,7 @@ class Torneoscontroller extends CI_Controller {
 					$letra=++$letra;
 
 
-					echo "zona de 3".$letra."------";
+					//echo "zona de 3".$letra."------";
 						
 						$array = array(
 						    "letra" => $letra,
@@ -1082,7 +1099,7 @@ class Torneoscontroller extends CI_Controller {
 		if ($cant_sd == 8)
 		{
 						$letra= 'A';
-						echo "zona de 4".$letra."------";
+						//echo "zona de 4".$letra."------";
 						$sorteo = array();
 
 						$cabezas = $this->buscarCabezasDeZona($cant_sd, $inscriptos_sd, 0);						
@@ -1129,7 +1146,7 @@ class Torneoscontroller extends CI_Controller {
 					$letra=++$letra;
 
 
-					echo "zona de 4".$letra."------";
+					//echo "zona de 4".$letra."------";
 						
 						$array = array(
 						    "letra" => $letra,
@@ -1150,7 +1167,7 @@ class Torneoscontroller extends CI_Controller {
 		if ($cant_sd == 9)
 		{
 						$letra= 'A';
-						echo "zona de 4".$letra."------";
+						//echo "zona de 4".$letra."------";
 						$sorteo = array();
 
 						$cabezas = $this->buscarCabezasDeZona($cant_sd, $inscriptos_sd, 0);						
@@ -1198,7 +1215,7 @@ class Torneoscontroller extends CI_Controller {
 
 					$letra=++$letra;
 					
-						echo "zona de 5".$letra."------";
+						//echo "zona de 5".$letra."------";
 						
 
 						$array = array(
@@ -1221,7 +1238,7 @@ class Torneoscontroller extends CI_Controller {
 		if ($cant_sd == 10)
 		{
 						$letra= 'A';
-						echo "zona de 5".$letra."------";
+						//echo "zona de 5".$letra."------";
 						$sorteo = array();
 
 						$cabezas = $this->buscarCabezasDeZona($cant_sd, $inscriptos_sd, 0);						
@@ -1274,7 +1291,7 @@ class Torneoscontroller extends CI_Controller {
 
 					$letra=++$letra;
 
-					echo "zona de 5".$letra."------";
+					//echo "zona de 5".$letra."------";
 						
 						$array = array(
 						    "letra" => $letra,
@@ -1296,7 +1313,7 @@ class Torneoscontroller extends CI_Controller {
 		if ($cant_sd == 11)
 		{
 			$letra= 'A';
-						echo "zona de 3".$letra."------";
+						//echo "zona de 3".$letra."------";
 						$sorteo = array();
 
 						$cabezas = $this->buscarCabezasDeZona($cant_sd, $inscriptos_sd, 0);						
@@ -1349,7 +1366,7 @@ class Torneoscontroller extends CI_Controller {
 					$letra=++$letra;
 
 
-					echo "zona de 4".$letra."------";
+					//echo "zona de 4".$letra."------";
 											
 						$array = array(
 						    "letra" => $letra,
@@ -1368,7 +1385,7 @@ class Torneoscontroller extends CI_Controller {
 					$letra=++$letra;
 
 
-					echo "zona de 4".$letra."------";
+					//echo "zona de 4".$letra."------";
 						
 						$array = array(
 						    "letra" => $letra,
@@ -1389,7 +1406,7 @@ class Torneoscontroller extends CI_Controller {
 		if ($cant_sd == 12)
 		{
 						$letra= 'A';
-						echo "zona de 4".$letra."------";
+						//echo "zona de 4".$letra."------";
 						$sorteo = array();
 
 						$cabezas = $this->buscarCabezasDeZona($cant_sd, $inscriptos_sd, 0);						
@@ -1443,7 +1460,7 @@ class Torneoscontroller extends CI_Controller {
 					$letra=++$letra;
 
 
-					echo "zona de 4".$letra."------";
+					//echo "zona de 4".$letra."------";
 										
 
 						$array = array(
@@ -1462,7 +1479,7 @@ class Torneoscontroller extends CI_Controller {
 
 					$letra=++$letra;
 
-					echo "zona de 4".$letra."------";
+					//echo "zona de 4".$letra."------";
 						
 						$array = array(
 						    "letra" => $letra,

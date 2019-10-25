@@ -107,7 +107,8 @@
             <!--6 class="collapse-header">Custom Components:</h6-->
             <a class="collapse-item" href="<?=base_url()?>Welcome/crear_torneo">Crear torneo</a>
             <a class="collapse-item" href="<?=base_url()?>Welcome/torneos">Ver torneos</a>
-            <a class="collapse-item" href="<?=base_url()?>Welcome/inscripcion">Inscripción</a>            
+            <a class="collapse-item" href="<?=base_url()?>Welcome/inscripcion">Inscripción</a>
+            <a class="collapse-item" href="<?=base_url()?>Welcome/mesas">Mesas</a>            
           </div>
         </div>
       </li>      
@@ -177,6 +178,21 @@
           </div>
         </div>
       </li>      
+
+      <hr class="sidebar-divider">
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRating" aria-expanded="true" aria-controls="collapseRating">
+          <i class="fas fa-angle-double-up"></i>
+          <span>Rating</span>
+        </a>
+        <div id="collapseRating" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <!--6 class="collapse-header">Custom Components:</h6-->
+            <a class="collapse-item" href="<?=base_url()?>Welcome/rating">Único</a>            
+          </div>
+        </div>
+      </li>      
       <?php          
           }           
       ?>
@@ -192,7 +208,11 @@
           if ($rol == 'ROLE_CLIENT_USER' | $rol == 'ROLE_SYSTEM_ADMIN') {                                    
       ?>
       
-     
+     <li class="nav-item">
+        <a class="nav-link" href="<?=base_url()?>Welcome/testpdf" target="blank">
+          <i class="fas fa-key"></i>
+          <span>Test pdf</span></a>
+      </li>
       <li class="nav-item">
         <a class="nav-link" href="<?=base_url()?>Welcome/plantilla_llaves">
           <i class="fas fa-key"></i>
