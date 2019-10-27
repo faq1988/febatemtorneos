@@ -61,7 +61,7 @@
                       <td><?php echo $jugadores[$i]['categoria'];?></td>
                       <td><?php echo $jugadores[$i]['provincia'];?></td>
                       <td><?php echo $jugadores[$i]['ciudad'];?></td>
-                      <td>Eliminar</td>
+                      <td><a class="btn btn-success" href="<?=base_url()?>Torneoscontroller/eliminar_jugador/<?php echo $jugadores[$i]['id']; ?>">Eliminar</a></td>
                       
                     </tr>
                      <?php } }?>

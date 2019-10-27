@@ -26,20 +26,20 @@
 <div class="form-row">
     <div class="form-group col-md-4">
       <label for="inputEmail4">Nombre</label>
-      <input type="text" name="nombre" class="form-control" id="inputEmail4">
+      <input type="text" name="nombre" class="form-control" id="inputEmail4" required>
     </div>
     <div class="form-group col-md-6">
       <label for="inputPassword4">Lugar</label>
-      <input type="text" name="lugar" class="form-control" id="inputPassword4">
+      <input type="text" name="lugar" class="form-control" id="inputPassword4" required>
     </div>
     <div class="form-group col-md-2">
       <label for="inputZip">Cantidad de mesas</label>
-      <input type="text" name="cant_mesas" class="form-control" id="inputZip">
+      <input type="text" name="cant_mesas" class="form-control" id="inputZip" required>
     </div>
   </div>
   <div class="form-group">
     <label for="inputAddress">Categorías</label>
-    <select name="categorias[]" class="custom-select" multiple>  
+    <select name="categorias[]" class="custom-select" multiple required>  
         <option value="sd">SD</option>
         <option value="primera">Primera</option>
         <option value="segunda">Segunda</option>

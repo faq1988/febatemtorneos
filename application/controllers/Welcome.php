@@ -190,31 +190,32 @@ public function jugadores()
     {
         $row = $torneo->first_row();  
 
-        $llave_32_primera=  $this->torneo_model->obtener_llave($row->id, 1, 32);
-        $llave_16_primera=  $this->torneo_model->obtener_llave($row->id, 1, 16);
-        $llave_8_primera=  $this->torneo_model->obtener_llave($row->id, 1, 8);
-        $llave_4_primera=  $this->torneo_model->obtener_llave($row->id, 1, 4);
-        $llave_2_primera=  $this->torneo_model->obtener_llave($row->id, 1, 2);
+        //$llave_32_primera=  $this->torneo_model->obtener_llave($row->id, "Primera", 32);
+        $llave_16_primera=  $this->torneo_model->obtener_llave($row->id, "Primera", 16);
+        //$llave_8_primera=  $this->torneo_model->obtener_llave($row->id, "Primera", 8);
+        //$llave_4_primera=  $this->torneo_model->obtener_llave($row->id, "Primera", 4);
+        //$llave_2_primera=  $this->torneo_model->obtener_llave($row->id, "Primera", 2);
 
-
-        $cant_inscriptos_sd= $this->torneo_model->obtener_cant_inscriptos($row->id, 0);
-        $cant_inscriptos_primera= $this->torneo_model->obtener_cant_inscriptos($row->id, 1);
-        $cant_inscriptos_segunda= $this->torneo_model->obtener_cant_inscriptos($row->id, 2);
-        $cant_inscriptos_tercera= $this->torneo_model->obtener_cant_inscriptos($row->id, 3);
-        $cant_inscriptos_cuarta= $this->torneo_model->obtener_cant_inscriptos($row->id, 4);
+        $cant_inscriptos_sd= $this->torneo_model->obtener_cant_inscriptos($row->id, "SD");
+        $cant_inscriptos_primera= $this->torneo_model->obtener_cant_inscriptos($row->id, "Primera");
+        $cant_inscriptos_segunda= $this->torneo_model->obtener_cant_inscriptos($row->id, "Segunda");
+        $cant_inscriptos_tercera= $this->torneo_model->obtener_cant_inscriptos($row->id, "Tercera");
+        $cant_inscriptos_cuarta= $this->torneo_model->obtener_cant_inscriptos($row->id, "Cuarta");
+        $cant_inscriptos_quinta= $this->torneo_model->obtener_cant_inscriptos($row->id, "Quinta");
         
         $data['cant_inscriptos_sd']= $cant_inscriptos_sd;
         $data['cant_inscriptos_primera']= $cant_inscriptos_primera;
         $data['cant_inscriptos_segunda']= $cant_inscriptos_segunda;
         $data['cant_inscriptos_tercera']= $cant_inscriptos_tercera;
         $data['cant_inscriptos_cuarta']= $cant_inscriptos_cuarta;
+        $data['cant_inscriptos_quinta']= $cant_inscriptos_quinta;
 
 
-        $data['llave_32_primera']= $this->completar_llave($cant_inscriptos_primera, $llave_32_primera);
+        //$data['llave_32_primera']= $this->completar_llave($cant_inscriptos_primera, $llave_32_primera);
         $data['llave_16_primera']= $this->completar_fase(8, $llave_16_primera);
-        $data['llave_8_primera']= $this->completar_fase(4, $llave_8_primera);
-        $data['llave_4_primera']= $this->completar_fase(2, $llave_4_primera);
-        $data['llave_2_primera']= $this->completar_fase(1, $llave_2_primera);
+        //$data['llave_8_primera']= $this->completar_fase(4, $llave_8_primera);
+        //$data['llave_4_primera']= $this->completar_fase(2, $llave_4_primera);
+        //$data['llave_2_primera']= $this->completar_fase(1, $llave_2_primera);
 
         $t['nombre_torneo']=$row->nombre;
       }
@@ -309,7 +310,7 @@ public function zonas()
         //$zonas_segunda=  $this->torneo_model->obtenerZonas($row->id, 2);
         //$zonas_tercera=  $this->torneo_model->obtenerZonas($row->id, 3);
         //$zonas_cuarta=  $this->torneo_model->obtenerZonas($row->id, 4);
-                
+              
         if (isset($zonas))
         $data['zonas']= $zonas->result();
 /*
@@ -419,13 +420,26 @@ public function inscripcion()
     }  
     $data=array();
     $this->load->model('torneo_model');
-    
+    $torneo = $this->torneo_model->obtenerTorneoActual(); 
     $jugadores=  $this->torneo_model->obtener_jugadores();
+
+    $cant_sd= $this->torneo_model->obtener_cant_inscriptos($torneo->first_row()->id, 'SD');
+    $cant_primera= $this->torneo_model->obtener_cant_inscriptos($torneo->first_row()->id, 'Primera');
+    $cant_segunda= $this->torneo_model->obtener_cant_inscriptos($torneo->first_row()->id, 'Segunda');
+    $cant_tercera= $this->torneo_model->obtener_cant_inscriptos($torneo->first_row()->id, 'Tercera');
+    $cant_cuarta= $this->torneo_model->obtener_cant_inscriptos($torneo->first_row()->id, 'Cuarta');
+    $cant_quinta= $this->torneo_model->obtener_cant_inscriptos($torneo->first_row()->id, 'Quinta');
+
+    $data['cant_sd']= $cant_sd;
+    $data['cant_primera']= $cant_primera;
+    $data['cant_segunda']= $cant_segunda;
+    $data['cant_tercera']= $cant_tercera;
+    $data['cant_cuarta']= $cant_cuarta;
+    $data['cant_quinta']= $cant_quinta;
 
     if (isset($jugadores))
     $data['jugadores']= $jugadores->result_array();
-
-    $torneo = $this->torneo_model->obtenerTorneoActual();   
+      
     if (isset($torneo))
       $t['nombre_torneo'] = $torneo->first_row()->nombre;
     else

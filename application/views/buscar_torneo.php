@@ -11,6 +11,12 @@
           <li class="breadcrumb-item active">Torneos</li>
         </ol>
 
+         <ul class="nav nav-pills">
+          <li class="nav-item">
+            <a class="nav-link active" href="<?=base_url()?>Welcome/crear_torneo"> <i class="fas fa-plus-circle"></i> Crear Torneo</a>
+          </li> 
+        </ul>
+
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -26,13 +32,8 @@
                       <th>Fecha</th>
                       <th>Estado</th>                      
                       <th>Cant Mesas</th>                      
-                      <th>Creado por</th>                      
-                      <th>SD</th>                      
-                      <th>Primera</th>                      
-                      <th>Segunda</th>                      
-                      <th>Tercera</th>                      
-                      <th>Cuarta</th>                      
-                      <th>Quinta</th>
+                      <th>Creado por</th>                     
+                      
                       <th>Opciones</th>                      
                     </tr>
                   </thead>
@@ -51,13 +52,10 @@
                       <td><?php echo $torneos[$i]['estado'];?></td>
                       <td><?php echo $torneos[$i]['cant_mesas'];?></td>
                       <td><?php echo $torneos[$i]['usuario'];?></td>
-                      <td><?php echo $torneos[$i]['superdivision'];?></td>
-                      <td><?php echo $torneos[$i]['primera'];?></td>
-                      <td><?php echo $torneos[$i]['segunda'];?></td>
-                      <td><?php echo $torneos[$i]['tercera'];?></td>
-                      <td><?php echo $torneos[$i]['cuarta'];?></td>
-                      <td><?php echo $torneos[$i]['quinta'];?></td>
-                      <td>Eliminar</td>
+                      
+                      <td><a class="btn btn-success" href="<?=base_url()?>Torneoscontroller/eliminar_torneo/<?php echo $torneos[$i]['id']; ?>">Eliminar</a>
+                        <a class="btn btn-success" href="<?=base_url()?>Torneoscontroller/seleccionar_torneo/<?php echo $torneos[$i]['id']; ?>">Seleccionar</a>
+                      </td>
                       
                     </tr>
                      <?php } }?>

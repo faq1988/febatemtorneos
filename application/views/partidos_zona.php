@@ -33,13 +33,13 @@
                                 <table class="table table-warning table-bordered table-hover table-sm">
                                     <thead class="thead-inverse">
                                         <tr>                                            
-                                            <th>Jugador</th>   
-                                            <th>Set 1</th> 
-                                            <th>Set 2</th>                                          
-                                            <th>Set 3</th>                                          
-                                            <th>Set 4</th>                                          
-                                            <th>Set 5</th>                                          
-                                            <th>Resultado</th>
+                                            <th class="col-sm-6">Jugador</th>   
+                                            <th class="col-sm-1">Set 1</th> 
+                                            <th class="col-sm-1">Set 2</th>                                          
+                                            <th class="col-sm-1">Set 3</th>                                          
+                                            <th class="col-sm-1">Set 4</th>                                          
+                                            <th class="col-sm-1">Set 5</th>                                          
+                                            <th class="col-sm-1">Resultado</th>
                                             <th rowspan="3">
                                              <a href="<?php echo base_url() ?>Welcome/editarPartido/<?php echo $partidos_primera[$i]->id; ?>"> Cargar resultado</a>   
                                              </th>                                           

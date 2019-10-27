@@ -26,17 +26,17 @@
 <div class="form-row">
     <div class="form-group col-md-6">
       <label for="inputEmail4">Nombre</label>
-      <input type="text" name="nombre" class="form-control" id="inputEmail4">
+      <input type="text" name="nombre" class="form-control" id="inputEmail4" required>
     </div>
     <div class="form-group col-md-6">
       <label for="inputPassword4">Apellido</label>
-      <input type="text" name="apellido" class="form-control" id="inputPassword4">
+      <input type="text" name="apellido" class="form-control" id="inputPassword4" required>
     </div>   
   </div>
   <div class="form-row">
     <div class="form-group col-md-3">
     <label for="inputAddress">Categoría</label>
-    <select name="categoria" class="custom-select">  
+    <select name="categoria" class="custom-select" required>  
         <option value="nada">Seleccionar</option>
         <option value="sd">SD</option>
         <option value="primera">Primera</option>
@@ -49,30 +49,30 @@
 
     <div class="form-group col-md-3">
       <label for="inputEmail4">DNI</label>
-      <input type="text" name="dni" class="form-control" id="inputEmail4">
+      <input type="text" name="dni" class="form-control" id="inputEmail4" required>
     </div>
     <div class="form-group col-md-3">
       <label for="inputEmail4">Teléfono</label>
-      <input type="text" name="telefono" class="form-control" id="inputEmail4">
+      <input type="text" name="telefono" class="form-control" id="inputEmail4" required>
     </div>
     <div class="form-group col-md-3">
       <label for="inputPassword4">Fecha nacimiento</label>
-      <input type="date" name="fecha_nac" class="form-control" id="inputPassword4">
+      <input type="date" name="fecha_nac" class="form-control" id="inputPassword4" required>
     </div>   
       
   </div>
   <div class="form-row">
     <div class="form-group col-md-4">
       <label for="inputPassword4">Email</label>
-      <input type="email" name="email" class="form-control" id="inputPassword4">
+      <input type="email" name="email" class="form-control" id="inputPassword4" required>
     </div> 
     <div class="form-group col-md-4">
       <label for="inputEmail4">Provincia</label>
-      <input type="text" name="provincia" class="form-control" id="inputEmail4">
+      <input type="text" name="provincia" class="form-control" id="inputEmail4" required>
     </div>
     <div class="form-group col-md-4">
       <label for="inputPassword4">Ciudad</label>
-      <input type="text" name="ciudad" class="form-control" id="inputPassword4">
+      <input type="text" name="ciudad" class="form-control" id="inputPassword4" required>
     </div>   
   </div>
   

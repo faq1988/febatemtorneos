@@ -11,6 +11,119 @@
           <li class="breadcrumb-item active">Inscripción</li>
         </ol>
 
+         <?php if ($this->session->flashdata('error')) {?>
+                    <div class="alert alert-danger">                                
+                      <?php echo $this->session->flashdata('error');?>
+                    </div>
+                  <?php } ?>    
+                  <?php if ($this->session->flashdata('success')) {?>
+                    <div class="alert alert-success">                               
+                      <?php echo $this->session->flashdata('success');?>
+                    </div>
+          <?php } ?>  
+
+        <div class="row">
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-2 col-md-2 mb-4">
+              <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Super división</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $cant_sd;?></div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-users fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl-2 col-md-2 mb-4">
+              <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Primera</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $cant_primera;?></div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-users fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl-2 col-md-2 mb-4">
+              <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Segunda</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $cant_segunda;?></div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-users fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pending Requests Card Example -->
+            <div class="col-xl-2 col-md-2 mb-4">
+              <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Tercera</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $cant_tercera;?></div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-users fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+             <!-- Pending Requests Card Example -->
+            <div class="col-xl-2 col-md-2 mb-4">
+              <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Cuarta</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $cant_cuarta;?></div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-users fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+             <!-- Pending Requests Card Example -->
+            <div class="col-xl-2 col-md-2 mb-4">
+              <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Quinta</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $cant_quinta;?></div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-users fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+
 
          <ul class="nav nav-pills">
           <li class="nav-item">

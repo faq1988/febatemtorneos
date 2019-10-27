@@ -104,8 +104,7 @@
         </a>
         <div id="collapseTorneos" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <!--6 class="collapse-header">Custom Components:</h6-->
-            <a class="collapse-item" href="<?=base_url()?>Welcome/crear_torneo">Crear torneo</a>
+            <!--6 class="collapse-header">Custom Components:</h6-->            
             <a class="collapse-item" href="<?=base_url()?>Welcome/torneos">Ver torneos</a>
             <a class="collapse-item" href="<?=base_url()?>Welcome/inscripcion">Inscripción</a>
             <a class="collapse-item" href="<?=base_url()?>Welcome/mesas">Mesas</a>            

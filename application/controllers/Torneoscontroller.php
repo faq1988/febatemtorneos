@@ -77,7 +77,7 @@ class Torneoscontroller extends CI_Controller {
 			$torneo= $this->torneo_model->obtenerTorneoActual();
 			$this->torneo_model->crear_mesas($data['cant_mesas'], $torneo->first_row()->id);
 
-			redirect('Welcome/crear_torneo');
+			redirect('Welcome/torneos');
 	}
 
 
@@ -97,24 +97,76 @@ class Torneoscontroller extends CI_Controller {
 			'jugador' => $this->input->post('id_jugador'),			
 			);
 
+
+		
+
 		if (isset($categorias)){
              for($i=0; $i<sizeof($categorias); $i++)
              {
              	if ($categorias[$i]=='sd')
-             		$this->torneo_model->crearInscripcion($data, $row->id, 'SD');
+             	{             		
+             		if ($this->torneo_model->esta_inscripto($row->id, 'SD', $data['jugador'])==FALSE)
+             			$this->torneo_model->crearInscripcion($data, $row->id, 'SD');
+             		else
+             		{
+             			$this->session->set_flashdata('error', 'Ha ocurrido un error, el jugador ya se encontraba inscripto en categoría SD');
+						redirect('Welcome/inscripcion');
+             		}
+             	}
              	if ($categorias[$i]=='primera')
-             		$this->torneo_model->crearInscripcion($data, $row->id, 'Primera');
+             	{
+             		if ($this->torneo_model->esta_inscripto($row->id, 'Primera', $data['jugador'])==FALSE)
+             			$this->torneo_model->crearInscripcion($data, $row->id, 'Primera');
+             		else
+             		{
+             			$this->session->set_flashdata('error', 'Ha ocurrido un error, el jugador ya se encontraba inscripto en categoría Primera');
+						redirect('Welcome/inscripcion');
+             		}
+             	}
              	if ($categorias[$i]=='segunda')
-             		$this->torneo_model->crearInscripcion($data, $row->id, 'Segunda');
+             	{
+             		if ($this->torneo_model->esta_inscripto($row->id, 'Segunda', $data['jugador'])==FALSE)
+             			$this->torneo_model->crearInscripcion($data, $row->id, 'Segunda');
+             		else
+             		{
+             			$this->session->set_flashdata('error', 'Ha ocurrido un error, el jugador ya se encontraba inscripto en categoría Segunda');
+						redirect('Welcome/inscripcion');
+             		}
+             	}
              	if ($categorias[$i]=='tercera')
-             		$this->torneo_model->crearInscripcion($data, $row->id, 'Tercera');
+             	{
+             		if ($this->torneo_model->esta_inscripto($row->id, 'Tercera', $data['jugador'])==FALSE)
+             			$this->torneo_model->crearInscripcion($data, $row->id, 'Tercera');
+             		else
+             		{
+             			$this->session->set_flashdata('error', 'Ha ocurrido un error, el jugador ya se encontraba inscripto en categoría Tercera');
+						redirect('Welcome/inscripcion');
+             		}
+             	}
              	if ($categorias[$i]=='cuarta')
-             		$this->torneo_model->crearInscripcion($data, $row->id, 'Cuarta');
+             	{
+             		if ($this->torneo_model->esta_inscripto($row->id, 'Cuarta', $data['jugador'])==FALSE)
+             			$this->torneo_model->crearInscripcion($data, $row->id, 'Cuarta');
+             		else
+             		{
+             			$this->session->set_flashdata('error', 'Ha ocurrido un error, el jugador ya se encontraba inscripto en categoría Cuarta');
+						redirect('Welcome/inscripcion');
+             		}
+             	}
              	if ($categorias[$i]=='quinta')
-             		$this->torneo_model->crearInscripcion($data, $row->id, 'Quinta');
+             	{
+             		if ($this->torneo_model->esta_inscripto($row->id, 'Quinta', $data['jugador'])==FALSE)
+             			$this->torneo_model->crearInscripcion($data, $row->id, 'Quinta');
+             		else
+             		{
+             			$this->session->set_flashdata('error', 'Ha ocurrido un error, el jugador ya se encontraba inscripto en categoría Quinta');
+						redirect('Welcome/inscripcion');
+             		}
+             	}
              }
          }			
 
+         	$this->session->set_flashdata('success', 'La inscripción fué procesada correctamente');
 			redirect('Welcome/inscripcion');
 	}
 
@@ -852,31 +904,27 @@ class Torneoscontroller extends CI_Controller {
 			);
 		}
 		else
-		{
+		{			
 			$data = array(		    			
 			'id' => $this->input->post('id'),			
 			'pos1' => $this->input->post('posicion1'),			
 			'pos2' => $this->input->post('posicion2'),							
 			'pos3' => $this->input->post('posicion3'),							
 			'pos4' => null,									
-			'estado' => 'FINALIZADA',
-			
+			'estado' => 'FINALIZADA',			
 			);	
 		}
-			
-						
+									
 			$this->torneo_model->guardarZona($data);
-
 
 			//obtengo la zona recientemente cargada para generar el pase de jugadores a llave
 			$zona_cargada= 	$this->torneo_model->obtener_zona_por_id($data['id']);
 			$cant_inscriptos= $this->torneo_model->obtener_cant_inscriptos($zona_cargada[0]->torneo, 
 				$zona_cargada[0]->categoria);
 
-
 			//entre 12 y 16 inscriptos la instancia de llave comienza en 16avos
 			if ($cant_inscriptos > 11 and $cant_inscriptos <17)
-			{
+			{				
 				$orden_llave= $this->torneo_model->obtener_posicion_plantilla($cant_inscriptos, '1'.$zona_cargada[0]->letra);
 				$primero= $this->torneo_model->obtener_posicion_jugador_zona($data['id'], 1);
 
@@ -2105,5 +2153,53 @@ class Torneoscontroller extends CI_Controller {
 			$this->torneo_model->crear_jugador($data);
 			redirect('Welcome/jugadores');
 	}
+
+
+
+	public function eliminar_jugador()
+  {
+    
+    $data=array();
+    $this->load->model('torneo_model');
+    $id_jugador = $this->uri->segment(3);   
+
+    $this->torneo_model->eliminar_jugador($id_jugador);
+
+    redirect('Welcome/jugadores');
+    
+  }
+
+
+
+  public function eliminar_torneo()
+  {
+    
+    $data=array();
+    $this->load->model('torneo_model');
+    $id_torneo = $this->uri->segment(3);   
+
+    $this->torneo_model->eliminar_mesas($id_torneo);
+    $this->torneo_model->eliminar_torneo($id_torneo);
+
+    redirect('Welcome/torneos');
+    
+  }
+
+
+
+  public function seleccionar_torneo()
+  {
+    
+    $data=array();
+    $this->load->model('torneo_model');
+    $id_torneo = $this->uri->segment(3);   
+    $usuario = $this->session->userdata('id_usuario');
+
+    $this->torneo_model->desactivar_torneos($usuario);
+    $this->torneo_model->activar_torneo($id_torneo);
+
+    redirect('Welcome/torneos');
+    
+  }
 
 }
