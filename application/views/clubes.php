@@ -8,31 +8,34 @@
           <li class="breadcrumb-item">
             <a href="#">FEBATEM</a>
           </li>
-          <li class="breadcrumb-item active">Torneos</li>
+          <li class="breadcrumb-item active">Clubes</li>
         </ol>
 
-         <ul class="nav nav-pills">
+
+        <ul class="nav nav-pills">
           <li class="nav-item">
-            <a class="nav-link active" href="<?=base_url()?>Welcome/crear_torneo"> <i class="fas fa-plus-circle"></i> Crear Torneo</a>
+            <a class="nav-link active" href="<?=base_url()?>Welcome/crear_club"> <i class="fas fa-plus-circle"></i> Agregar Club</a>
           </li> 
         </ul>
+
+
+
 
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Torneos</h6>
+              <h6 class="m-0 font-weight-bold text-primary">Clubes</h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
-                    <tr>                      
+                    <tr>
                       <th>Nombre</th>
-                      <th>Lugar</th>
-                      <th>Fecha</th>
-                      <th>Estado</th>                      
-                      <th>Cant Mesas</th>  
-                      
+                      <th>Dirección</th>
+                      <th>Teléfono</th>
+                      <th>Email</th>
+                      <th>Responsable</th>                                       
                       <th>Opciones</th>                      
                     </tr>
                   </thead>
@@ -40,20 +43,19 @@
                   <tbody>
 
                   <?php
-                    if (isset($torneos)){
-                     for($i=0; $i<count($torneos); $i++){ 
+                    if (isset($clubes)){
+                     for($i=0; $i<count($clubes); $i++){ 
                   ?>
-                  
+
                     <tr>
-                      <td><?php echo $torneos[$i]['nombre'];?></td>
-                      <td><?php echo $torneos[$i]['lugar'];?></td>
-                      <td><?php echo $torneos[$i]['fecha'];?></td>
-                      <td><?php echo $torneos[$i]['estado'];?></td>
-                      <td><?php echo $torneos[$i]['cant_mesas'];?></td>                      
+                      <td><?php echo $clubes[$i]['nombre'];?></td>
+                      <td><?php echo $clubes[$i]['direccion'];?></td>
+                      <td><?php echo $clubes[$i]['telefono'];?></td>
+                      <td><?php echo $clubes[$i]['mail'];?></td>
+                      <td><?php echo $clubes[$i]['responsable'];?></td>
                       
-                      <td><a class="btn btn-success btn-sm" href="<?=base_url()?>Torneoscontroller/eliminar_torneo/<?php echo $torneos[$i]['id']; ?>" title="Eliminar"><i class="fas fa-trash-alt"></i></a>
-                        <a class="btn btn-success btn-sm" href="<?=base_url()?>Torneoscontroller/seleccionar_torneo/<?php echo $torneos[$i]['id']; ?>" title="Seleccionar"><i class="fas fa-check-circle"></i></a>
-                      </td>
+                      
+                      <td><a class="btn btn-success" href="<?=base_url()?>Torneoscontroller/eliminar_club/<?php echo $clubes[$i]['id']; ?>" title="Eliminar"><i class="fas fa-trash-alt"></i></a></td>
                       
                     </tr>
                      <?php } }?>

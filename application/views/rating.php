@@ -8,53 +8,53 @@
           <li class="breadcrumb-item">
             <a href="#">FEBATEM</a>
           </li>
-          <li class="breadcrumb-item active">Torneos</li>
+          <li class="breadcrumb-item active">Rating</li>
         </ol>
 
-         <ul class="nav nav-pills">
-          <li class="nav-item">
-            <a class="nav-link active" href="<?=base_url()?>Welcome/crear_torneo"> <i class="fas fa-plus-circle"></i> Crear Torneo</a>
-          </li> 
-        </ul>
-
           <!-- DataTales Example -->
+
+          <div class="row">
+          <div class="col-lg-10 offset-md-1">
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Torneos</h6>
+              <h6 class="m-0 font-weight-bold text-primary">Rating</h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
-                    <tr>                      
-                      <th>Nombre</th>
-                      <th>Lugar</th>
-                      <th>Fecha</th>
-                      <th>Estado</th>                      
-                      <th>Cant Mesas</th>  
-                      
-                      <th>Opciones</th>                      
+                    <tr>
+                      <th>Posicion</th>
+                      <th>Jugador</th>
+                      <th>Puntaje anterior</th>
+                      <th>SD</th>                      
+                      <th>1ra</th>                      
+                      <th>2da</th>                      
+                      <th>3ra</th>                      
+                      <th>4ta</th>                      
+                      <th>5ta</th>
+                      <th>Puntaje posterior</th>                      
                     </tr>
                   </thead>
                  
                   <tbody>
 
                   <?php
-                    if (isset($torneos)){
-                     for($i=0; $i<count($torneos); $i++){ 
+                    if (isset($rating)){
+                     for($i=0; $i<count($rating); $i++){ 
                   ?>
-                  
+
                     <tr>
-                      <td><?php echo $torneos[$i]['nombre'];?></td>
-                      <td><?php echo $torneos[$i]['lugar'];?></td>
-                      <td><?php echo $torneos[$i]['fecha'];?></td>
-                      <td><?php echo $torneos[$i]['estado'];?></td>
-                      <td><?php echo $torneos[$i]['cant_mesas'];?></td>                      
-                      
-                      <td><a class="btn btn-success btn-sm" href="<?=base_url()?>Torneoscontroller/eliminar_torneo/<?php echo $torneos[$i]['id']; ?>" title="Eliminar"><i class="fas fa-trash-alt"></i></a>
-                        <a class="btn btn-success btn-sm" href="<?=base_url()?>Torneoscontroller/seleccionar_torneo/<?php echo $torneos[$i]['id']; ?>" title="Seleccionar"><i class="fas fa-check-circle"></i></a>
-                      </td>
-                      
+                      <td><?php echo $i+1;?></td>
+                      <td><?php echo $rating[$i]['jugador'];?></td>
+                      <td><?php echo $rating[$i]['puntaje_anterior'];?></td>
+                      <td><?php echo $rating[$i]['sd'];?></td>
+                      <td><?php echo $rating[$i]['primera'];?></td>
+                      <td><?php echo $rating[$i]['segunda'];?></td>
+                      <td><?php echo $rating[$i]['tercera'];?></td>
+                      <td><?php echo $rating[$i]['cuarta'];?></td>
+                      <td><?php echo $rating[$i]['quinta'];?></td>
+                      <td><?php echo $rating[$i]['puntaje_posterior'];?></td>                      
                     </tr>
                      <?php } }?>
                   </tbody>
@@ -62,7 +62,8 @@
               </div>
             </div>
           </div>
-
+        </div>
+      </div>
         </div>
         <!-- /.container-fluid -->
 
@@ -111,12 +112,6 @@
   <!-- Custom scripts for all pages-->
   <script src="<?=base_url()?>assets_template/js/sb-admin-2.min.js"></script>
 
-  <!-- Page level plugins -->
-  <script src="<?=base_url()?>assets_template/vendor/datatables/jquery.dataTables.min.js"></script>
-  <script src="<?=base_url()?>assets_template/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-  <!-- Page level custom scripts -->
-  <script src="<?=base_url()?>assets_template/js/demo/datatables-demo.js"></script>
 
 </body>
 

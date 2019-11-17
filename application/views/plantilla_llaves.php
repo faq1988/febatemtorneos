@@ -18,7 +18,7 @@
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-striped table-bordered table-hover table-sm">
+                <table class="table table-bordered table-hover table-sm">
                                     <thead>
                                         <tr>
                                           <th>Cantidad</th>                                            

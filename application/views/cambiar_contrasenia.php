@@ -19,7 +19,7 @@
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">Cambiar contraseña</h6>
             </div>
-            <div class="card-body">
+    <div class="card-body">
 
          <!-- Default form login -->
          <div class="container">
@@ -34,7 +34,7 @@
     ?>
 
 
-<div class="col-lg-12">  
+<div class="col-lg-8 offset-lg-2">  
 
     <!-- Contraseña actual -->
     <div class="form-group">

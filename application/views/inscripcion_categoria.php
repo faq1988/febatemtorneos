@@ -31,8 +31,8 @@
                   <thead>
                     <tr>
                       <th>DNI</th>
-                      <th>Nombre</th>
-                      <th>Apellido</th>                                      
+                      <th>Jugador</th>                      
+                      <th>Categoría</th>                                      
                     </tr>
                   </thead>
                  
@@ -41,8 +41,8 @@
                  
                     <tr>
                       <td><?php echo $jugador[0]['dni'];?></td>
-                      <td><?php echo $jugador[0]['nombre'];?></td>
-                      <td><?php echo $jugador[0]['apellido'];?></td>
+                      <td><?php echo $jugador[0]['jugador'];?></td>
+                      <td><?php echo $jugador[0]['categoria'];?></td>
                       
                       
                     </tr>                   
@@ -53,12 +53,12 @@
   <div class="form-group col-md-6 offset-md-3">
     <label for="inputAddress">Categorías</label>
     <select name="categorias[]" class="custom-select" multiple>  
-        <option value="sd">SD</option>
-        <option value="primera">Primera</option>
-        <option value="segunda">Segunda</option>
-        <option value="tercera">Tercera</option>
-        <option value="cuarta">Cuarta</option>
-        <option value="quinta">Quinta</option>
+        <option value="0">SD</option>
+        <option value="1">Primera</option>
+        <option value="2">Segunda</option>
+        <option value="3">Tercera</option>
+        <option value="4">Cuarta</option>
+        <option value="5">Quinta</option>
     </select>
   </div>
 

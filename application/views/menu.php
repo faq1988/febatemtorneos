@@ -47,43 +47,33 @@
 
       <!-- Divider -->
       <hr class="sidebar-divider my-0">
-
-      <!-- Nav Item - Dashboard x
-      <li class="nav-item active">
-        <a class="nav-link" href="index.html">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Obtener un turno</span></a>
-      </li>
-      -->
-
+      
       <!-- Divider -->
-      <hr class="sidebar-divider">
+      <!--hr class="sidebar-divider"-->
 
        <?php          
           if ($rol == 'ROLE_CLIENT_USER') {                                    
       ?>
-      <div class="sidebar-heading">
-        Turnos
-      </div>
+      <!--div class="sidebar-heading">
+        Torneos
+      </div-->
 
       
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGestionar" aria-expanded="true" aria-controls="collapseGestionar">
-          <i class="fas fa-tasks"></i>
-          <span>Gestionar</span>
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTorneos" aria-expanded="true" aria-controls="collapseTorneos">
+          <i class="fas fa-trophy"></i>
+          <span>Torneos</span>
         </a>
-        <div id="collapseGestionar" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="collapseTorneos" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <!--6 class="collapse-header">Custom Components:</h6-->
-            <a class="collapse-item" href="<?=base_url()?>Welcome/obtener_turno">Obtener turno</a>
-            <a class="collapse-item" href="<?=base_url()?>Welcome/ver_turnos">Ver turnos</a>
-            <a class="collapse-item" href="cards.html">Cancelar turno</a>
+            <!--6 class="collapse-header">Custom Components:</h6-->            
+            <a class="collapse-item" href="<?=base_url()?>Welcome/torneos">Ver torneos</a>
+            <a class="collapse-item" href="<?=base_url()?>Welcome/inscripcion">Inscripción</a>
+            <a class="collapse-item" href="<?=base_url()?>Welcome/mesas">Mesas</a>            
           </div>
         </div>
-      </li>
-       
-
-      <hr class="sidebar-divider">
+      </li>      
+     
       <?php          
           }           
       ?>
@@ -112,7 +102,7 @@
         </div>
       </li>      
      
-      <hr class="sidebar-divider">
+      <!--hr class="sidebar-divider"-->
 
       <!--div class="sidebar-heading">
         Partidos
@@ -128,12 +118,12 @@
             <a class="collapse-item" href="<?=base_url()?>Welcome/zonas">Zonas</a>
             <a class="collapse-item" href="<?=base_url()?>Welcome/partidos_zona">Partidos de zona</a>
             <a class="collapse-item" href="<?=base_url()?>Welcome/llave">Llaves</a>
-            <a class="collapse-item" href="<?=base_url()?>Welcome/llave">Partidos de llave</a>
+            <a class="collapse-item" href="<?=base_url()?>Welcome/partidos_llave">Partidos de llave</a>
           </div>
         </div>
       </li>      
      
-      <hr class="sidebar-divider">
+      <!--hr class="sidebar-divider"-->
 
 
       <!--div class="sidebar-heading">
@@ -147,13 +137,14 @@
         <div id="collapseClubes" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <!--6 class="collapse-header">Custom Components:</h6-->  
-            <a class="collapse-item" href="<?=base_url()?>Welcome/jugadores">Jugadores</a>                      
+            <a class="collapse-item" href="<?=base_url()?>Welcome/clubes">Clubes</a>
+            <a class="collapse-item" href="<?=base_url()?>Welcome/jugadores">Jugadores</a>
             <a class="collapse-item" href="<?=base_url()?>Welcome/usuarios">Usuarios</a>            
           </div>
         </div>
       </li>             
 
-      <hr class="sidebar-divider">
+      <!--hr class="sidebar-divider"-->
 
       <!--div class="sidebar-heading">
         Ranking
@@ -178,7 +169,7 @@
         </div>
       </li>      
 
-      <hr class="sidebar-divider">
+      <!--hr class="sidebar-divider"-->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRating" aria-expanded="true" aria-controls="collapseRating">
@@ -209,7 +200,7 @@
       
      <li class="nav-item">
         <a class="nav-link" href="<?=base_url()?>Welcome/testpdf" target="blank">
-          <i class="fas fa-key"></i>
+          <i class="far fa-file-pdf"></i>
           <span>Test pdf</span></a>
       </li>
       <li class="nav-item">

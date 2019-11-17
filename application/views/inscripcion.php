@@ -25,15 +25,15 @@
         <div class="row">
             <!-- Earnings (Monthly) Card Example -->
             <div class="col-xl-2 col-md-2 mb-4">
-              <div class="card border-left-success shadow h-100 py-2">
+              <div class="card border-left-success shadow">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Super división</div>
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">SD</div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $cant_sd;?></div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-users fa-2x text-gray-300"></i>
+                      <a class="" href="<?=base_url()?>Welcome/ver_inscriptos/0"><i class="fas fa-users fa-2x text-gray-300"></i></a>
                     </div>
                   </div>
                 </div>
@@ -41,7 +41,7 @@
             </div>
 
             <div class="col-xl-2 col-md-2 mb-4">
-              <div class="card border-left-success shadow h-100 py-2">
+              <div class="card border-left-success shadow">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
@@ -49,7 +49,7 @@
                       <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $cant_primera;?></div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-users fa-2x text-gray-300"></i>
+                      <a class="" href="<?=base_url()?>Welcome/ver_inscriptos/1"><i class="fas fa-users fa-2x text-gray-300"></i></a>
                     </div>
                   </div>
                 </div>
@@ -57,7 +57,7 @@
             </div>
 
             <div class="col-xl-2 col-md-2 mb-4">
-              <div class="card border-left-success shadow h-100 py-2">
+              <div class="card border-left-success shadow">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
@@ -65,7 +65,7 @@
                       <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $cant_segunda;?></div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-users fa-2x text-gray-300"></i>
+                      <a class="" href="<?=base_url()?>Welcome/ver_inscriptos/2"><i class="fas fa-users fa-2x text-gray-300"></i></a>
                     </div>
                   </div>
                 </div>
@@ -74,7 +74,7 @@
 
             <!-- Pending Requests Card Example -->
             <div class="col-xl-2 col-md-2 mb-4">
-              <div class="card border-left-success shadow h-100 py-2">
+              <div class="card border-left-success shadow">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
@@ -82,7 +82,7 @@
                       <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $cant_tercera;?></div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-users fa-2x text-gray-300"></i>
+                      <a class="" href="<?=base_url()?>Welcome/ver_inscriptos/3"><i class="fas fa-users fa-2x text-gray-300"></i></a>
                     </div>
                   </div>
                 </div>
@@ -91,7 +91,7 @@
 
              <!-- Pending Requests Card Example -->
             <div class="col-xl-2 col-md-2 mb-4">
-              <div class="card border-left-success shadow h-100 py-2">
+              <div class="card border-left-success shadow">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
@@ -99,7 +99,7 @@
                       <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $cant_cuarta;?></div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-users fa-2x text-gray-300"></i>
+                      <a class="" href="<?=base_url()?>Welcome/ver_inscriptos/4"><i class="fas fa-users fa-2x text-gray-300"></i></a>
                     </div>
                   </div>
                 </div>
@@ -108,7 +108,7 @@
 
              <!-- Pending Requests Card Example -->
             <div class="col-xl-2 col-md-2 mb-4">
-              <div class="card border-left-success shadow h-100 py-2">
+              <div class="card border-left-success shadow">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
@@ -116,7 +116,7 @@
                       <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $cant_quinta;?></div>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-users fa-2x text-gray-300"></i>
+                      <a class="" href="<?=base_url()?>Welcome/ver_inscriptos/5"><i class="fas fa-users fa-2x text-gray-300"></i></a>
                     </div>
                   </div>
                 </div>
@@ -166,7 +166,7 @@
                       <td><?php echo $jugadores[$i]['categoria'];?></td>
                       <td><?php echo $jugadores[$i]['provincia'];?></td>
                       <td><?php echo $jugadores[$i]['ciudad'];?></td>
-                      <td><a class="btn btn-success" href="<?=base_url()?>Welcome/inscribir_categoria/<?php echo $jugadores[$i]['id']; ?>">Inscribir</a></td>
+                      <td><a class="btn btn-success btn-sm btn-block" href="<?=base_url()?>Welcome/inscribir_categoria/<?php echo $jugadores[$i]['id']; ?>"><i class="fas fa-check"></i></a></td>
                     </tr>
                      <?php } }?>
                   </tbody>

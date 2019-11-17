@@ -36,7 +36,7 @@
                       <th>Apellido</th>
                       <th>Email</th>
                       <th>Telefono</th>                      
-                      <th>Fecha Nac</th>                      
+                                         
                       <th>Categoria</th>                      
                       <th>Provincia</th>                      
                       <th>Ciudad</th>   
@@ -57,11 +57,11 @@
                       <td><?php echo $jugadores[$i]['apellido'];?></td>
                       <td><?php echo $jugadores[$i]['email'];?></td>
                       <td><?php echo $jugadores[$i]['telefono'];?></td>
-                      <td><?php echo $jugadores[$i]['fecha_nac'];?></td>
+                      
                       <td><?php echo $jugadores[$i]['categoria'];?></td>
                       <td><?php echo $jugadores[$i]['provincia'];?></td>
                       <td><?php echo $jugadores[$i]['ciudad'];?></td>
-                      <td><a class="btn btn-success" href="<?=base_url()?>Torneoscontroller/eliminar_jugador/<?php echo $jugadores[$i]['id']; ?>">Eliminar</a></td>
+                      <td><a class="btn btn-success" href="<?=base_url()?>Torneoscontroller/eliminar_jugador/<?php echo $jugadores[$i]['id']; ?>" title="Eliminar"><i class="fas fa-trash-alt"></i></a></td>
                       
                     </tr>
                      <?php } }?>

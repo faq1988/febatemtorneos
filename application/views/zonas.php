@@ -19,12 +19,12 @@
     <label for="inputAddress">Categoría</label>
     <select onchange="this.form.submit();" name="categoria" class="custom-select">  
         <option value="-1">Seleccionar</option>
-        <option value="SD">SD</option>
-        <option value="Primera">Primera</option>
-        <option value="Segunda">Segunda</option>
-        <option value="Tercera">Tercera</option>
-        <option value="Cuarta">Cuarta</option>
-        <option value="Quinta">Quinta</option>
+        <option value="0">SD</option>
+        <option value="1">Primera</option>
+        <option value="2">Segunda</option>
+        <option value="3">Tercera</option>
+        <option value="4">Cuarta</option>
+        <option value="5">Quinta</option>
     </select>
   </div>
 </div>
@@ -47,7 +47,7 @@
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered table-sm">
+                                <table class="table table-bordered table-primary">
                                     <thead>
                                         <tr>                                            
                                             <th class="col-sm-6">Jugador</th>
@@ -56,9 +56,11 @@
                                             <th class="col-sm-1">vs</th>
                                             <th class="col-sm-1">vs</th>
                                             <th class="col-sm-1">Posición</th>
-                                            <th>
+                                            <?php if ($zonas[$i]->estado!='FINALIZADA') {?>
+                                            <th>                                            
                                             <a href="<?php echo base_url() ?>Welcome/editar_zona/<?php echo $zonas[$i]->id; ?>"> Cargar resultado</a> 
                                             </th>                            
+                                          <?php }?>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -73,7 +75,9 @@
                                             <td>-
                                             </td> 
                                             <td>-
-                                            </td>                                                           
+                                            </td>  
+                                            <td><?php echo $zonas[$i]->pos1;?>
+                                            </td>                                                          
                                         </tr>
                                         <tr>
                                             <td><?php echo $zonas[$i]->jugador2;?>
@@ -86,7 +90,9 @@
                                             <td>-
                                             </td> 
                                             <td>-
-                                            </td>                                                               
+                                            </td>  
+                                            <td><?php echo $zonas[$i]->pos2;?>
+                                            </td>                                                              
                                         </tr>
                                         <tr>
                                             <td><?php echo $zonas[$i]->jugador3;?>
@@ -99,7 +105,9 @@
                                             <td style="background-color:black;">-
                                             </td> 
                                             <td>-
-                                            </td>                                                                
+                                            </td>               
+                                            <td><?php echo $zonas[$i]->pos3;?>
+                                            </td>                                                  
                                         </tr>
                                         <?php if (isset($zonas[$i]->jugador4)){ ?>
                                         <tr>
@@ -113,7 +121,9 @@
                                             <td>-
                                             </td>
                                             <td style="background-color:black;">-
-                                            </td>                                                                
+                                            </td>     
+                                            <td><?php echo $zonas[$i]->pos4;?>
+                                            </td>                                                            
                                         </tr>
                                       <?php } ?>
                                        

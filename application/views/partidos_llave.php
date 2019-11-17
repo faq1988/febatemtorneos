@@ -8,11 +8,11 @@
           <li class="breadcrumb-item">
             <a href="#">FEBATEM</a>
           </li>
-          <li class="breadcrumb-item active">Partidos de zona</li>
+          <li class="breadcrumb-item active">Partidos de llave</li>
         </ol>
 
 
-           <?php echo form_open('Welcome/partidos_zona', 'class= "text-center "'); ?>
+        <?php echo form_open('Welcome/partidos_llave', 'class= "text-center "'); ?>
         <div class="form-row">
           <div class="form-group col-md-6 offset-md-3">
           <label for="inputAddress">Categoría</label>
@@ -39,16 +39,14 @@
                                     if (isset($partidos)){
                                      for($i=0; $i<sizeof($partidos); $i++){ ?>
                         <div class="panel-heading">
-                           Id de partido: <?php echo $partidos[$i]->id;?>
-                           ---
-                           Zona: <?php echo $partidos[$i]->zona;?>
+                           Id de partido: <?php echo $partidos[$i]->id;?>                      
                            ---
                            Estado: <?php echo $partidos[$i]->estado;?>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="table-responsive">
-                                <table class="table table-warning table-bordered table-hover table-sm">
+                                <table class="table table-success table-bordered table-hover table-sm">
                                     <thead class="thead-inverse">
                                         <tr>                                            
                                             <th class="col-sm-6">Jugador</th>   

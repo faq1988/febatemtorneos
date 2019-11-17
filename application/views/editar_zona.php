@@ -8,58 +8,129 @@
           <li class="breadcrumb-item">
             <a href="#">FEBATEM</a>
           </li>
-          <li class="breadcrumb-item active">Zonas</li>
+          <li class="breadcrumb-item active">Editar Zona</li>
         </ol>
 
-          
+          <!-- DataTales Example -->
 
-          <!--form action="<?=base_url()?>Torneoscontroller/guardar_zona" method="post"-->
-<?php echo form_open('Torneoscontroller/guardar_zona', 'class= "text-center "'); ?>
-<input type="hidden" name="id" value="<?php echo $id_zona; ?>"/>
+  <?php echo form_open('Torneoscontroller/guardar_zona', 'class= "text-center "'); ?>
+  
 
-<div>
+          <div class="row">
+          <div class="col-lg-8 offset-md-2">
+         
 
-<p><strong>ID de zona:</strong> <?php echo $id_zona; ?></p>
+          <div class="panel panel-primary">
 
-<p><strong>Jugador 1:</strong> <?php echo $jugador1; ?></p>
-<strong>Partido 2: *</strong> <input type="text" name="partido12" value=""/><br/>
-<strong>Partido 3: *</strong> <input type="text" name="partido13" value=""/><br/>
-<strong>Partido 4: *</strong> <input type="text" name="partido14" value=""/><br/>
-<strong>Posición: *</strong> <input type="text" name="posicion1" value=""/><br/>
+                        
+                        <div class="panel-heading">
+                          <input type="hidden" name="id" value="<?php echo $id_zona; ?>"/>
+                            ID: <?php echo $id_zona;?>
+                            ---
+                            Zona: <?php echo $letra;?>
+                            ---
+                            Estado: <?php echo $estado;?>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-sm">
+                                    <thead>
+                                        <tr>                                            
+                                            <th class="col-sm-6">Jugador</th>
+                                            <th class="col-sm-1">vs</th>
+                                            <th class="col-sm-1">vs</th>
+                                            <th class="col-sm-1">vs</th>
+                                            <th class="col-sm-1">vs</th>
+                                            <th class="col-sm-1">Posición</th>
+                                                                       
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    
+                                        <tr>
+                                            <td><?php echo $jugador1;?>
+                                            </td> 
+                                            <td style="background-color:black;">-
+                                            </td>
+                                            <td>-
+                                            </td>
+                                            <td>-
+                                            </td> 
+                                            <td>-
+                                            </td>   
+                                            <td>
+                                            <input type="text" name="posicion1" value=""/>                                                            
+                                            </td>                                                        
+                                        </tr>
+                                        <tr>
+                                            <td><?php echo $jugador2;?>
+                                            </td> 
+                                            </td> 
+                                            <td>-
+                                            </td>
+                                            <td style="background-color:black;">-
+                                            </td>
+                                            <td>-
+                                            </td> 
+                                            <td>-
+                                            </td>    
+                                            <td>
+                                            <input type="text" name="posicion2" value=""/>                                                            
+                                            </td>                                                           
+                                        </tr>
+                                        <tr>
+                                            <td><?php echo $jugador3;?>
+                                            </td>
+                                            </td> 
+                                            <td>-
+                                            </td>
+                                            <td>-
+                                            </td>
+                                            <td style="background-color:black;">-
+                                            </td> 
+                                            <td>-
+                                            </td>   
+                                            <td>
+                                            <input type="text" name="posicion3" value=""/>                                                            
+                                            </td>                                                             
+                                        </tr>
+                                        <?php if (isset($jugador4)){ ?>
+                                        <tr>
+                                            <td><?php echo $jugador4;?>
+                                            </td> 
+                                            </td> 
+                                            <td>-
+                                            </td>
+                                            <td>-
+                                            </td>
+                                            <td>-
+                                            </td>
+                                            <td style="background-color:black;">-
+                                            </td>    
+                                            <td>
+                                            <input type="text" name="posicion4" value=""/>                                                            
+                                            </td>
+                                        </tr>
+                                      <?php } ?>
+                                       
+                                    </tbody>
+                                </table>
 
-</br>
+                                <button type="submit" class="btn btn-primary">Aceptar</button>
+                            </div>
+                            <!-- /.table-responsive -->
+                        </div>
+                        
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
 
-<p><strong>Jugador 2:</strong> <?php echo $jugador2; ?></p>
-<strong>Partido 1: *</strong> <input type="text" name="partido21" value=""/><br/>
-<strong>Partido 3: *</strong> <input type="text" name="partido23" value=""/><br/>
-<strong>Partido 4: *</strong> <input type="text" name="partido24" value=""/><br/>
-<strong>Posición: *</strong> <input type="text" name="posicion2" value=""/><br/>
+                    
+        </div>
+      </div>
 
-</br>
-
-<p><strong>Jugador 3:</strong> <?php echo $jugador3; ?></p>
-<strong>Partido 1: *</strong> <input type="text" name="partido31" value=""/><br/>
-<strong>Partido 2: *</strong> <input type="text" name="partido32" value=""/><br/>
-<strong>Partido 4: *</strong> <input type="text" name="partido34" value=""/><br/>
-<strong>Posición: *</strong> <input type="text" name="posicion3" value=""/><br/>
-
-</br>
-
-<p><strong>Jugador 4:</strong> <?php echo $jugador4; ?></p>
-<strong>Partido 1: *</strong> <input type="text" name="partido41" value=""/><br/>
-<strong>Partido 2: *</strong> <input type="text" name="partido42" value=""/><br/>
-<strong>Partido 3: *</strong> <input type="text" name="partido43" value=""/><br/>
-<strong>Posición: *</strong> <input type="text" name="posicion4" value=""/><br/>
-
-<p>* Required</p>
-
-<input type="submit" name="submit" value="Submit">
-
-</div>
-
-</form>
-
-
+      </form>
 
         </div>
         <!-- /.container-fluid -->

@@ -40,17 +40,17 @@ class Torneoscontroller extends CI_Controller {
 		if (isset($categorias)){
              for($i=0; $i<sizeof($categorias); $i++)
              {
-             	if ($categorias[$i]=='sd')
+             	if ($categorias[$i]==0)
              		$sd=TRUE;
-             	if ($categorias[$i]=='primera')
+             	if ($categorias[$i]==1)
              		$primera=TRUE;
-             	if ($categorias[$i]=='segunda')
+             	if ($categorias[$i]==2)
              		$segunda=TRUE;
-             	if ($categorias[$i]=='tercera')
+             	if ($categorias[$i]==3)
              		$tercera=TRUE;
-             	if ($categorias[$i]=='cuarta')
+             	if ($categorias[$i]==4)
              		$cuarta=TRUE;
-             	if ($categorias[$i]=='quinta')
+             	if ($categorias[$i]==5)
              		$quinta=TRUE;
              }
          }
@@ -103,60 +103,60 @@ class Torneoscontroller extends CI_Controller {
 		if (isset($categorias)){
              for($i=0; $i<sizeof($categorias); $i++)
              {
-             	if ($categorias[$i]=='sd')
+             	if ($categorias[$i]==0)
              	{             		
-             		if ($this->torneo_model->esta_inscripto($row->id, 'SD', $data['jugador'])==FALSE)
-             			$this->torneo_model->crearInscripcion($data, $row->id, 'SD');
+             		if ($this->torneo_model->esta_inscripto($row->id, 0, $data['jugador'])==FALSE)
+             			$this->torneo_model->crearInscripcion($data, $row->id, 0);
              		else
              		{
              			$this->session->set_flashdata('error', 'Ha ocurrido un error, el jugador ya se encontraba inscripto en categoría SD');
 						redirect('Welcome/inscripcion');
              		}
              	}
-             	if ($categorias[$i]=='primera')
+             	if ($categorias[$i]==1)
              	{
-             		if ($this->torneo_model->esta_inscripto($row->id, 'Primera', $data['jugador'])==FALSE)
-             			$this->torneo_model->crearInscripcion($data, $row->id, 'Primera');
+             		if ($this->torneo_model->esta_inscripto($row->id, 1, $data['jugador'])==FALSE)
+             			$this->torneo_model->crearInscripcion($data, $row->id, 1);
              		else
              		{
              			$this->session->set_flashdata('error', 'Ha ocurrido un error, el jugador ya se encontraba inscripto en categoría Primera');
 						redirect('Welcome/inscripcion');
              		}
              	}
-             	if ($categorias[$i]=='segunda')
+             	if ($categorias[$i]==2)
              	{
-             		if ($this->torneo_model->esta_inscripto($row->id, 'Segunda', $data['jugador'])==FALSE)
-             			$this->torneo_model->crearInscripcion($data, $row->id, 'Segunda');
+             		if ($this->torneo_model->esta_inscripto($row->id, 2, $data['jugador'])==FALSE)
+             			$this->torneo_model->crearInscripcion($data, $row->id, 2);
              		else
              		{
              			$this->session->set_flashdata('error', 'Ha ocurrido un error, el jugador ya se encontraba inscripto en categoría Segunda');
 						redirect('Welcome/inscripcion');
              		}
              	}
-             	if ($categorias[$i]=='tercera')
+             	if ($categorias[$i]==3)
              	{
-             		if ($this->torneo_model->esta_inscripto($row->id, 'Tercera', $data['jugador'])==FALSE)
-             			$this->torneo_model->crearInscripcion($data, $row->id, 'Tercera');
+             		if ($this->torneo_model->esta_inscripto($row->id, 3, $data['jugador'])==FALSE)
+             			$this->torneo_model->crearInscripcion($data, $row->id, 3);
              		else
              		{
              			$this->session->set_flashdata('error', 'Ha ocurrido un error, el jugador ya se encontraba inscripto en categoría Tercera');
 						redirect('Welcome/inscripcion');
              		}
              	}
-             	if ($categorias[$i]=='cuarta')
+             	if ($categorias[$i]==4)
              	{
-             		if ($this->torneo_model->esta_inscripto($row->id, 'Cuarta', $data['jugador'])==FALSE)
-             			$this->torneo_model->crearInscripcion($data, $row->id, 'Cuarta');
+             		if ($this->torneo_model->esta_inscripto($row->id, 4, $data['jugador'])==FALSE)
+             			$this->torneo_model->crearInscripcion($data, $row->id, 4);
              		else
              		{
              			$this->session->set_flashdata('error', 'Ha ocurrido un error, el jugador ya se encontraba inscripto en categoría Cuarta');
 						redirect('Welcome/inscripcion');
              		}
              	}
-             	if ($categorias[$i]=='quinta')
+             	if ($categorias[$i]==5)
              	{
-             		if ($this->torneo_model->esta_inscripto($row->id, 'Quinta', $data['jugador'])==FALSE)
-             			$this->torneo_model->crearInscripcion($data, $row->id, 'Quinta');
+             		if ($this->torneo_model->esta_inscripto($row->id, 5, $data['jugador'])==FALSE)
+             			$this->torneo_model->crearInscripcion($data, $row->id, 5);
              		else
              		{
              			$this->session->set_flashdata('error', 'Ha ocurrido un error, el jugador ya se encontraba inscripto en categoría Quinta');
@@ -177,14 +177,23 @@ class Torneoscontroller extends CI_Controller {
 		//obtengo el torneo activo actual
 		$torneo = $this->torneo_model->obtenerTorneoActual();
 		$resumen="";
+		$cantPrimera=0;
 		if(isset($torneo))
 		{
 			$row = $torneo->first_row();		
 
 			//obtengo inscriptos al torneo actual, categoria primera
-			$inscriptos=  $this->torneo_model->obtenerInscripcion($row->id, 'Primera');
+			$inscriptos=  $this->torneo_model->obtenerInscripcion($row->id, 1);
 
-			$cantPrimera = sizeof($inscriptos->result());				
+			if (isset($inscriptos))
+				$cantPrimera = sizeof($inscriptos->result());	
+
+			if ($cantPrimera < 12)
+			{
+				$this->session->set_flashdata('error', 'Para cerrar inscripciones debe haber al menos 12 jugadores en Primera');
+				redirect('Welcome/inscripcion');
+			}
+
 			$modulo = $cantPrimera % 3;
 			$cantZonas3 = 0;
 			$cantZonas4 = 0;			
@@ -221,7 +230,7 @@ class Torneoscontroller extends CI_Controller {
 		$resumen= $resumen. 'cantidad de cabezas de zona '. ($cantZonas3+$cantZonas4);
 		$resumen= $resumen. '</br>';
 		
-		$cabezas = $this->buscarCabezasDeZona($cantZonas3+$cantZonas4, $inscriptos, 'Primera');	
+		$cabezas = $this->buscarCabezasDeZona($cantZonas3+$cantZonas4, $inscriptos, 1);	
 
 		for($i=0; $i<sizeof($cabezas); $i++)
 			{
@@ -234,6 +243,9 @@ class Torneoscontroller extends CI_Controller {
 		$this->guardar_zonas($row->id, $cantZonas3, $cantZonas4, $cabezas, $inscriptos_sin_cabezas);
 
 		$this->armar_partidos($row->id, TRUE, 1);
+
+
+		$this->crear_byes_llave($row->id, $cantPrimera, 1);
 	}
 	else
 	{
@@ -252,6 +264,43 @@ class Torneoscontroller extends CI_Controller {
 
 	}
 
+
+
+	public function crear_byes_llave($torneo, $cant_inscriptos, $categoria)
+	{
+		$template_llave= array();
+    	if ($cant_inscriptos>0)
+      		$template_llave = $this->torneo_model->obtener_plantilla_con_byes($cant_inscriptos);
+
+      if (isset($template_llave))
+    {
+      $llave_incompleta= $template_llave->result_array();
+
+      if ($cant_inscriptos < 16)
+      	$instancia= 16;
+      else
+      	 $instancia=32;
+            
+      for($i=0; $i<count($llave_incompleta); $i++)
+      {
+      	$llave = array(		    											
+					'jugador' => 0,			
+					'resultado' => '',					
+					'torneo'   => $torneo,
+					'instancia'=> $instancia,
+					'categoria'     => $categoria,
+					'orden'  => ($llave_incompleta[$i]['posicion']),	
+					'bye' => 1,												
+					);
+							
+		$this->torneo_model->crear_llave($llave);
+
+        
+      }
+    }
+      
+
+	}
 
 
 	//elimina de los inscriptos los jugadores que son cabezas de zona
@@ -334,8 +383,9 @@ class Torneoscontroller extends CI_Controller {
 			shuffle($inscriptos_sin_cabezas);
 
 			for($i=0; $i<$cantZonas3; $i++)
-					{
+					{						
 						$cabeza= array_shift($cabezas)->jugador;
+
 						//echo "zona de 3 ".$letra."------";
 
 						$jugador2= array_pop($inscriptos_sin_cabezas)->id_jugador;						
@@ -538,12 +588,13 @@ class Torneoscontroller extends CI_Controller {
 
 			for($i=0; $i<sizeof($zonas); $i++)
 			{
-				if ($zonas[$i]->jugador4 == NULL) //es partido de zona de 3
+				//if ($zonas[$i]->jugador4 == NULL) //es partido de zona de 3
+				if (!isset($zonas[$i]->jugador4)) //es partido de zona de 3
 				{
 					//1 vs 2
 					$data = array(		    											
-					'jugador1' => $zonas[$i]->jugador1,			
-					'jugador2' => $zonas[$i]->jugador2,
+					'jugador1' => $zonas[$i]->id_jugador1,			
+					'jugador2' => $zonas[$i]->id_jugador2,
 					'cant_sets'=> 5,
 					'estado'   => 'SIN JUGAR',
 					'torneo'   => $id_torneo,
@@ -558,8 +609,8 @@ class Torneoscontroller extends CI_Controller {
 
 					//1 vs 3
 					$data = array(		    											
-					'jugador1' => $zonas[$i]->jugador1,			
-					'jugador2' => $zonas[$i]->jugador3,
+					'jugador1' => $zonas[$i]->id_jugador1,			
+					'jugador2' => $zonas[$i]->id_jugador3,
 					'cant_sets'=> 5,
 					'estado'   => 'SIN JUGAR',
 					'torneo'   => $id_torneo,
@@ -575,8 +626,8 @@ class Torneoscontroller extends CI_Controller {
 
 					//2 vs 3
 					$data = array(		    											
-					'jugador1' => $zonas[$i]->jugador2,			
-					'jugador2' => $zonas[$i]->jugador3,
+					'jugador1' => $zonas[$i]->id_jugador2,			
+					'jugador2' => $zonas[$i]->id_jugador3,
 					'cant_sets'=> 5,
 					'estado'   => 'SIN JUGAR',
 					'torneo'   => $id_torneo,
@@ -593,12 +644,12 @@ class Torneoscontroller extends CI_Controller {
 
 				else
 				{
-				if ($zonas[$i]->jugador5 == NULL) //es partido de zona de 4
+				if (!isset($zonas[$i]->jugador5)) //es partido de zona de 4
 				{
 					//1 vs 2
 					$data = array(		    											
-					'jugador1' => $zonas[$i]->jugador1,			
-					'jugador2' => $zonas[$i]->jugador2,
+					'jugador1' => $zonas[$i]->id_jugador1,			
+					'jugador2' => $zonas[$i]->id_jugador2,
 					'cant_sets'=> 5,
 					'estado'   => 'SIN JUGAR',
 					'torneo'   => $id_torneo,
@@ -614,8 +665,8 @@ class Torneoscontroller extends CI_Controller {
 
 					//1 vs 3
 					$data = array(		    											
-					'jugador1' => $zonas[$i]->jugador1,			
-					'jugador2' => $zonas[$i]->jugador3,
+					'jugador1' => $zonas[$i]->id_jugador1,			
+					'jugador2' => $zonas[$i]->id_jugador3,
 					'cant_sets'=> 5,
 					'estado'   => 'SIN JUGAR',
 					'torneo'   => $id_torneo,
@@ -631,8 +682,8 @@ class Torneoscontroller extends CI_Controller {
 
 					//1 vs 4
 					$data = array(		    											
-					'jugador1' => $zonas[$i]->jugador1,			
-					'jugador2' => $zonas[$i]->jugador4,
+					'jugador1' => $zonas[$i]->id_jugador1,			
+					'jugador2' => $zonas[$i]->id_jugador4,
 					'cant_sets'=> 5,
 					'estado'   => 'SIN JUGAR',
 					'torneo'   => $id_torneo,
@@ -648,8 +699,8 @@ class Torneoscontroller extends CI_Controller {
 
 					//2 vs 3
 					$data = array(		    											
-					'jugador1' => $zonas[$i]->jugador2,			
-					'jugador2' => $zonas[$i]->jugador3,
+					'jugador1' => $zonas[$i]->id_jugador2,			
+					'jugador2' => $zonas[$i]->id_jugador3,
 					'cant_sets'=> 5,
 					'estado'   => 'SIN JUGAR',
 					'torneo'   => $id_torneo,
@@ -665,8 +716,8 @@ class Torneoscontroller extends CI_Controller {
 
 					//2 vs 4
 					$data = array(		    											
-					'jugador1' => $zonas[$i]->jugador2,			
-					'jugador2' => $zonas[$i]->jugador4,
+					'jugador1' => $zonas[$i]->id_jugador2,			
+					'jugador2' => $zonas[$i]->id_jugador4,
 					'cant_sets'=> 5,
 					'estado'   => 'SIN JUGAR',
 					'torneo'   => $id_torneo,
@@ -682,8 +733,8 @@ class Torneoscontroller extends CI_Controller {
 
 					//3 vs 4
 					$data = array(		    											
-					'jugador1' => $zonas[$i]->jugador3,			
-					'jugador2' => $zonas[$i]->jugador4,
+					'jugador1' => $zonas[$i]->id_jugador3,			
+					'jugador2' => $zonas[$i]->id_jugador4,
 					'cant_sets'=> 5,
 					'estado'   => 'SIN JUGAR',
 					'torneo'   => $id_torneo,
@@ -701,8 +752,8 @@ class Torneoscontroller extends CI_Controller {
 				{
 					//1 vs 2
 					$data = array(		    											
-					'jugador1' => $zonas[$i]->jugador1,			
-					'jugador2' => $zonas[$i]->jugador2,
+					'jugador1' => $zonas[$i]->id_jugador1,			
+					'jugador2' => $zonas[$i]->id_jugador2,
 					'cant_sets'=> 5,
 					'estado'   => 'SIN JUGAR',
 					'torneo'   => $id_torneo,
@@ -718,8 +769,8 @@ class Torneoscontroller extends CI_Controller {
 
 					//1 vs 3
 					$data = array(		    											
-					'jugador1' => $zonas[$i]->jugador1,			
-					'jugador2' => $zonas[$i]->jugador3,
+					'jugador1' => $zonas[$i]->id_jugador1,			
+					'jugador2' => $zonas[$i]->id_jugador3,
 					'cant_sets'=> 5,
 					'estado'   => 'SIN JUGAR',
 					'torneo'   => $id_torneo,
@@ -735,8 +786,8 @@ class Torneoscontroller extends CI_Controller {
 
 					//1 vs 4
 					$data = array(		    											
-					'jugador1' => $zonas[$i]->jugador1,			
-					'jugador2' => $zonas[$i]->jugador4,
+					'jugador1' => $zonas[$i]->id_jugador1,			
+					'jugador2' => $zonas[$i]->id_jugador4,
 					'cant_sets'=> 5,
 					'estado'   => 'SIN JUGAR',
 					'torneo'   => $id_torneo,
@@ -752,8 +803,8 @@ class Torneoscontroller extends CI_Controller {
 
 					//1 vs 5
 					$data = array(		    											
-					'jugador1' => $zonas[$i]->jugador1,			
-					'jugador2' => $zonas[$i]->jugador5,
+					'jugador1' => $zonas[$i]->id_jugador1,			
+					'jugador2' => $zonas[$i]->id_jugador5,
 					'cant_sets'=> 5,
 					'estado'   => 'SIN JUGAR',
 					'torneo'   => $id_torneo,
@@ -769,8 +820,8 @@ class Torneoscontroller extends CI_Controller {
 
 					//2 vs 3
 					$data = array(		    											
-					'jugador1' => $zonas[$i]->jugador2,			
-					'jugador2' => $zonas[$i]->jugador3,
+					'jugador1' => $zonas[$i]->id_jugador2,			
+					'jugador2' => $zonas[$i]->id_jugador3,
 					'cant_sets'=> 5,
 					'estado'   => 'SIN JUGAR',
 					'torneo'   => $id_torneo,
@@ -786,8 +837,8 @@ class Torneoscontroller extends CI_Controller {
 
 					//2 vs 4
 					$data = array(		    											
-					'jugador1' => $zonas[$i]->jugador2,			
-					'jugador2' => $zonas[$i]->jugador4,
+					'jugador1' => $zonas[$i]->id_jugador2,			
+					'jugador2' => $zonas[$i]->id_jugador4,
 					'cant_sets'=> 5,
 					'estado'   => 'SIN JUGAR',
 					'torneo'   => $id_torneo,
@@ -803,8 +854,8 @@ class Torneoscontroller extends CI_Controller {
 
 					//2 vs 5
 					$data = array(		    											
-					'jugador1' => $zonas[$i]->jugador2,			
-					'jugador2' => $zonas[$i]->jugador5,
+					'jugador1' => $zonas[$i]->id_jugador2,			
+					'jugador2' => $zonas[$i]->id_jugador5,
 					'cant_sets'=> 5,
 					'estado'   => 'SIN JUGAR',
 					'torneo'   => $id_torneo,
@@ -820,8 +871,8 @@ class Torneoscontroller extends CI_Controller {
 
 					//3 vs 4
 					$data = array(		    											
-					'jugador1' => $zonas[$i]->jugador3,			
-					'jugador2' => $zonas[$i]->jugador4,
+					'jugador1' => $zonas[$i]->id_jugador3,			
+					'jugador2' => $zonas[$i]->id_jugador4,
 					'cant_sets'=> 5,
 					'estado'   => 'SIN JUGAR',
 					'torneo'   => $id_torneo,
@@ -837,8 +888,8 @@ class Torneoscontroller extends CI_Controller {
 
 					//3 vs 5
 					$data = array(		    											
-					'jugador1' => $zonas[$i]->jugador3,			
-					'jugador2' => $zonas[$i]->jugador5,
+					'jugador1' => $zonas[$i]->id_jugador3,			
+					'jugador2' => $zonas[$i]->id_jugador5,
 					'cant_sets'=> 5,
 					'estado'   => 'SIN JUGAR',
 					'torneo'   => $id_torneo,
@@ -854,8 +905,8 @@ class Torneoscontroller extends CI_Controller {
 
 					//4 vs 5
 					$data = array(		    											
-					'jugador1' => $zonas[$i]->jugador4,			
-					'jugador2' => $zonas[$i]->jugador5,
+					'jugador1' => $zonas[$i]->id_jugador4,			
+					'jugador2' => $zonas[$i]->id_jugador5,
 					'cant_sets'=> 5,
 					'estado'   => 'SIN JUGAR',
 					'torneo'   => $id_torneo,
@@ -891,7 +942,7 @@ class Torneoscontroller extends CI_Controller {
 	public function guardar_zona()
 	{			
 		$pos4=$this->input->post('posicion4');
-		if ($pos4!=0)
+		if (isset($pos4))
 		{
 			$data = array(		    			
 			'id' => $this->input->post('id'),			
@@ -934,9 +985,11 @@ class Torneoscontroller extends CI_Controller {
 					'instancia' => 16,
 					'categoria' => $zona_cargada[0]->categoria,
 					'orden' => $orden_llave[0]->posicion,
+					'bye' => 0,
 					);
 
 				$this->torneo_model->crear_llave($data_llave);
+				$this->crear_partido_llave($data_llave['torneo'], $data_llave['categoria'], $data_llave['orden'], $data_llave['instancia']);
 
 
 				$orden_llave= $this->torneo_model->obtener_posicion_plantilla($cant_inscriptos, '2'.$zona_cargada[0]->letra);
@@ -948,9 +1001,11 @@ class Torneoscontroller extends CI_Controller {
 					'instancia' => 16,
 					'categoria' => $zona_cargada[0]->categoria,
 					'orden' => $orden_llave[0]->posicion,
+					'bye' => 0,
 					);
 
 				$this->torneo_model->crear_llave($data_llave);
+				$this->crear_partido_llave($data_llave['torneo'], $data_llave['categoria'], $data_llave['orden'], $data_llave['instancia']);
 
 				
 				$orden_llave= $this->torneo_model->obtener_posicion_plantilla($cant_inscriptos, '3'.$zona_cargada[0]->letra);
@@ -962,12 +1017,14 @@ class Torneoscontroller extends CI_Controller {
 					'instancia' => 16,
 					'categoria' => $zona_cargada[0]->categoria,
 					'orden' => $orden_llave[0]->posicion,
+					'bye' => 0,
 					);
 
-				$this->torneo_model->crear_llave($data_llave);		
+				$this->torneo_model->crear_llave($data_llave);
+				$this->crear_partido_llave($data_llave['torneo'], $data_llave['categoria'], $data_llave['orden'], $data_llave['instancia']);		
 
 
-				if ($pos4!=0)
+				if (isset($pos4))
 				{
 				$orden_llave= $this->torneo_model->obtener_posicion_plantilla($cant_inscriptos, '4'.$zona_cargada[0]->letra);
 				$cuarto= $this->torneo_model->obtener_posicion_jugador_zona($data['id'], 4);
@@ -978,9 +1035,11 @@ class Torneoscontroller extends CI_Controller {
 					'instancia' => 16,
 					'categoria' => $zona_cargada[0]->categoria,
 					'orden' => $orden_llave[0]->posicion,
+					'bye' => 0,
 					);
 
 				$this->torneo_model->crear_llave($data_llave);	
+				$this->crear_partido_llave($data_llave['torneo'], $data_llave['categoria'], $data_llave['orden'], $data_llave['instancia']);
 				}		
 			}
 
@@ -998,9 +1057,11 @@ class Torneoscontroller extends CI_Controller {
 					'instancia' => 32,
 					'categoria' => $zona_cargada[0]->categoria,
 					'orden' => $orden_llave[0]->posicion,
+					'bye' => 0,
 					);
 
 				$this->torneo_model->crear_llave($data_llave);
+				$this->crear_partido_llave($data_llave['torneo'], $data_llave['categoria'], $data_llave['orden'], $data_llave['instancia']);
 
 
 				$orden_llave= $this->torneo_model->obtener_posicion_plantilla($cant_inscriptos, '2'.$zona_cargada[0]->letra);
@@ -1012,9 +1073,11 @@ class Torneoscontroller extends CI_Controller {
 					'instancia' => 32,
 					'categoria' => $zona_cargada[0]->categoria,
 					'orden' => $orden_llave[0]->posicion,
+					'bye' => 0,
 					);
 
 				$this->torneo_model->crear_llave($data_llave);
+				$this->crear_partido_llave($data_llave['torneo'], $data_llave['categoria'], $data_llave['orden'], $data_llave['instancia']);
 
 				
 				$orden_llave= $this->torneo_model->obtener_posicion_plantilla($cant_inscriptos, '3'.$zona_cargada[0]->letra);
@@ -1026,12 +1089,14 @@ class Torneoscontroller extends CI_Controller {
 					'instancia' => 32,
 					'categoria' => $zona_cargada[0]->categoria,
 					'orden' => $orden_llave[0]->posicion,
+					'bye' => 0,
 					);
 
-				$this->torneo_model->crear_llave($data_llave);		
+				$this->torneo_model->crear_llave($data_llave);	
+				$this->crear_partido_llave($data_llave['torneo'], $data_llave['categoria'], $data_llave['orden'], $data_llave['instancia']);	
 
 
-				if ($pos4!=0)
+				if (isset($pos4))
 				{
 				$orden_llave= $this->torneo_model->obtener_posicion_plantilla($cant_inscriptos, '4'.$zona_cargada[0]->letra);
 				$cuarto= $this->torneo_model->obtener_posicion_jugador_zona($data['id'], 4);
@@ -1042,9 +1107,11 @@ class Torneoscontroller extends CI_Controller {
 					'instancia' => 32,
 					'categoria' => $zona_cargada[0]->categoria,
 					'orden' => $orden_llave[0]->posicion,
+					'bye' => 0,
 					);
 
 				$this->torneo_model->crear_llave($data_llave);	
+				$this->crear_partido_llave($data_llave['torneo'], $data_llave['categoria'], $data_llave['orden'], $data_llave['instancia']);
 				}		
 			}
 
@@ -1056,6 +1123,64 @@ class Torneoscontroller extends CI_Controller {
 
 
 
+	public function crear_partido_llave($torneo, $categoria, $orden, $instancia)
+	{
+		
+				//si encuentro creada la llave del rival, creo el partido entre ambos
+				if ($orden %2 == 0)
+				{
+					//var_dump("entro por par");exit;
+					$llave_oponente = $this-> torneo_model -> obtener_llave_oponente ($torneo, $categoria, 
+						$instancia, $orden-1);
+
+					$llave_rival = $this-> torneo_model -> obtener_llave_oponente ($torneo, $categoria, 
+						$instancia, $orden);
+
+					if (isset($llave_oponente))
+					{
+						$partido = array(		    											
+						'jugador1' => $llave_oponente[0]->jugador,			
+						'jugador2' => $llave_rival[0]->jugador,
+						'cant_sets'=> 5,
+						'estado'   => 'SIN JUGAR',
+						'torneo'   => $torneo,
+						'categoria'=> $categoria,
+						'tipo'     => 'LLAVE',
+						'id_llave1'  => $llave_oponente[0]->id,								
+						'id_llave2'  => $llave_rival[0]->id,								
+						
+						);
+									
+						$this->torneo_model->crear_partido($partido);
+					}
+				}
+				else
+				{
+					//var_dump("entro por impar");exit;
+					$llave_oponente = $this-> torneo_model -> obtener_llave_oponente ($torneo, $categoria, 
+						$instancia, $orden+1);
+
+					$llave_rival = $this-> torneo_model -> obtener_llave_oponente ($torneo, $categoria, 
+						$instancia, $orden);
+
+					if (isset($llave_oponente))
+					{
+						$partido = array(		    											
+						'jugador1' => $llave_rival[0]->jugador,			
+						'jugador2' => $llave_oponente[0]->jugador,
+						'cant_sets'=> 5,
+						'estado'   => 'SIN JUGAR',
+						'torneo'   => $torneo,
+						'categoria'=> $categoria,
+						'tipo'     => 'LLAVE',
+						'id_llave1'  => $llave_rival[0]->id,					
+						'id_llave2'  => $llave_oponente[0]->id,				
+						);
+									
+						$this->torneo_model->crear_partido($partido);
+					}
+				}
+	}
 
 
 
@@ -2155,6 +2280,21 @@ class Torneoscontroller extends CI_Controller {
 	}
 
 
+	public function crear_club()
+	{			
+			$data = array(		    
+			'nombre' => $this->input->post('nombre'),
+			'direccion' => $this->input->post('direccion'),
+			'telefono' => $this->input->post('telefono'),			
+			'email' => $this->input->post('email'),
+			'responsable' => $this->input->post('responsable'),		
+			);
+			
+			$this->torneo_model->crear_club($data);
+			redirect('Welcome/clubes');
+	}
+
+
 
 	public function eliminar_jugador()
   {
@@ -2166,6 +2306,19 @@ class Torneoscontroller extends CI_Controller {
     $this->torneo_model->eliminar_jugador($id_jugador);
 
     redirect('Welcome/jugadores');
+    
+  }
+
+  public function eliminar_club()
+  {
+    
+    $data=array();
+    $this->load->model('torneo_model');
+    $id_club = $this->uri->segment(3);   
+
+    $this->torneo_model->eliminar_club($id_club);
+
+    redirect('Welcome/clubes');
     
   }
 
@@ -2185,6 +2338,21 @@ class Torneoscontroller extends CI_Controller {
     
   }
 
+
+public function eliminar_inscripcion()
+  {
+    
+    $data=array();
+    $this->load->model('torneo_model');
+    $id_inscripcion = $this->uri->segment(3);   
+
+    $this->torneo_model->eliminar_inscripcion($id_inscripcion);
+
+    $this->session->set_flashdata('success', 'La inscripción fué eliminada con éxito');
+
+    redirect('Welcome/inscripcion');
+    
+  }
 
 
   public function seleccionar_torneo()
