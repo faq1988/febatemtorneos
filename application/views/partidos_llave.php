@@ -57,7 +57,7 @@
                                             <th class="col-sm-1">Set 5</th>                                          
                                             <th class="col-sm-1">Resultado</th>
                                             <th rowspan="3">
-                                             <a href="<?php echo base_url() ?>Welcome/editarPartido/<?php echo $partidos[$i]->id; ?>"> Cargar resultado</a>   
+                                             <a href="<?php echo base_url() ?>Welcome/editar_partido/<?php echo $partidos[$i]->id; ?>"> Cargar resultado</a>   
                                              </th>                                           
                                         </tr>
                                     </thead>

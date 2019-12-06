@@ -11,13 +11,29 @@
           <li class="breadcrumb-item active">Ranking</li>
         </ol>
 
-          <!-- DataTales Example -->
+          <?php echo form_open('Welcome/ranking', 'class= "text-center "'); ?>
+            <div class="form-row">
+              <div class="form-group col-md-6 offset-md-3">
+              <label for="inputAddress">Categoría</label>
+              <select onchange="this.form.submit();" name="categoria" class="custom-select">  
+                  <option value="-1">Seleccionar</option>
+                  <option value="0">SD</option>
+                  <option value="1">Primera</option>
+                  <option value="2">Segunda</option>
+                  <option value="3">Tercera</option>
+                  <option value="4">Cuarta</option>
+                  <option value="5">Quinta</option>
+              </select>
+            </div>
+          </div>
+          </form>
+
 
           <div class="row">
           <div class="col-lg-8 offset-md-2">
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Ranking</h6>
+              <h6 class="m-0 font-weight-bold text-primary">Ranking (Categoria: <?php echo $categoria;?>)</h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">

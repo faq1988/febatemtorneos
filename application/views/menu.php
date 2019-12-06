@@ -52,7 +52,7 @@
       <!--hr class="sidebar-divider"-->
 
        <?php          
-          if ($rol == 'ROLE_CLIENT_USER') {                                    
+          if ($rol == 'ROLE_JUGADOR') {                                    
       ?>
       <!--div class="sidebar-heading">
         Torneos
@@ -69,7 +69,8 @@
             <!--6 class="collapse-header">Custom Components:</h6-->            
             <a class="collapse-item" href="<?=base_url()?>Welcome/torneos">Ver torneos</a>
             <a class="collapse-item" href="<?=base_url()?>Welcome/inscripcion">Inscripción</a>
-            <a class="collapse-item" href="<?=base_url()?>Welcome/mesas">Mesas</a>            
+            <a class="collapse-item" href="<?=base_url()?>Welcome/mesas">Mesas</a>   
+
           </div>
         </div>
       </li>      
@@ -80,7 +81,7 @@
 
 
        <?php          
-          if ($rol == 'ROLE_SYSTEM_ADMIN') {                                    
+          if ($rol == 'ROLE_ADMIN_FEBATEM') {                                    
       ?>
       <!--div class="sidebar-heading">
         Torneos
@@ -97,7 +98,8 @@
             <!--6 class="collapse-header">Custom Components:</h6-->            
             <a class="collapse-item" href="<?=base_url()?>Welcome/torneos">Ver torneos</a>
             <a class="collapse-item" href="<?=base_url()?>Welcome/inscripcion">Inscripción</a>
-            <a class="collapse-item" href="<?=base_url()?>Welcome/mesas">Mesas</a>            
+            <a class="collapse-item" href="<?=base_url()?>Welcome/mesas">Mesas</a>     
+            <a class="collapse-item" href="<?=base_url()?>Welcome/campeonatos">Campeonatos</a>                   
           </div>
         </div>
       </li>      
@@ -159,12 +161,10 @@
         <div id="collapseRanking" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <!--6 class="collapse-header">Custom Components:</h6-->
-            <a class="collapse-item" href="<?=base_url()?>Welcome/ranking/0">SD</a>
-            <a class="collapse-item" href="<?=base_url()?>Welcome/ranking/1">Primera</a>
-            <a class="collapse-item" href="<?=base_url()?>Welcome/ranking/2">Segunda</a>
-            <a class="collapse-item" href="<?=base_url()?>Welcome/ranking/3">Tercera</a>
-            <a class="collapse-item" href="<?=base_url()?>Welcome/ranking/4">Cuarta</a>
-            <a class="collapse-item" href="<?=base_url()?>Welcome/ranking/5">Quinta</a>            
+            <a class="collapse-item" href="<?=base_url()?>Welcome/ranking">Campeonato</a>
+            <a class="collapse-item" href="<?=base_url()?>Welcome/ranking">Provincial</a>
+            <a class="collapse-item" href="<?=base_url()?>Welcome/ranking">Por Edad</a>
+                       
           </div>
         </div>
       </li>      
@@ -179,7 +179,9 @@
         <div id="collapseRating" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <!--6 class="collapse-header">Custom Components:</h6-->
-            <a class="collapse-item" href="<?=base_url()?>Welcome/rating">Único</a>            
+            <a class="collapse-item" href="<?=base_url()?>Welcome/rating">Único</a> 
+            <a class="collapse-item" href="<?=base_url()?>Welcome/puntaje_rating">Puntajes</a> 
+            <a class="collapse-item" href="<?=base_url()?>Welcome/categorias_rating">Rango de categorías</a>            
           </div>
         </div>
       </li>      
@@ -195,7 +197,7 @@
       </div>
 
       <?php          
-          if ($rol == 'ROLE_CLIENT_USER' | $rol == 'ROLE_SYSTEM_ADMIN') {                                    
+          if ($rol == 'ROLE_JUGADOR' | $rol == 'ROLE_ADMIN_FEBATEM') {                                    
       ?>
       
      <li class="nav-item">

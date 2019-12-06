@@ -24,6 +24,7 @@
 
         <div class="row">
             <!-- Earnings (Monthly) Card Example -->
+            <?php if($juega_sd){ ?>
             <div class="col-xl-2 col-md-2 mb-4">
               <div class="card border-left-success shadow">
                 <div class="card-body">
@@ -39,7 +40,8 @@
                 </div>
               </div>
             </div>
-
+          <?php } ?>
+          <?php if($juega_primera){ ?>
             <div class="col-xl-2 col-md-2 mb-4">
               <div class="card border-left-success shadow">
                 <div class="card-body">
@@ -55,7 +57,8 @@
                 </div>
               </div>
             </div>
-
+            <?php } ?>
+            <?php if($juega_segunda){ ?>
             <div class="col-xl-2 col-md-2 mb-4">
               <div class="card border-left-success shadow">
                 <div class="card-body">
@@ -71,7 +74,8 @@
                 </div>
               </div>
             </div>
-
+            <?php } ?>
+            <?php if($juega_tercera){ ?>
             <!-- Pending Requests Card Example -->
             <div class="col-xl-2 col-md-2 mb-4">
               <div class="card border-left-success shadow">
@@ -88,7 +92,8 @@
                 </div>
               </div>
             </div>
-
+            <?php } ?>
+            <?php if($juega_cuarta){ ?>
              <!-- Pending Requests Card Example -->
             <div class="col-xl-2 col-md-2 mb-4">
               <div class="card border-left-success shadow">
@@ -105,7 +110,8 @@
                 </div>
               </div>
             </div>
-
+            <?php } ?>
+            <?php if($juega_quinta){ ?>
              <!-- Pending Requests Card Example -->
             <div class="col-xl-2 col-md-2 mb-4">
               <div class="card border-left-success shadow">
@@ -122,6 +128,7 @@
                 </div>
               </div>
             </div>
+            <?php } ?>
         </div>
 
 

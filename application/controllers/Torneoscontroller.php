@@ -184,16 +184,17 @@ class Torneoscontroller extends CI_Controller {
 
 			//obtengo inscriptos al torneo actual, categoria primera
 			$inscriptos=  $this->torneo_model->obtenerInscripcion($row->id, 1);
+			
 
 			if (isset($inscriptos))
 				$cantPrimera = sizeof($inscriptos->result());	
-
+/*
 			if ($cantPrimera < 12)
 			{
 				$this->session->set_flashdata('error', 'Para cerrar inscripciones debe haber al menos 12 jugadores en Primera');
 				redirect('Welcome/inscripcion');
 			}
-
+*/
 			$modulo = $cantPrimera % 3;
 			$cantZonas3 = 0;
 			$cantZonas4 = 0;			
@@ -229,17 +230,20 @@ class Torneoscontroller extends CI_Controller {
 					
 		$resumen= $resumen. 'cantidad de cabezas de zona '. ($cantZonas3+$cantZonas4);
 		$resumen= $resumen. '</br>';
-		
-		$cabezas = $this->buscarCabezasDeZona($cantZonas3+$cantZonas4, $inscriptos, 1);	
 
+		
+		$cabezas = $this->buscarCabezasDeZona($cantZonas3*3 + $cantZonas4*4, $inscriptos, 1);	
+	
 		for($i=0; $i<sizeof($cabezas); $i++)
 			{
 				$resumen= $resumen. 'lista de cabezas '. $cabezas[$i]->jugador;
 				$resumen= $resumen. '</br>';
 			}				
 
-		$inscriptos_sin_cabezas= $this->eliminar_cabezas_inscriptos($inscriptos, $cabezas);
+		$inscriptos_sin_cabezas= $this->eliminar_cabezas_inscriptos($cabezas, $cantZonas3+$cantZonas4);
 		
+
+
 		$this->guardar_zonas($row->id, $cantZonas3, $cantZonas4, $cabezas, $inscriptos_sin_cabezas);
 
 		$this->armar_partidos($row->id, TRUE, 1);
@@ -304,20 +308,17 @@ class Torneoscontroller extends CI_Controller {
 
 
 	//elimina de los inscriptos los jugadores que son cabezas de zona
-	public function eliminar_cabezas_inscriptos($inscriptos, $cabezas)
+	public function eliminar_cabezas_inscriptos($cabezas, $cantidad_cabezas)
 	{
 
 		$inscriptos_sin_cabezas= array();
-		$arreglo_inscriptos= $inscriptos->result();
+		$arreglo_inscriptos= $cabezas;
 		
-			for($j=0; $j<sizeof($arreglo_inscriptos); $j++)
+			for($j=0; $j<$cantidad_cabezas; $j++)
 			{
-				if ($this->es_cabeza($cabezas, $arreglo_inscriptos[$j]->id_jugador))
-				{}
-				else
-				{
+			
 					array_push($inscriptos_sin_cabezas, $arreglo_inscriptos[$j]);
-				}
+			
 				
 			}
 		
@@ -346,7 +347,7 @@ class Torneoscontroller extends CI_Controller {
 		return false;
 	}
 
-	//dados los inscriptos, obtiene las cabezas del ranking
+	//dados los inscriptos, obtiene las cabezas del rating
 	public function buscarCabezasDeZona($cantCabezas, $inscriptos, $categoria)
 		{
 			$cabezas= array();
@@ -367,31 +368,59 @@ class Torneoscontroller extends CI_Controller {
 						array_push($id_inscriptos,$result[$i]->id_jugador);		
 					}
 
-			$cabezas= $this->torneo_model->obtener_cabezas_ranking($id_inscriptos, $cantCabezas, $categoria);
+			$cabezas= $this->torneo_model->obtener_cabezas_rating($id_inscriptos, $cantCabezas, $categoria);
 
 			return $cabezas;
 		}
 	
 
 		//armado de zonas
-		public function guardar_zonas($torneo, $cantZonas3,$cantZonas4,$cabezas, $inscriptos_sin_cabezas)
+		public function guardar_zonas($torneo, $cantZonas3,$cantZonas4,$inscriptos_ordenados, $cabezas)
 		{
 			$letra= 'A';
 			$zonas;
+			
+			//obtengo el primer nivel de jugadores
+			$tope1= ($cantZonas3+$cantZonas4);
+			$primer_nivel= array();
+			for ($j=0 ; $j < $cantZonas3+$cantZonas4; $j++)
+				array_push($primer_nivel,$inscriptos_ordenados[$j+$tope1]->jugador);	
+
+			$tope2= ($cantZonas3+$cantZonas4)*2;
+			$segundo_nivel= array();
+			for ($j=0 ; $j < $cantZonas3+$cantZonas4; $j++)
+				array_push($segundo_nivel,$inscriptos_ordenados[$j+$tope2]->jugador);	
+
+/*
+	$result= $segundo_nivel;						
+				for($i=0; $i<sizeof($result); $i++)
+					{
+						echo "inscriptos".$result[$i]."------";						
+					}
+*/
+			//si hay zonas de 4, seteo el tercer nivel con el resto de jugadores		
+			if ($cantZonas4 > 0)
+			{
+				$tope3 = ($cantZonas3+$cantZonas4)*3;
+				$tercer_nivel = array();
+				for ($j=0 ; $j < $cantZonas4; $j++)
+					array_push($tercer_nivel,$inscriptos_ordenados[$j+$tope3]->jugador);
+			}		
+
 
 			//mezclamos el arreglo para hacer random
-			shuffle($inscriptos_sin_cabezas);
+			//shuffle($inscriptos_sin_cabezas);
 
 			for($i=0; $i<$cantZonas3; $i++)
 					{						
 						$cabeza= array_shift($cabezas)->jugador;
 
 						//echo "zona de 3 ".$letra."------";
+						shuffle($primer_nivel);
+						shuffle($segundo_nivel);
 
-						$jugador2= array_pop($inscriptos_sin_cabezas)->id_jugador;						
-						shuffle($inscriptos_sin_cabezas);						
-						$jugador3= array_pop($inscriptos_sin_cabezas)->id_jugador;
-						
+						$jugador2= array_pop($primer_nivel);															
+						$jugador3= array_pop($segundo_nivel);						
 						
 						$array = array(
 						    "letra" => $letra,
@@ -409,21 +438,19 @@ class Torneoscontroller extends CI_Controller {
 
 					$letra=++$letra;
 					}
-
-
-			//mezclamos el arreglo para hacer random
-			shuffle($inscriptos_sin_cabezas);		
+			
 
 			for($i=0; $i<$cantZonas4; $i++)
 					{
 						$cabeza= array_shift($cabezas)->jugador;
 						//echo "zona de 4".$letra."------";
+						shuffle($primer_nivel);															
+						shuffle($segundo_nivel);
+						shuffle($tercer_nivel);
 
-						$jugador2= array_pop($inscriptos_sin_cabezas)->id_jugador;						
-						shuffle($inscriptos_sin_cabezas);						
-						$jugador3= array_pop($inscriptos_sin_cabezas)->id_jugador;
-						shuffle($inscriptos_sin_cabezas);						
-						$jugador4= array_pop($inscriptos_sin_cabezas)->id_jugador;
+						$jugador2= array_pop($primer_nivel);											
+						$jugador3= array_pop($segundo_nivel);						
+						$jugador4= array_pop($tercer_nivel);
 
 						$array = array(
 						    "letra" => $letra,
@@ -486,7 +513,7 @@ class Torneoscontroller extends CI_Controller {
 				if ($partido[0]->resultado1 > $partido[0]->resultado2) //si gano el 1
 				{
 					$llave = array(		    											
-					'jugador' => $partido[0]->jugador1,			
+					'jugador' => $partido[0]->id_jugador1,			
 					'resultado' => '11-11-11-11-11',					
 					'torneo'   => $partido[0]->torneo,
 					'instancia'=> ($llave2[0]->instancia) /2,
@@ -499,7 +526,7 @@ class Torneoscontroller extends CI_Controller {
 				else //si gano el 2
 				{
 					$llave = array(		    											
-					'jugador' => $partido[0]->jugador2,			
+					'jugador' => $partido[0]->id_jugador2,			
 					'resultado' => '11-11-11-11-11',					
 					'torneo'   => $partido[0]->torneo,
 					'instancia'=> ($llave2[0]->instancia) /2,
@@ -572,9 +599,9 @@ class Torneoscontroller extends CI_Controller {
 			}
 
 			if ($tipo=='ZONA')
-				redirect('welcome/partidos');
+				redirect('welcome/partidos_zona');
 			if ($tipo=='LLAVE')
-				redirect('welcome/partidos_de_llave');
+				redirect('welcome/partidos_llave');
 	}
 
 
@@ -2261,6 +2288,14 @@ class Torneoscontroller extends CI_Controller {
 
 		public function crear_jugador()
 	{			
+
+		//controlo la categoria seteada al jugador, si es inferior lo habilita, si es superior requiere aprobacion
+		$categoria= $this->input->post('categoria');
+		if ($categoria == 3 or $categoria == 4 or $categoria == 5)
+			$habilitado= TRUE;
+		else
+			$habilitado= FALSE;
+
 			$data = array(		    
 			'nombre' => $this->input->post('nombre'),
 			'apellido' => $this->input->post('apellido'),
@@ -2271,8 +2306,10 @@ class Torneoscontroller extends CI_Controller {
 			'fecha_nac' => $this->input->post('fecha_nac'),
 			'provincia' => $this->input->post('provincia'),
 			'ciudad' => $this->input->post('ciudad'),
+			'club' => $this->input->post('club'),
 			'usuario' => $this->session->userdata('id_usuario'), 			
 			'activo' => TRUE,						
+			'habilitado' => $habilitado,
 			);
 			
 			$this->torneo_model->crear_jugador($data);
@@ -2287,7 +2324,9 @@ class Torneoscontroller extends CI_Controller {
 			'direccion' => $this->input->post('direccion'),
 			'telefono' => $this->input->post('telefono'),			
 			'email' => $this->input->post('email'),
-			'responsable' => $this->input->post('responsable'),		
+			'responsable' => $this->input->post('responsable'),	
+			'provincia' => $this->input->post('provincia'),	
+			'ciudad' => $this->input->post('ciudad'),		
 			);
 			
 			$this->torneo_model->crear_club($data);
@@ -2337,6 +2376,8 @@ class Torneoscontroller extends CI_Controller {
     redirect('Welcome/torneos');
     
   }
+
+
 
 
 public function eliminar_inscripcion()

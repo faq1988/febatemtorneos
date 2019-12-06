@@ -1,64 +1,62 @@
  <!-- Begin Page Content -->
         <div class="container-fluid">
 
- <!-- Breadcrumbs -->
+ <!-- Breadcrumbs 
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
             <a href="#">FEBATEM</a>
           </li>
-          <li class="breadcrumb-item active">Crear club</li>
+          <li class="breadcrumb-item active">Crear campeonato</li>
         </ol>
-
+-->
           <!-- Page Heading -->
           <!--h1 class="h3 mb-4 text-gray-800">Bienvenidos</h1-->
  <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Crear club</h6>
-            </div>
-  
-  
+              <h6 class="m-0 font-weight-bold text-primary">Crear campeonato</h6>
+            </div>  
   <div class="card-body">
 
          <!-- Default form login -->
   <div class="container">
 <!--form class="text-center border border-light p-5" action="#!"-->
-  <?php echo form_open('Torneoscontroller/crear_club', 'class= "text-center "'); ?>
+  <?php echo form_open('Campeonatoscontroller/crear_campeonato', 'class= "text-center "'); ?>
 <div class="form-row">
     <div class="form-group col-md-6">
       <label for="inputEmail4">Nombre</label>
       <input type="text" name="nombre" class="form-control" id="inputEmail4" required>
     </div>
-    <div class="form-group col-md-6">
-      <label for="inputPassword4">Dirección</label>
-      <input type="text" name="direccion" class="form-control" id="inputPassword4" required>
-    </div>   
+    <div class="form-group col-md-3">
+      <label for="inputPassword4">Fecha inicio</label>
+      <input type="date" name="fecha_inicio" class="form-control" id="inputPassword4" required>
+    </div>
+    <div class="form-group col-md-3">
+      <label for="inputZip">Fecha fin</label>
+      <input type="date" name="fecha_fin" class="form-control" id="inputZip" required>
+    </div>
   </div>
   <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="inputEmail4">Provincia</label>
-      <input type="text" name="provincia" class="form-control" id="inputEmail4" required>
-    </div>
-    <div class="form-group col-md-6">
-      <label for="inputPassword4">Ciudad</label>
-      <input type="text" name="ciudad" class="form-control" id="inputPassword4" required>
-    </div>   
+  <div class="form-group col-md-6">
+    <label for="inputAddress">Club</label>
+    <select name="club" class="custom-select" required>  
+        <option value="1">ABTM</option>
+        <option value="4">UNICEN</option>
+        
+        
+    </select>
   </div>
-  <div class="form-row">    
-    <div class="form-group col-md-4">
-      <label for="inputEmail4">Teléfono</label>
-      <input type="text" name="telefono" class="form-control" id="inputEmail4" required>
-    </div>
-    <div class="form-group col-md-4">
-      <label for="inputEmail4">Email</label>
-      <input type="email" name="email" class="form-control" id="inputEmail4" required>
-    </div>
-    <div class="form-group col-md-4">
-      <label for="inputPassword4">Responsable</label>
-      <input type="text" name="responsable" class="form-control" id="inputPassword4" required>
-    </div>   
-      
+
+  <div class="form-group col-md-6">
+    <label for="inputAddress">Usuario</label>
+    <select name="usuario" class="custom-select" required>  
+        <option value="1">Admin</option>
+        <option value="2">Client</option>   
+        
+    </select>
   </div>
-    
+  </div>
+ 
+  
   <button type="submit" class="btn btn-primary">Aceptar</button>
 </form>
 

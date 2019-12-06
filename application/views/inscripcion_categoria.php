@@ -51,14 +51,18 @@
 
 
   <div class="form-group col-md-6 offset-md-3">
-    <label for="inputAddress">Categorías</label>
+    <label for="inputAddress">Categorías habilitadas</label>
     <select name="categorias[]" class="custom-select" multiple>  
-        <option value="0">SD</option>
-        <option value="1">Primera</option>
-        <option value="2">Segunda</option>
-        <option value="3">Tercera</option>
-        <option value="4">Cuarta</option>
-        <option value="5">Quinta</option>
+       <?php
+                    if (isset($categorias_habilitadas)){
+                     for($i=0; $i<count($categorias_habilitadas); $i++){ 
+                  ?>
+
+        <option value="<?php echo $categorias_habilitadas[$i]['id'];?>"><?php echo $categorias_habilitadas[$i]['nombre'];?></option>
+
+          <?php
+                    }}
+                  ?>
     </select>
   </div>
 

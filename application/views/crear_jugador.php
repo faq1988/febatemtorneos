@@ -62,18 +62,28 @@
       
   </div>
   <div class="form-row">
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-3">
       <label for="inputPassword4">Email</label>
       <input type="email" name="email" class="form-control" id="inputPassword4" required>
     </div> 
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-3">
       <label for="inputEmail4">Provincia</label>
       <input type="text" name="provincia" class="form-control" id="inputEmail4" required>
     </div>
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-3">
       <label for="inputPassword4">Ciudad</label>
       <input type="text" name="ciudad" class="form-control" id="inputPassword4" required>
-    </div>   
+    </div>  
+    <div class="form-group col-md-3">
+    <label for="inputAddress">Club</label>
+    <select name="club" class="custom-select" required>  
+        <option value="1">ABTM</option>
+        <option value="4">UNICEN</option>
+        
+        
+    </select>
+  </div>
+ 
   </div>
   
   
