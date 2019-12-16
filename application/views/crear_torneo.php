@@ -24,7 +24,7 @@
 <!--form class="text-center border border-light p-5" action="#!"-->
   <?php echo form_open('Torneoscontroller/crear_torneo', 'class= "text-center "'); ?>
 <div class="form-row">
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-6">
       <label for="inputEmail4">Nombre</label>
       <input type="text" name="nombre" class="form-control" id="inputEmail4" required>
     </div>
@@ -32,9 +32,64 @@
       <label for="inputPassword4">Lugar</label>
       <input type="text" name="lugar" class="form-control" id="inputPassword4" required>
     </div>
-    <div class="form-group col-md-2">
+   
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputEmail4">Desde</label>
+      <input type="date" name="fecha_inicio" class="form-control" id="inputEmail4" required>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword4">Hasta</label>
+      <input type="date" name="fecha_fin" class="form-control" id="inputPassword4" required>
+    </div>
+    
+  </div>
+  <div class="form-row">
+     <div class="form-group col-md-2">
       <label for="inputZip">Cantidad de mesas</label>
-      <input type="text" name="cant_mesas" class="form-control" id="inputZip" required>
+      <input type="number" name="cant_mesas" class="form-control" id="inputZip" required>
+    </div>
+    <div class="form-group col-md-4">
+      <label for="inputEmail4">Marca de mesas</label>
+      <input type="text" name="marca_mesas" class="form-control" id="inputEmail4" required>
+    </div>
+    <div class="form-group col-md-2">
+       <label for="inputAddress">Tipo de pelota</label>
+      <select name="categorias[]" class="custom-select" required>  
+        <option value="1">*</option>
+        <option value="2">**</i></option>
+        <option value="3">***</i></option>        
+    </select>
+    </div>
+    <div class="form-group col-md-4">
+      <label for="inputZip">Marca de pelota</label>
+      <input type="text" name="marca_pelotas" class="form-control" id="inputZip" required>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-3">
+      <label for="inputEmail4">Cierre de inscripción</label>
+      <input type="text" name="cierre_inscripcion" class="form-control" id="inputEmail4" required>
+    </div>
+    <div class="form-group col-md-3">
+      <label for="inputPassword4">Costo de inscripción</label>
+      <input type="text" name="costo_inscripcion" class="form-control" id="inputPassword4" required>
+    </div>
+    <div class="form-group col-md-3">
+      <label for="inputZip">Costo de afiliación</label>
+      <input type="text" name="costo_afiliacion" class="form-control" id="inputZip" required>
+    </div>
+    <div class="form-group col-md-3">
+      <label for="inputAddress">Categorías habilitadas</label>
+      <select name="categorias[]" class="custom-select" required>  
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+    </select>
     </div>
   </div>
   <div class="form-group">

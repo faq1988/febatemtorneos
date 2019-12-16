@@ -3,14 +3,24 @@
         <!-- Begin Page Content -->
         <div class="container-fluid">
 
-          <!-- Breadcrumbs -->
+          <!-- Breadcrumbs
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
             <a href="#">FEBATEM</a>
           </li>
           <li class="breadcrumb-item active">Jugadores</li>
         </ol>
-
+ -->
+           <?php if ($this->session->flashdata('error')) {?>
+                    <div class="alert alert-danger">                                
+                      <?php echo $this->session->flashdata('error');?>
+                    </div>
+                  <?php } ?>    
+                  <?php if ($this->session->flashdata('success')) {?>
+                    <div class="alert alert-success">                               
+                      <?php echo $this->session->flashdata('success');?>
+                    </div>
+          <?php } ?>  
 
         <ul class="nav nav-pills">
           <li class="nav-item">

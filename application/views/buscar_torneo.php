@@ -53,6 +53,7 @@
                       
                       <td><a class="btn btn-success btn-sm" href="<?=base_url()?>Torneoscontroller/eliminar_torneo/<?php echo $torneos[$i]['id']; ?>" title="Eliminar"><i class="fas fa-trash-alt"></i></a>
                         <a class="btn btn-success btn-sm" href="<?=base_url()?>Torneoscontroller/seleccionar_torneo/<?php echo $torneos[$i]['id']; ?>" title="Seleccionar"><i class="fas fa-check-circle"></i></a>
+                         <a class="btn btn-success btn-sm" href="<?=base_url()?>Torneoscontroller/resetear_torneo/<?php echo $torneos[$i]['id']; ?>" title="Reiniciar"><i class="fas fa-redo-alt"></i></a>
                       </td>
                       
                     </tr>

@@ -37,13 +37,13 @@
     <div class="form-group col-md-3">
     <label for="inputAddress">Categoría</label>
     <select name="categoria" class="custom-select" required>  
-        <option value="nada">Seleccionar</option>
-        <option value="sd">SD</option>
-        <option value="primera">Primera</option>
-        <option value="segunda">Segunda</option>
-        <option value="tercera">Tercera</option>
-        <option value="cuarta">Cuarta</option>
-        <option value="quinta">Quinta</option>
+        <option value="-1">Seleccionar</option>
+        <option value="0">SD</option>
+        <option value="1">Primera</option>
+        <option value="2">Segunda</option>
+        <option value="3">Tercera</option>
+        <option value="4">Cuarta</option>
+        <option value="5">Quinta</option>
     </select>
   </div>
 

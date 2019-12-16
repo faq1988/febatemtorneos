@@ -178,23 +178,26 @@ class Torneoscontroller extends CI_Controller {
 		$torneo = $this->torneo_model->obtenerTorneoActual();
 		$resumen="";
 		$cantPrimera=0;
+		
+		$id_categoria = $this->uri->segment(3);
+
 		if(isset($torneo))
 		{
 			$row = $torneo->first_row();		
 
-			//obtengo inscriptos al torneo actual, categoria primera
-			$inscriptos=  $this->torneo_model->obtenerInscripcion($row->id, 1);
+			//obtengo inscriptos al torneo actual
+			$inscriptos=  $this->torneo_model->obtenerInscripcion($row->id, $id_categoria);
 			
 
 			if (isset($inscriptos))
 				$cantPrimera = sizeof($inscriptos->result());	
-/*
-			if ($cantPrimera < 12)
+
+			if ($cantPrimera < 1)
 			{
-				$this->session->set_flashdata('error', 'Para cerrar inscripciones debe haber al menos 12 jugadores en Primera');
+				$this->session->set_flashdata('error', 'Para cerrar inscripciones debe haber al menos 1 jugador');
 				redirect('Welcome/inscripcion');
 			}
-*/
+
 			$modulo = $cantPrimera % 3;
 			$cantZonas3 = 0;
 			$cantZonas4 = 0;			
@@ -232,7 +235,7 @@ class Torneoscontroller extends CI_Controller {
 		$resumen= $resumen. '</br>';
 
 		
-		$cabezas = $this->buscarCabezasDeZona($cantZonas3*3 + $cantZonas4*4, $inscriptos, 1);	
+		$cabezas = $this->buscarCabezasDeZona($cantZonas3*3 + $cantZonas4*4, $inscriptos, $id_categoria);	
 	
 		for($i=0; $i<sizeof($cabezas); $i++)
 			{
@@ -246,10 +249,10 @@ class Torneoscontroller extends CI_Controller {
 
 		$this->guardar_zonas($row->id, $cantZonas3, $cantZonas4, $cabezas, $inscriptos_sin_cabezas);
 
-		$this->armar_partidos($row->id, TRUE, 1);
+		$this->armar_partidos($row->id, TRUE, $id_categoria);
 
 
-		$this->crear_byes_llave($row->id, $cantPrimera, 1);
+		$this->crear_byes_llave($row->id, $cantPrimera, $id_categoria);
 	}
 	else
 	{
@@ -2289,6 +2292,16 @@ class Torneoscontroller extends CI_Controller {
 		public function crear_jugador()
 	{			
 
+		$dni = $this->input->post('dni');
+		$this->load->model('torneo_model');
+		$repetido = $this->torneo_model->verificar_jugador_repetido($dni);
+		if ($repetido)
+		{
+			$this->session->set_flashdata('error', 'Ya existe un jugador con el mismo DNI');
+			redirect('Welcome/jugadores');
+		}
+
+
 		//controlo la categoria seteada al jugador, si es inferior lo habilita, si es superior requiere aprobacion
 		$categoria= $this->input->post('categoria');
 		if ($categoria == 3 or $categoria == 4 or $categoria == 5)
@@ -2312,6 +2325,12 @@ class Torneoscontroller extends CI_Controller {
 			'habilitado' => $habilitado,
 			);
 			
+			if ($habilitado)
+				$this->session->set_flashdata('success', 'El jugador ha sido creado con éxito');
+			else
+				$this->session->set_flashdata('success', 'El jugador ha sido creado con éxito, pero requiere aprobación de categoría por parte de FEBATEM');
+
+
 			$this->torneo_model->crear_jugador($data);
 			redirect('Welcome/jugadores');
 	}
@@ -2409,6 +2428,20 @@ public function eliminar_inscripcion()
 
     redirect('Welcome/torneos');
     
+  }
+
+
+
+  public function resetear_torneo()
+  {
+  	$this->load->model('torneo_model');
+  	$id_torneo = $this->uri->segment(3);
+
+	$this->torneo_model->eliminar_partidos_torneo($id_torneo);
+  	$this->torneo_model->eliminar_zonas_torneo($id_torneo);  	
+  	$this->torneo_model->eliminar_llave_torneo($id_torneo);
+
+  	redirect('Welcome/torneos');
   }
 
 }

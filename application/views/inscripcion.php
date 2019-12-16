@@ -3,13 +3,13 @@
         <!-- Begin Page Content -->
         <div class="container-fluid">
 
-          <!-- Breadcrumbs -->
+          <!-- Breadcrumbs 
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
             <a href="#">FEBATEM</a>
           </li>
           <li class="breadcrumb-item active">Inscripción</li>
-        </ol>
+        </ol>-->
 
          <?php if ($this->session->flashdata('error')) {?>
                     <div class="alert alert-danger">                                
@@ -21,6 +21,34 @@
                       <?php echo $this->session->flashdata('success');?>
                     </div>
           <?php } ?>  
+
+
+          <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Cerrar inscripción
+            </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <?php if($juega_sd){ ?>
+                <a class="dropdown-item" href="<?=base_url()?>Torneoscontroller/armar_zonas/0">Super división</a>
+                <?php } ?>
+                <?php if($juega_primera){ ?>
+                <a class="dropdown-item" href="<?=base_url()?>Torneoscontroller/armar_zonas/1">Primera</a>
+                <?php } ?>
+                <?php if($juega_segunda){ ?>
+                <a class="dropdown-item" href="<?=base_url()?>Torneoscontroller/armar_zonas/2">Segunda</a>
+                <?php } ?>
+                <?php if($juega_tercera){ ?>
+                <a class="dropdown-item" href="<?=base_url()?>Torneoscontroller/armar_zonas/3">Tercera</a>
+                <?php } ?>
+                <?php if($juega_cuarta){ ?>
+                <a class="dropdown-item" href="<?=base_url()?>Torneoscontroller/armar_zonas/4">Cuarta</a>
+                <?php } ?>
+                <?php if($juega_quinta){ ?>
+                <a class="dropdown-item" href="<?=base_url()?>Torneoscontroller/armar_zonas/5">Quinta</a>
+                <?php } ?>
+              </div>
+        </div>
+</br>
 
         <div class="row">
             <!-- Earnings (Monthly) Card Example -->
@@ -132,12 +160,15 @@
         </div>
 
 
-         <ul class="nav nav-pills">
+         <!--ul class="nav nav-pills">
           <li class="nav-item">
             <a class="nav-link active" href="<?=base_url()?>Torneoscontroller/armar_zonas"> <i class="fas fa-times-circle"></i> Cerrar inscripciones</a>
           </li> 
-        </ul>
+        </ul-->
 
+      
+
+    
 
           <!-- DataTales Example -->
           <div class="card shadow mb-4">

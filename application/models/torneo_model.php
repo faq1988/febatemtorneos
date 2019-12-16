@@ -481,6 +481,41 @@ class Torneo_model extends CI_Model {
 		if ($query->num_rows() >0 ) return $query;
 	}
 
+
+	function eliminar_zonas_torneo($id_torneo)
+	{
+		$this->db->where('torneo =', $id_torneo);
+		$this->db->delete('zona');
+	}
+
+
+
+	function eliminar_llave_torneo($id_torneo)
+	{
+		$this->db->where('torneo =', $id_torneo);
+		$this->db->delete('llave');
+	}
+
+
+
+	function eliminar_partidos_torneo($id_torneo)
+	{
+		$this->db->where('torneo =', $id_torneo);
+		$this->db->delete('partido');
+	}
+
+
+	function verificar_jugador_repetido($dni)
+	{		
+		$this->db->where('dni = ',$dni);
+		$this->db->from('jugador');										
+
+		$query = $this->db->get();
+		if ($query->num_rows() >0 ) return TRUE;
+			else
+				return FALSE;
+	}
+
 }
 
 
