@@ -16,6 +16,7 @@
             <a class="nav-link active" href="<?=base_url()?>Welcome/crear_torneo"> <i class="fas fa-plus-circle"></i> Crear Torneo</a>
           </li> 
         </ul>
+        </br>
 
           <!-- DataTales Example -->
           <div class="card shadow mb-4">

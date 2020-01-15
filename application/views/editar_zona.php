@@ -11,6 +11,17 @@
           <li class="breadcrumb-item active">Editar Zona</li>
         </ol>
 
+         <?php if ($this->session->flashdata('error')) {?>
+                    <div class="alert alert-danger">                                
+                      <?php echo $this->session->flashdata('error');?>
+                    </div>
+                  <?php } ?>    
+                  <?php if ($this->session->flashdata('success')) {?>
+                    <div class="alert alert-success">                               
+                      <?php echo $this->session->flashdata('success');?>
+                    </div>
+          <?php } ?>  
+
           <!-- DataTales Example -->
 
   <?php echo form_open('Torneoscontroller/guardar_zona', 'class= "text-center "'); ?>
@@ -60,7 +71,7 @@
                                             <td>-
                                             </td>   
                                             <td>
-                                            <input type="text" name="posicion1" value=""/>                                                            
+                                            -                                                            
                                             </td>                                                        
                                         </tr>
                                         <tr>
@@ -76,7 +87,7 @@
                                             <td>-
                                             </td>    
                                             <td>
-                                            <input type="text" name="posicion2" value=""/>                                                            
+                                            -                                                            
                                             </td>                                                           
                                         </tr>
                                         <tr>
@@ -92,7 +103,7 @@
                                             <td>-
                                             </td>   
                                             <td>
-                                            <input type="text" name="posicion3" value=""/>                                                            
+                                            -                                                            
                                             </td>                                                             
                                         </tr>
                                         <?php if (isset($jugador4)){ ?>
@@ -109,7 +120,7 @@
                                             <td style="background-color:black;">-
                                             </td>    
                                             <td>
-                                            <input type="text" name="posicion4" value=""/>                                                            
+                                            -                                                            
                                             </td>
                                         </tr>
                                       <?php } ?>
@@ -117,7 +128,7 @@
                                     </tbody>
                                 </table>
 
-                                <button type="submit" class="btn btn-primary">Aceptar</button>
+                                
                             </div>
                             <!-- /.table-responsive -->
                         </div>
@@ -127,6 +138,99 @@
                     <!-- /.panel -->
 
                     
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+          <div class="row">
+          <div class="col-lg-8 offset-lg-2">
+          
+
+                <?php
+                         if (isset($partidos)){
+                                     for($i=0; $i<sizeof($partidos); $i++){ ?>
+                        <div class="panel-heading">
+                           Id de partido: <?php echo $partidos[$i]->id;?>
+                           ---
+                           Zona: <?php echo $partidos[$i]->zona;?>
+                           ---
+                           Estado: <?php echo $partidos[$i]->estado;?>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-warning table-bordered table-hover table-sm">
+                                    <thead class="thead-inverse">
+                                        <tr>                                            
+                                            <th class="col-sm-6">Jugador</th>   
+                                            <th class="col-sm-1">Set 1</th> 
+                                            <th class="col-sm-1">Set 2</th>                                          
+                                            <th class="col-sm-1">Set 3</th>                                          
+                                            <th class="col-sm-1">Set 4</th>                                          
+                                            <th class="col-sm-1">Set 5</th>                                          
+                                            <th class="col-sm-1">Resultado</th>
+                                            <th rowspan="3">
+                                             <a href="<?php echo base_url() ?>Welcome/editar_partido/<?php echo $partidos[$i]->id; ?>"> Cargar resultado</a>   
+                                             </th>                                           
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    
+                                        <tr>
+                                            <td><?php echo $partidos[$i]->jugador1;?>
+                                            </td>
+                                            <td><?php echo $partidos[$i]->set11;?>
+                                            </td>
+                                            <td><?php echo $partidos[$i]->set12;?>
+                                            </td>
+                                            <td><?php echo $partidos[$i]->set13;?>
+                                            </td>
+                                            <td><?php echo $partidos[$i]->set14;?>
+                                            </td>
+                                            <td><?php echo $partidos[$i]->set15;?>
+                                            </td>
+                                            <td><?php echo $partidos[$i]->resultado1;?>
+                                            </td> 
+                                          
+
+
+                                        </tr>
+
+                                        <tr>
+                                            <td><?php echo $partidos[$i]->jugador2;?>
+                                            </td>
+                                            <td><?php echo $partidos[$i]->set21;?>
+                                            </td>
+                                            <td><?php echo $partidos[$i]->set22;?>
+                                            </td>
+                                            <td><?php echo $partidos[$i]->set23;?>
+                                            </td>
+                                            <td><?php echo $partidos[$i]->set24;?>
+                                            </td>
+                                            <td><?php echo $partidos[$i]->set25;?>
+                                            </td>
+                                            <td><?php echo $partidos[$i]->resultado2;?>
+                                            </td>                                                             
+                                        </tr>
+                                        
+                                       
+                                    </tbody>
+                                </table>                                  
+                                 
+                                
+                            </div>
+                            <!-- /.table-responsive -->
+                        </div>
+                        <?php } }?> 
+                        <!-- /.panel-body -->
+                        <button type="submit" class="btn btn-primary">Procesar Zona</button>
+
         </div>
       </div>
 

@@ -180,11 +180,17 @@ class Torneoscontroller extends CI_Controller {
 		$cantPrimera=0;
 		
 		$id_categoria = $this->uri->segment(3);
+		$row = $torneo->first_row();
+
+		if ($this->torneo_model->existen_zonas_sembradas($row->id, $id_categoria))
+		{
+			$this->session->set_flashdata('error', 'Ya existen zonas sembradas para la categoría elegida');
+				redirect('Welcome/inscripcion');
+		}
+
 
 		if(isset($torneo))
 		{
-			$row = $torneo->first_row();		
-
 			//obtengo inscriptos al torneo actual
 			$inscriptos=  $this->torneo_model->obtenerInscripcion($row->id, $id_categoria);
 			
@@ -501,6 +507,7 @@ class Torneoscontroller extends CI_Controller {
 			);
 
 			$tipo = $this->input->post('tipo');
+			$id_zona = $this->input->post('id_zona');
 						
 			$this->torneo_model->guardarPartido($data);
 
@@ -597,14 +604,16 @@ class Torneoscontroller extends CI_Controller {
 					}
 				}
 
-				
+				redirect('welcome/partidos_llave');
 
 			}
 
 			if ($tipo=='ZONA')
-				redirect('welcome/partidos_zona');
-			if ($tipo=='LLAVE')
-				redirect('welcome/partidos_llave');
+			{
+				redirect('welcome/editar_zona/'.$id_zona);
+			}
+			
+				
 	}
 
 
@@ -964,56 +973,87 @@ class Torneoscontroller extends CI_Controller {
 	
 
 
-
-
-
-
 	//guarda los campos editados de una zona
 	public function guardar_zona()
 	{			
-		$pos4=$this->input->post('posicion4');
-		if (isset($pos4))
+		$id_zona=$this->input->post('id');
+
+		//controlo que todos los partidos tengan resultado
+		$partidos_inconclusos= $this->torneo_model->hay_partidos_sin_finalizar($id_zona);
+		$zona_a_procesar= 	$this->torneo_model->obtener_zona_por_id($id_zona)->result_array();
+
+		if ($partidos_inconclusos)
 		{
-			$data = array(		    			
-			'id' => $this->input->post('id'),			
-			'pos1' => $this->input->post('posicion1'),			
-			'pos2' => $this->input->post('posicion2'),							
-			'pos3' => $this->input->post('posicion3'),							
-			'pos4' => $this->input->post('posicion4'),									
+			$this->session->set_flashdata('error', 'No es posible procesar la zona, existen partidos sin finalizar');
+			redirect('welcome/editar_zona/'.$id_zona);
+		}
+
+		$partidos_de_la_zona = $this->torneo_model->obtener_partidos_zona($id_zona)->result_array();
+
+		 if (isset($partidos_de_la_zona)){
+               for($i=0; $i<sizeof($partidos_de_la_zona); $i++){
+               	 $ganador = $this->obtener_ganador_partido($partidos_de_la_zona[$i]);
+
+               	 //sumo 2 puntos al ganador
+               	 if ($ganador == $zona_a_procesar[0]['id_jugador1'])
+               	 	$zona_a_procesar[0]['puntos1']= $zona_a_procesar[0]['puntos1']+2;
+               	 if ($ganador == $zona_a_procesar[0]['id_jugador2'])
+               	 	$zona_a_procesar[0]['puntos2']= $zona_a_procesar[0]['puntos2']+2;
+               	 if ($ganador == $zona_a_procesar[0]['id_jugador3'])
+               	 	$zona_a_procesar[0]['puntos3']= $zona_a_procesar[0]['puntos3']+2;
+
+               	 if ($ganador == $partidos_de_la_zona[$i]['id_jugador1'])
+               	 	$perdedor= $partidos_de_la_zona[$i]['id_jugador2'];
+               	 else
+               	 	$perdedor= $partidos_de_la_zona[$i]['id_jugador1'];
+
+               	 //sumo 1 punto al perdedor
+               	 if ($perdedor == $zona_a_procesar[0]['id_jugador1'])
+               	 	$zona_a_procesar[0]['puntos1']= $zona_a_procesar[0]['puntos1']+1;
+               	 if ($perdedor == $zona_a_procesar[0]['id_jugador2'])
+               	 	$zona_a_procesar[0]['puntos2']= $zona_a_procesar[0]['puntos2']+1;
+               	 if ($perdedor == $zona_a_procesar[0]['id_jugador3'])
+               	 	$zona_a_procesar[0]['puntos3']= $zona_a_procesar[0]['puntos3']+1;
+
+               }
+
+
+           }
+
+		$data = array(		    			
+			'id' => $zona_a_procesar[0]['id'],			
+			'pos1' => 0,
+			'pos2' => 0,
+			'pos3' => 0,
+			'pos4' => 0,
+			'puntos1' => $zona_a_procesar[0]['puntos1'],
+			'puntos2' => $zona_a_procesar[0]['puntos2'],							
+			'puntos3' => $zona_a_procesar[0]['puntos3'],							
+			'puntos4' => 0,									
 			'estado' => 'FINALIZADA',
 			
 			);
-		}
-		else
-		{			
-			$data = array(		    			
-			'id' => $this->input->post('id'),			
-			'pos1' => $this->input->post('posicion1'),			
-			'pos2' => $this->input->post('posicion2'),							
-			'pos3' => $this->input->post('posicion3'),							
-			'pos4' => null,									
-			'estado' => 'FINALIZADA',			
-			);	
-		}
-									
+
+	
 			$this->torneo_model->guardarZona($data);
 
 			//obtengo la zona recientemente cargada para generar el pase de jugadores a llave
-			$zona_cargada= 	$this->torneo_model->obtener_zona_por_id($data['id']);
-			$cant_inscriptos= $this->torneo_model->obtener_cant_inscriptos($zona_cargada[0]->torneo, 
-				$zona_cargada[0]->categoria);
+			$zona_cargada= 	$this->torneo_model->obtener_zona_por_id($data['id'])->result_array();
+			$cant_inscriptos= $this->torneo_model->obtener_cant_inscriptos($zona_cargada[0]['torneo'], 
+				$zona_cargada[0]['categoria']);
 
 			//entre 12 y 16 inscriptos la instancia de llave comienza en 16avos
 			if ($cant_inscriptos > 11 and $cant_inscriptos <17)
 			{				
-				$orden_llave= $this->torneo_model->obtener_posicion_plantilla($cant_inscriptos, '1'.$zona_cargada[0]->letra);
+				$orden_llave= $this->torneo_model->obtener_posicion_plantilla($cant_inscriptos, '1'.$zona_cargada[0]
+					['letra']);
 				$primero= $this->torneo_model->obtener_posicion_jugador_zona($data['id'], 1);
 
 				$data_llave = array(
 					'jugador' => $primero[0]->id,
-					'torneo'  => $zona_cargada[0]->torneo,
+					'torneo'  => $zona_cargada[0]['torneo'],
 					'instancia' => 16,
-					'categoria' => $zona_cargada[0]->categoria,
+					'categoria' => $zona_cargada[0]['categoria'],
 					'orden' => $orden_llave[0]->posicion,
 					'bye' => 0,
 					);
@@ -1022,14 +1062,15 @@ class Torneoscontroller extends CI_Controller {
 				$this->crear_partido_llave($data_llave['torneo'], $data_llave['categoria'], $data_llave['orden'], $data_llave['instancia']);
 
 
-				$orden_llave= $this->torneo_model->obtener_posicion_plantilla($cant_inscriptos, '2'.$zona_cargada[0]->letra);
+				$orden_llave= $this->torneo_model->obtener_posicion_plantilla($cant_inscriptos, '2'.$zona_cargada[0]
+					['letra']);
 				$segundo= $this->torneo_model->obtener_posicion_jugador_zona($data['id'], 2);
 
 				$data_llave = array(
 					'jugador' => $segundo[0]->id,
-					'torneo'  => $zona_cargada[0]->torneo,
+					'torneo'  => $zona_cargada[0]['torneo'],
 					'instancia' => 16,
-					'categoria' => $zona_cargada[0]->categoria,
+					'categoria' => $zona_cargada[0]['categoria'],
 					'orden' => $orden_llave[0]->posicion,
 					'bye' => 0,
 					);
@@ -1038,14 +1079,15 @@ class Torneoscontroller extends CI_Controller {
 				$this->crear_partido_llave($data_llave['torneo'], $data_llave['categoria'], $data_llave['orden'], $data_llave['instancia']);
 
 				
-				$orden_llave= $this->torneo_model->obtener_posicion_plantilla($cant_inscriptos, '3'.$zona_cargada[0]->letra);
+				$orden_llave= $this->torneo_model->obtener_posicion_plantilla($cant_inscriptos, '3'.$zona_cargada[0]
+					['letra']);
 				$tercero= $this->torneo_model->obtener_posicion_jugador_zona($data['id'], 3);
 
 				$data_llave = array(
 					'jugador' => $tercero[0]->id,
-					'torneo'  => $zona_cargada[0]->torneo,
+					'torneo'  => $zona_cargada[0]['torneo'],
 					'instancia' => 16,
-					'categoria' => $zona_cargada[0]->categoria,
+					'categoria' => $zona_cargada[0]['categoria'],
 					'orden' => $orden_llave[0]->posicion,
 					'bye' => 0,
 					);
@@ -1056,14 +1098,15 @@ class Torneoscontroller extends CI_Controller {
 
 				if (isset($pos4))
 				{
-				$orden_llave= $this->torneo_model->obtener_posicion_plantilla($cant_inscriptos, '4'.$zona_cargada[0]->letra);
+				$orden_llave= $this->torneo_model->obtener_posicion_plantilla($cant_inscriptos, '4'.$zona_cargada[0]
+					['letra']);
 				$cuarto= $this->torneo_model->obtener_posicion_jugador_zona($data['id'], 4);
 
 				$data_llave = array(
 					'jugador' => $cuarto[0]->id,
-					'torneo'  => $zona_cargada[0]->torneo,
+					'torneo'  => $zona_cargada[0]['torneo'],
 					'instancia' => 16,
-					'categoria' => $zona_cargada[0]->categoria,
+					'categoria' => $zona_cargada[0]['categoria'],
 					'orden' => $orden_llave[0]->posicion,
 					'bye' => 0,
 					);
@@ -1152,6 +1195,13 @@ class Torneoscontroller extends CI_Controller {
 	}
 
 
+	public function obtener_ganador_partido($partido)
+	{		
+		if ($partido['resultado1'] > $partido['resultado2'])
+			return $partido['id_jugador1'];
+		else
+			return $partido['id_jugador2'];
+	}
 
 	public function crear_partido_llave($torneo, $categoria, $orden, $instancia)
 	{

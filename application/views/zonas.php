@@ -53,14 +53,14 @@
                                             <th class="col-sm-6">Jugador</th>
                                             <th class="col-sm-1">vs</th>
                                             <th class="col-sm-1">vs</th>
-                                            <th class="col-sm-1">vs</th>
-                                            <th class="col-sm-1">vs</th>
+                                            <th class="col-sm-1">vs</th>                                            
+                                            <th class="col-sm-1">vs</th>                                            
                                             <th class="col-sm-1">Posición</th>
-                                            <?php if ($zonas[$i]->estado!='FINALIZADA') {?>
+                                            <?php //if ($zonas[$i]->estado!='FINALIZADA') {?>
                                             <th>                                            
                                             <a href="<?php echo base_url() ?>Welcome/editar_zona/<?php echo $zonas[$i]->id; ?>"> Cargar resultado</a> 
                                             </th>                            
-                                          <?php }?>
+                                          <?php //}?>
                                         </tr>
                                     </thead>
                                     <tbody>

@@ -25,6 +25,7 @@
   <?php echo form_open('Torneoscontroller/guardar_partido', 'class= "text-center "'); ?>
 
    <input type="hidden" name="id" value="<?php echo $id_partido; ?>"/>
+   <input type="hidden" name="id_zona" value="<?php echo $id_zona; ?>"/>
    <input type="hidden" name="tipo" value="<?php echo $tipo; ?>"/>
 
 
