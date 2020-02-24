@@ -55,6 +55,7 @@
                                             <th class="col-sm-1">vs</th>
                                             <th class="col-sm-1">vs</th>                                            
                                             <th class="col-sm-1">vs</th>                                            
+                                            <th class="col-sm-1">Puntos</th>
                                             <th class="col-sm-1">Posición</th>
                                             <?php //if ($zonas[$i]->estado!='FINALIZADA') {?>
                                             <th>                                            
@@ -76,6 +77,8 @@
                                             </td> 
                                             <td>-
                                             </td>  
+                                            <td><?php echo $zonas[$i]->puntos1;?>
+                                            </td> 
                                             <td><?php echo $zonas[$i]->pos1;?>
                                             </td>                                                          
                                         </tr>
@@ -91,6 +94,8 @@
                                             </td> 
                                             <td>-
                                             </td>  
+                                            <td><?php echo $zonas[$i]->puntos2;?>
+                                            </td> 
                                             <td><?php echo $zonas[$i]->pos2;?>
                                             </td>                                                              
                                         </tr>
@@ -105,7 +110,9 @@
                                             <td style="background-color:black;">-
                                             </td> 
                                             <td>-
-                                            </td>               
+                                            </td>     
+                                            <td><?php echo $zonas[$i]->puntos3;?>
+                                            </td>           
                                             <td><?php echo $zonas[$i]->pos3;?>
                                             </td>                                                  
                                         </tr>
@@ -121,7 +128,9 @@
                                             <td>-
                                             </td>
                                             <td style="background-color:black;">-
-                                            </td>     
+                                            </td>    
+                                            <td><?php echo $zonas[$i]->puntos4;?>
+                                            </td>  
                                             <td><?php echo $zonas[$i]->pos4;?>
                                             </td>                                                            
                                         </tr>

@@ -11,6 +11,17 @@
           <li class="breadcrumb-item active">Llave</li>
         </ol>
 
+           <?php if ($this->session->flashdata('error')) {?>
+                    <div class="alert alert-danger">                                
+                      <?php echo $this->session->flashdata('error');?>
+                    </div>
+                  <?php } ?>    
+                  <?php if ($this->session->flashdata('success')) {?>
+                    <div class="alert alert-success">                               
+                      <?php echo $this->session->flashdata('success');?>
+                    </div>
+          <?php } ?>  
+
 
   <?php echo form_open('Welcome/llave', 'class= "text-center "'); ?>
       <div class="form-row">
@@ -30,6 +41,10 @@
     </form>
 
 
+  <?php echo form_open('Torneoscontroller/procesar_llave', 'class= "text-center "'); ?>
+
+    <input type="hidden" name="id_categoria" value="<?php echo $id_categoria; ?>"/>
+
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -38,9 +53,80 @@
             <div class="card-body">
               <div class="table-responsive">
                  <?php 
-              if ($cant_inscriptos > 0) {
+              
+              if ($cant_inscriptos > 5 and $cant_inscriptos < 9 and isset($llave_8))
+                {
+                    ?>
+                     <table summary="Tournament Bracket">
+                       <tr>                        
+                        <td rowspan="2"><p>1. <?php if (isset($llave_8[0]->jugador)) echo $llave_8[0]->jugador;?></p></td>
+                        <td rowspan="4"><p>1. <?php if (isset($llave_4[0]->jugador)) echo $llave_4[0]->jugador;?></p></td>
+                        <td rowspan="8"><p>1.  <?php if (isset($llave_2[0]->jugador)) echo $llave_2[0]->jugador;?></p></td>
+                        <td rowspan="16"><p>1.  <?php if (isset($ganador[0]->jugador)) echo $ganador[0]->jugador;?></p></td>                       
+                       </tr>
+                       <tr>                        
+                       </tr>
+                       <tr>
+                        
+                        <td rowspan="2"><p>2. <?php if (isset($llave_8[1]->jugador)) echo $llave_8[1]->jugador;?></p></td>
+                       </tr>
+                       <tr>
+                        
+                       </tr>
+                       <tr>
+                        
+                        <td rowspan="2"><p>3. <?php if (isset($llave_8[2]->jugador)) echo $llave_8[2]->jugador;?></p></td>
+                        <td rowspan="4"><p>2. <?php if (isset($llave_4[1]->jugador)) echo $llave_4[1]->jugador;?></p></td>
+                       </tr>
+                       <tr>
+                        
+                       </tr>
+                       <tr>
+                        
+                        <td rowspan="2"><p>4. <?php if (isset($llave_8[3]->jugador)) echo $llave_8[3]->jugador;?></p></td>
+                       </tr>
+                       <tr>
+                        
+                       </tr>
+                       <tr>
+                        
+                        <td rowspan="2"><p>5. <?php if (isset($llave_8[4]->jugador)) echo $llave_8[4]->jugador;?></p></td>
+                        <td rowspan="4"><p>3. <?php if (isset($llave_4[2]->jugador)) echo $llave_4[2]->jugador;?></p></td>
+                        <td rowspan="8"><p>2. <?php if (isset($llave_2[1]->jugador)) echo $llave_2[1]->jugador;?></p></td>
+                       </tr>
+                       <tr>
+                        
+                       </tr>
+                       <tr>
+                        
+                        <td rowspan="2"><p>6. <?php if (isset($llave_8[5]->jugador)) echo $llave_8[5]->jugador;?></p></td>
+                       </tr>
+                       <tr>
+                        
+                       </tr>
+                       <tr>
+                        
+                        <td rowspan="2"><p>7. <?php if (isset($llave_8[6]->jugador)) echo $llave_8[6]->jugador;?></p></td>
+                        <td rowspan="4"><p>4. <?php if (isset($llave_4[3]->jugador)) echo $llave_4[3]->jugador;?></p></td>
+                       </tr>
+                       <tr>
+                        
+                       </tr>
+                       <tr>
+                        
+                        <td rowspan="2"><p>8. <?php if (isset($llave_8[7]->jugador)) echo $llave_8[7]->jugador;?></p></td>
+                       </tr>
+                       <tr>
+                        
+                       </tr>
+                       </table>
 
-              if ($cant_inscriptos < 17 and isset($llave_16)) {
+
+              <?php } ?>
+
+
+                <?php     
+              if ($cant_inscriptos > 8 and $cant_inscriptos < 17 and isset($llave_16)) {
 
                  ?>
 
@@ -50,7 +136,7 @@
                         <td rowspan="2"><p>1. <?php if (isset($llave_8[0]->jugador)) echo $llave_8[0]->jugador;?></p></td>
                         <td rowspan="4"><p>1. <?php if (isset($llave_4[0]->jugador)) echo $llave_4[0]->jugador;?></p></td>
                         <td rowspan="8"><p>1.  <?php if (isset($llave_2[0]->jugador)) echo $llave_2[0]->jugador;?></p></td>
-                        <td rowspan="16"><p>1.  <?php //echo $llave_2_primera[0];?></p></td>                       
+                        <td rowspan="16"><p>1.  <?php if (isset($ganador[0]->jugador)) echo $ganador[0]->jugador;?></p></td>                       
                        </tr>
                        <tr>
                         <td><p>2. <?php echo $llave_16[1]->jugador; ?></p></td>
@@ -113,7 +199,8 @@
               <?php  }
 
 
-                    else {?>
+                   if ($cant_inscriptos > 17) {
+                    ?>
 
                   <table summary="Tournament Bracket">
                        <tr>
@@ -247,15 +334,23 @@
 
 
 
-                  <?php } }?>
+                  <?php } ?>
 
 
               </div>
+          </br>
+              <button type="submit" class="btn btn-primary">Procesar Llave</button>
             </div>
+
+
           </div>
+
+      </form>
+          
 
         </div>
         <!-- /.container-fluid -->
+
 
       </div>
       <!-- End of Main Content -->

@@ -57,14 +57,96 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                     
-                                    
+                                       <tr>
+                                            <td>
+                                            6
+                                            </td>
+                                            <?php 
+                                            for($i=0; $i<8; $i++){ ?>
+                                              <td>
+                                              <?php                                               
+                                              echo $plantilla[$i]->posicion_zona;
+                                               ?>
+                                              </td>  
+                                              <?php } ?>
+                                                                                                                    
+                                        </tr>
+                                         <tr>
+                                            <td>
+                                            7
+                                            </td>
+                                            <?php 
+                                            for($i=8; $i<16; $i++){ ?>
+                                              <td>
+                                              <?php                                               
+                                              echo $plantilla[$i]->posicion_zona;
+                                               ?>
+                                              </td>  
+                                              <?php } ?>
+                                                                                                                    
+                                        </tr>
+                                         <tr>
+                                            <td>
+                                            8
+                                            </td>
+                                            <?php 
+                                            for($i=16; $i<24; $i++){ ?>
+                                              <td>
+                                              <?php                                               
+                                              echo $plantilla[$i]->posicion_zona;
+                                               ?>
+                                              </td>  
+                                              <?php } ?>
+                                                                                                                    
+                                        </tr>
+                                       <tr>
+                                            <td>
+                                            9
+                                            </td>
+                                            <?php 
+                                            for($i=24; $i<40; $i++){ ?>
+                                              <td>
+                                              <?php                                               
+                                              echo $plantilla[$i]->posicion_zona;
+                                               ?>
+                                              </td>  
+                                              <?php } ?>
+                                                                                                                    
+                                        </tr>
+                                      <tr>
+                                            <td>
+                                            10
+                                            </td>
+                                            <?php 
+                                            for($i=40; $i<56; $i++){ ?>
+                                              <td>
+                                              <?php                                               
+                                              echo $plantilla[$i]->posicion_zona;
+                                               ?>
+                                              </td>  
+                                              <?php } ?>
+                                                                                                                    
+                                        </tr>
+                                     <tr>
+                                            <td>
+                                            11
+                                            </td>
+                                            <?php 
+                                            for($i=56; $i<72; $i++){ ?>
+                                              <td>
+                                              <?php                                               
+                                              echo $plantilla[$i]->posicion_zona;
+                                               ?>
+                                              </td>  
+                                              <?php } ?>
+                                                                                                                    
+                                        </tr>
                                         <tr>
                                             <td>
                                             12
                                             </td>
                                             <?php 
-                                            for($i=0; $i<16; $i++){ ?>
+                                            for($i=72; $i<88; $i++){ ?>
                                               <td>
                                               <?php                                               
                                               echo $plantilla[$i]->posicion_zona;
@@ -78,7 +160,7 @@
                                             13
                                             </td>
                                             <?php 
-                                            for($i=16; $i<32; $i++){ ?>
+                                            for($i=88; $i<104; $i++){ ?>
                                               <td>
                                               <?php                                               
                                               echo $plantilla[$i]->posicion_zona;
@@ -92,7 +174,7 @@
                                             14
                                             </td>
                                             <?php 
-                                            for($i=32; $i<48; $i++){ ?>
+                                            for($i=104; $i<120; $i++){ ?>
                                               <td>
                                               <?php                                               
                                               echo $plantilla[$i]->posicion_zona;
@@ -106,7 +188,7 @@
                                             15
                                             </td>
                                             <?php 
-                                            for($i=48; $i<64; $i++){ ?>
+                                            for($i=120; $i<136; $i++){ ?>
                                               <td>
                                               <?php                                               
                                               echo $plantilla[$i]->posicion_zona;
@@ -120,7 +202,7 @@
                                             16
                                             </td>
                                             <?php 
-                                            for($i=64; $i<80; $i++){ ?>
+                                            for($i=136; $i<152; $i++){ ?>
                                               <td>
                                               <?php                                               
                                               echo $plantilla[$i]->posicion_zona;
@@ -134,7 +216,7 @@
                                             17
                                             </td>
                                             <?php 
-                                            for($i=80; $i<112; $i++){ ?>
+                                            for($i=152; $i<184; $i++){ ?>
                                               <td>
                                               <?php                                               
                                               echo $plantilla[$i]->posicion_zona;
@@ -148,7 +230,7 @@
                                             18
                                             </td>
                                             <?php 
-                                            for($i=112; $i<144; $i++){ ?>
+                                            for($i=184; $i<216; $i++){ ?>
                                               <td>
                                               <?php                                               
                                               echo $plantilla[$i]->posicion_zona;
@@ -162,7 +244,7 @@
                                             19
                                             </td>
                                             <?php 
-                                            for($i=144; $i<176; $i++){ ?>
+                                            for($i=216; $i<248; $i++){ ?>
                                               <td>
                                               <?php                                               
                                               echo $plantilla[$i]->posicion_zona;
@@ -176,7 +258,7 @@
                                             20
                                             </td>
                                             <?php 
-                                            for($i=176; $i<208; $i++){ ?>
+                                            for($i=248; $i<280; $i++){ ?>
                                               <td>
                                               <?php                                               
                                               echo $plantilla[$i]->posicion_zona;
@@ -190,7 +272,7 @@
                                             21
                                             </td>
                                             <?php 
-                                            for($i=208; $i<240; $i++){ ?>
+                                            for($i=280; $i<312; $i++){ ?>
                                               <td>
                                               <?php                                               
                                               echo $plantilla[$i]->posicion_zona;
@@ -204,7 +286,7 @@
                                             22
                                             </td>
                                             <?php 
-                                            for($i=240; $i<272; $i++){ ?>
+                                            for($i=312; $i<344; $i++){ ?>
                                               <td>
                                               <?php                                               
                                               echo $plantilla[$i]->posicion_zona;
@@ -218,7 +300,7 @@
                                             23
                                             </td>
                                             <?php 
-                                            for($i=272; $i<304; $i++){ ?>
+                                            for($i=344; $i<376; $i++){ ?>
                                               <td>
                                               <?php                                               
                                               echo $plantilla[$i]->posicion_zona;
@@ -232,7 +314,7 @@
                                             24
                                             </td>
                                             <?php 
-                                            for($i=304; $i<336; $i++){ ?>
+                                            for($i=376; $i<408; $i++){ ?>
                                               <td>
                                               <?php                                               
                                               echo $plantilla[$i]->posicion_zona;
@@ -246,7 +328,7 @@
                                             25
                                             </td>
                                             <?php 
-                                            for($i=336; $i<368; $i++){ ?>
+                                            for($i=408; $i<440; $i++){ ?>
                                               <td>
                                               <?php                                               
                                               echo $plantilla[$i]->posicion_zona;
@@ -260,7 +342,7 @@
                                             26
                                             </td>
                                             <?php 
-                                            for($i=368; $i<400; $i++){ ?>
+                                            for($i=440; $i<472; $i++){ ?>
                                               <td>
                                               <?php                                               
                                               echo $plantilla[$i]->posicion_zona;
@@ -274,7 +356,7 @@
                                             27
                                             </td>
                                             <?php 
-                                            for($i=400; $i<432; $i++){ ?>
+                                            for($i=472; $i<504; $i++){ ?>
                                               <td>
                                               <?php                                               
                                               echo $plantilla[$i]->posicion_zona;
@@ -288,7 +370,7 @@
                                             28
                                             </td>
                                             <?php 
-                                            for($i=432; $i<464; $i++){ ?>
+                                            for($i=504; $i<536; $i++){ ?>
                                               <td>
                                               <?php                                               
                                               echo $plantilla[$i]->posicion_zona;
@@ -302,7 +384,7 @@
                                             29
                                             </td>
                                             <?php 
-                                            for($i=464; $i<496; $i++){ ?>
+                                            for($i=536; $i<568; $i++){ ?>
                                               <td>
                                               <?php                                               
                                               echo $plantilla[$i]->posicion_zona;
@@ -316,7 +398,7 @@
                                             30
                                             </td>
                                             <?php 
-                                            for($i=496; $i<528; $i++){ ?>
+                                            for($i=568; $i<600; $i++){ ?>
                                               <td>
                                               <?php                                               
                                               echo $plantilla[$i]->posicion_zona;
@@ -330,7 +412,7 @@
                                             31
                                             </td>
                                             <?php 
-                                            for($i=528; $i<560; $i++){ ?>
+                                            for($i=600; $i<632; $i++){ ?>
                                               <td>
                                               <?php                                               
                                               echo $plantilla[$i]->posicion_zona;
@@ -344,7 +426,7 @@
                                             32
                                             </td>
                                             <?php 
-                                            for($i=560; $i<592; $i++){ ?>
+                                            for($i=632; $i<664; $i++){ ?>
                                               <td>
                                               <?php                                               
                                               echo $plantilla[$i]->posicion_zona;

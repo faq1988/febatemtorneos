@@ -331,6 +331,7 @@ public function clubes()
         $llave_8=  $this->torneo_model->obtener_llave($row->id, $categoria, 8);
         $llave_4=  $this->torneo_model->obtener_llave($row->id, $categoria, 4);
         $llave_2=  $this->torneo_model->obtener_llave($row->id, $categoria, 2);
+        $ganador = $this->torneo_model->obtener_llave($row->id, $categoria, 1);
 //var_dump($llave_8);exit;
 
         $cant_inscriptos= $this->torneo_model->obtener_cant_inscriptos($row->id, $categoria);
@@ -345,7 +346,8 @@ public function clubes()
          $data['llave_4']=$llave_4;//-> result_array();
        if (isset($llave_2))
          $data['llave_2']=$llave_2;//-> result_array();
-
+       if (isset($ganador))
+         $data['ganador']=$ganador;//-> result_array();
 
         //$data['llave_32_primera']= $this->completar_llave($cant_inscriptos_primera, $llave_32_primera);
         //$data['llave_16_primera']= $this->completar_fase(16, $llave_16_primera);
@@ -362,6 +364,8 @@ public function clubes()
        $data['cant_inscriptos']= 0;
        
       }
+
+      $data['id_categoria'] = $categoria;
         
     $this->load->view('menu');    
     $this->load->view('header', $t);
@@ -899,7 +903,100 @@ public function crear_club()
     $pdf->Cell(20,5,'',1,0,'L',0);
    
     $pdf->Ln();
+    $pdf->Ln();
+    $pdf->Ln();
+    $pdf->Ln();
+
+    $header = array('Jugador', '1', '2', '3', '4', '5', 'Resultado');
+
     
+    $pdf->SetFont('Arial','B',9);
+    $w = array(70, 20, 20, 20 ,20, 20, 20);
+    for($i=0;$i<count($header);$i++)
+        $pdf->Cell($w[$i],7,$header[$i],1,0,'C',0);
+    $pdf->Ln();
+
+     $pdf->Cell(70,5,'Jugador 1',1,0,'L',0);
+   $pdf->SetFillColor(0,0,0);
+    $pdf->Cell(20,5,'',1,0,'L',0);
+    $pdf->Cell(20,5,'',1,0,'L',0);
+    $pdf->Cell(20,5,'',1,0,'L',0);
+    $pdf->Cell(20,5,'',1,0,'L',0);
+    $pdf->Cell(20,5,'',1,0,'L',0);
+    $pdf->Cell(20,5,'',1,0,'L',0);
+      
+    $pdf->Ln();
+    $pdf->Cell(70,5,'Jugador 3',1,0,'L',0);
+    $pdf->Cell(20,5,'',1,0,'L',0);
+    $pdf->Cell(20,5,'',1,0,'L',0);
+    $pdf->Cell(20,5,'',1,0,'L',0);
+    $pdf->Cell(20,5,'',1,0,'L',0);
+    $pdf->Cell(20,5,'',1,0,'L',0);
+    $pdf->Cell(20,5,'',1,0,'L',0);
+
+    $pdf->Ln();
+    $pdf->Ln();
+    $pdf->Ln();
+    $pdf->Ln();
+
+    $header = array('Jugador', '1', '2', '3', '4', '5', 'Resultado');
+
+    
+    $pdf->SetFont('Arial','B',9);
+    $w = array(70, 20, 20, 20 ,20, 20, 20);
+    for($i=0;$i<count($header);$i++)
+        $pdf->Cell($w[$i],7,$header[$i],1,0,'C',0);
+    $pdf->Ln();
+
+     $pdf->Cell(70,5,'Jugador 1',1,0,'L',0);
+   $pdf->SetFillColor(0,0,0);
+    $pdf->Cell(20,5,'',1,0,'L',0);
+    $pdf->Cell(20,5,'',1,0,'L',0);
+    $pdf->Cell(20,5,'',1,0,'L',0);
+    $pdf->Cell(20,5,'',1,0,'L',0);
+    $pdf->Cell(20,5,'',1,0,'L',0);
+    $pdf->Cell(20,5,'',1,0,'L',0);
+      
+    $pdf->Ln();
+    $pdf->Cell(70,5,'Jugador 2',1,0,'L',0);
+    $pdf->Cell(20,5,'',1,0,'L',0);
+    $pdf->Cell(20,5,'',1,0,'L',0);
+    $pdf->Cell(20,5,'',1,0,'L',0);
+    $pdf->Cell(20,5,'',1,0,'L',0);
+    $pdf->Cell(20,5,'',1,0,'L',0);
+    $pdf->Cell(20,5,'',1,0,'L',0);
+
+    $pdf->Ln();
+    $pdf->Ln();
+    $pdf->Ln();
+    $pdf->Ln();
+
+    $header = array('Jugador', '1', '2', '3', '4', '5', 'Resultado');
+
+    
+    $pdf->SetFont('Arial','B',9);
+    $w = array(70, 20, 20, 20 ,20, 20, 20);
+    for($i=0;$i<count($header);$i++)
+        $pdf->Cell($w[$i],7,$header[$i],1,0,'C',0);
+    $pdf->Ln();
+
+     $pdf->Cell(70,5,'Jugador 2',1,0,'L',0);
+   $pdf->SetFillColor(0,0,0);
+    $pdf->Cell(20,5,'',1,0,'L',0);
+    $pdf->Cell(20,5,'',1,0,'L',0);
+    $pdf->Cell(20,5,'',1,0,'L',0);
+    $pdf->Cell(20,5,'',1,0,'L',0);
+    $pdf->Cell(20,5,'',1,0,'L',0);
+    $pdf->Cell(20,5,'',1,0,'L',0);
+      
+    $pdf->Ln();
+    $pdf->Cell(70,5,'Jugador 3',1,0,'L',0);
+    $pdf->Cell(20,5,'',1,0,'L',0);
+    $pdf->Cell(20,5,'',1,0,'L',0);
+    $pdf->Cell(20,5,'',1,0,'L',0);
+    $pdf->Cell(20,5,'',1,0,'L',0);
+    $pdf->Cell(20,5,'',1,0,'L',0);
+    $pdf->Cell(20,5,'',1,0,'L',0);
 
     $pdf->Output();
 

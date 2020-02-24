@@ -3,14 +3,14 @@
         <!-- Begin Page Content -->
         <div class="container-fluid">
 
-          <!-- Breadcrumbs -->
+          <!-- Breadcrumbs
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
             <a href="#">FEBATEM</a>
           </li>
           <li class="breadcrumb-item active">Torneos</li>
         </ol>
-
+ -->
          <ul class="nav nav-pills">
           <li class="nav-item">
             <a class="nav-link active" href="<?=base_url()?>Welcome/crear_torneo"> <i class="fas fa-plus-circle"></i> Crear Torneo</a>
@@ -53,7 +53,9 @@
                       <td><?php echo $torneos[$i]['cant_mesas'];?></td>                      
                       
                       <td><a class="btn btn-success btn-sm" href="<?=base_url()?>Torneoscontroller/eliminar_torneo/<?php echo $torneos[$i]['id']; ?>" title="Eliminar"><i class="fas fa-trash-alt"></i></a>
+                        <?php if ($torneos[$i]['activo'] == false){ ?>
                         <a class="btn btn-success btn-sm" href="<?=base_url()?>Torneoscontroller/seleccionar_torneo/<?php echo $torneos[$i]['id']; ?>" title="Seleccionar"><i class="fas fa-check-circle"></i></a>
+                      <?php }?>
                          <a class="btn btn-success btn-sm" href="<?=base_url()?>Torneoscontroller/resetear_torneo/<?php echo $torneos[$i]['id']; ?>" title="Reiniciar"><i class="fas fa-redo-alt"></i></a>
                       </td>
                       

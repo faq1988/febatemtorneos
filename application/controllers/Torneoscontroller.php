@@ -31,6 +31,7 @@ class Torneoscontroller extends CI_Controller {
 	public function crear_torneo()
 	{
 		$categorias= $this->input->post('categorias');		
+		
 		$sd=FALSE;
 		$primera=FALSE;
 		$segunda=FALSE;
@@ -98,7 +99,11 @@ class Torneoscontroller extends CI_Controller {
 			);
 
 
-		
+		if($this->torneo_model->figura_en_rating($data['jugador'])==FALSE)
+		{
+			$this->session->set_flashdata('error', 'Ha ocurrido un error, el jugador aun no figura en el rating');
+			redirect('Welcome/inscripcion');
+		}
 
 		if (isset($categorias)){
              for($i=0; $i<sizeof($categorias); $i++)
@@ -212,7 +217,7 @@ class Torneoscontroller extends CI_Controller {
 					{
 						$division = $cantPrimera / 3;
 						$cantZonas3 = $division;
-						$resumen= $resumen. "caso cero Para ". $cantPrimera." jugadores se armaron ". $cantZonas3." zonas de 3 y ". $cantZonas4." zonas de 4";
+						$resumen= $resumen. "Para ". $cantPrimera." jugadores se armaron ". $cantZonas3." zonas de 3 y ". $cantZonas4." zonas de 4";
 						$resumen= $resumen. '</br>';
 
 					}				
@@ -223,7 +228,7 @@ class Torneoscontroller extends CI_Controller {
 							$cantZonas3 = floor($division);
 							$cantZonas3 = $cantZonas3-1;
 							$cantZonas4 = 1; 
-							$resumen= $resumen. "caso uno Para ". $cantPrimera." jugadores se armaron ". $cantZonas3." zonas de 3 y ". $cantZonas4." zonas de 4";				
+							$resumen= $resumen. "Para ". $cantPrimera." jugadores se armaron ". $cantZonas3." zonas de 3 y ". $cantZonas4." zonas de 4";				
 							$resumen= $resumen. '</br>';
 						}
 						else
@@ -233,7 +238,7 @@ class Torneoscontroller extends CI_Controller {
 								$cantZonas3 = floor($division);
 								$cantZonas3 = $cantZonas3-2;
 								$cantZonas4 = 2; 
-								$resumen= $resumen. "caso dos Para ". $cantPrimera." jugadores se armaron ". $cantZonas3." zonas de 3 y ". $cantZonas4." zonas de 4";	
+								$resumen= $resumen. "Para ". $cantPrimera." jugadores se armaron ". $cantZonas3." zonas de 3 y ". $cantZonas4." zonas de 4";	
 								$resumen= $resumen. '</br>';
 							}
 					
@@ -282,16 +287,18 @@ class Torneoscontroller extends CI_Controller {
 	public function crear_byes_llave($torneo, $cant_inscriptos, $categoria)
 	{
 		$template_llave= array();
-    	if ($cant_inscriptos>0)
+    	if ($cant_inscriptos>5)
       		$template_llave = $this->torneo_model->obtener_plantilla_con_byes($cant_inscriptos);
 
       if (isset($template_llave))
     {
       $llave_incompleta= $template_llave->result_array();
 
-      if ($cant_inscriptos < 16)
-      	$instancia= 16;
-      else
+      if ($cant_inscriptos > 5 and $cant_inscriptos < 9)
+      	$instancia= 8;
+      if ($cant_inscriptos > 8 and $cant_inscriptos < 17)
+      	$instancia = 16;
+      if ($cant_inscriptos > 16 and $cant_inscriptos < 33)
       	 $instancia=32;
             
       for($i=0; $i<count($llave_incompleta); $i++)
@@ -1042,8 +1049,84 @@ class Torneoscontroller extends CI_Controller {
 			$cant_inscriptos= $this->torneo_model->obtener_cant_inscriptos($zona_cargada[0]['torneo'], 
 				$zona_cargada[0]['categoria']);
 
-			//entre 12 y 16 inscriptos la instancia de llave comienza en 16avos
-			if ($cant_inscriptos > 11 and $cant_inscriptos <17)
+			//entre 6 y 8 inscriptos la instancia de llave comienza en 8vos
+			if ($cant_inscriptos > 5 and $cant_inscriptos < 9)
+			{
+				$orden_llave= $this->torneo_model->obtener_posicion_plantilla($cant_inscriptos, '1'.$zona_cargada[0]
+					['letra']);
+				$primero= $this->torneo_model->obtener_posicion_jugador_zona($data['id'], 1);
+
+				$data_llave = array(
+					'jugador' => $primero[0]->id,
+					'torneo'  => $zona_cargada[0]['torneo'],
+					'instancia' => 8,
+					'categoria' => $zona_cargada[0]['categoria'],
+					'orden' => $orden_llave[0]->posicion,
+					'bye' => 0,
+					);
+
+				$this->torneo_model->crear_llave($data_llave);
+				$this->crear_partido_llave($data_llave['torneo'], $data_llave['categoria'], $data_llave['orden'], $data_llave['instancia']);
+
+				$orden_llave= $this->torneo_model->obtener_posicion_plantilla($cant_inscriptos, '2'.$zona_cargada[0]
+					['letra']);
+				$segundo= $this->torneo_model->obtener_posicion_jugador_zona($data['id'], 2);
+
+				$data_llave = array(
+					'jugador' => $segundo[0]->id,
+					'torneo'  => $zona_cargada[0]['torneo'],
+					'instancia' => 8,
+					'categoria' => $zona_cargada[0]['categoria'],
+					'orden' => $orden_llave[0]->posicion,
+					'bye' => 0,
+					);
+
+				$this->torneo_model->crear_llave($data_llave);
+				$this->crear_partido_llave($data_llave['torneo'], $data_llave['categoria'], $data_llave['orden'], $data_llave['instancia']);
+
+				
+				$orden_llave= $this->torneo_model->obtener_posicion_plantilla($cant_inscriptos, '3'.$zona_cargada[0]
+					['letra']);
+				$tercero= $this->torneo_model->obtener_posicion_jugador_zona($data['id'], 3);
+
+				$data_llave = array(
+					'jugador' => $tercero[0]->id,
+					'torneo'  => $zona_cargada[0]['torneo'],
+					'instancia' => 8,
+					'categoria' => $zona_cargada[0]['categoria'],
+					'orden' => $orden_llave[0]->posicion,
+					'bye' => 0,
+					);
+
+				$this->torneo_model->crear_llave($data_llave);
+				$this->crear_partido_llave($data_llave['torneo'], $data_llave['categoria'], $data_llave['orden'], $data_llave['instancia']);		
+
+
+				if (isset($pos4))
+				{
+				$orden_llave= $this->torneo_model->obtener_posicion_plantilla($cant_inscriptos, '4'.$zona_cargada[0]
+					['letra']);
+				$cuarto= $this->torneo_model->obtener_posicion_jugador_zona($data['id'], 4);
+
+				$data_llave = array(
+					'jugador' => $cuarto[0]->id,
+					'torneo'  => $zona_cargada[0]['torneo'],
+					'instancia' => 8,
+					'categoria' => $zona_cargada[0]['categoria'],
+					'orden' => $orden_llave[0]->posicion,
+					'bye' => 0,
+					);
+
+				$this->torneo_model->crear_llave($data_llave);	
+				$this->crear_partido_llave($data_llave['torneo'], $data_llave['categoria'], $data_llave['orden'], $data_llave['instancia']);
+				}		
+			}
+
+
+
+
+			//entre 8 y 16 inscriptos la instancia de llave comienza en 16avos
+			if ($cant_inscriptos > 8 and $cant_inscriptos <17)
 			{				
 				$orden_llave= $this->torneo_model->obtener_posicion_plantilla($cant_inscriptos, '1'.$zona_cargada[0]
 					['letra']);
@@ -2492,6 +2575,90 @@ public function eliminar_inscripcion()
   	$this->torneo_model->eliminar_llave_torneo($id_torneo);
 
   	redirect('Welcome/torneos');
+  }
+
+
+
+  public function procesar_llave()
+  {
+
+  	
+
+  	  $categoria = $this->input->post('id_categoria');
+  	  $torneo = $this->torneo_model->obtenerTorneoActual();
+
+		if ($this->torneo_model->existen_resultados_llave($torneo->first_row()->id, $categoria))
+		  	{
+		  		$this->session->set_flashdata('error', 'La llave ya ha sido procesada');
+				redirect('Welcome/llave');
+		  	}	
+
+  	  $ganador_llave = $this->torneo_model->obtener_llave($torneo->first_row()->id, $categoria, 1);
+
+  	  if (isset($ganador_llave))
+  	  		{
+  	  			//registro el ganador del torneo en la primera posicion
+  	  			$this->torneo_model->guardar_resultado_torneo($ganador_llave[0]->id_jugador, $torneo->first_row()->id, $categoria, 1);
+
+  	  			//registro el segundo lugar, con el que perdio la final
+  	  			$partido_final = $this->torneo_model->obtener_partidos_instancia_llave($torneo->first_row()->id, 2);
+  	  			
+  	  			if ($partido_final->first_row()->jugador1 == $ganador_llave[0]->id_jugador)
+  	  			{
+					$this->torneo_model->guardar_resultado_torneo($partido_final->first_row()->jugador2, $torneo->first_row()->id, $categoria, 2);  	  				
+  	  			}
+  	  			else
+  	  			{
+  	  				$this->torneo_model->guardar_resultado_torneo($partido_final->first_row()->jugador1, $torneo->first_row()->id, $categoria, 2);  	  					
+  	  			}
+
+  	  			//registro tercer y cuarto puesto con la semifinal
+  	  			$partidos_semifinal = $this->torneo_model->obtener_partidos_instancia_llave($torneo->first_row()->id, 4)->result_array();
+
+  	  			for($i=0; $i<count($partidos_semifinal); $i++)
+  	  			{
+  	  				
+  	  				//si el ganador esta en el partido, entonces el oponente queda en tercer puesto
+  	  				if ($partidos_semifinal[$i]['jugador1'] == $ganador_llave[0]->id_jugador or $partidos_semifinal[$i]['jugador2'] == $ganador_llave[0]->id_jugador)
+  	  				{
+		  	  			if ($partidos_semifinal[$i]['jugador1'] == $ganador_llave[0]->id_jugador)
+		  	  			{
+							$this->torneo_model->guardar_resultado_torneo($partidos_semifinal[$i]['jugador2'], $torneo->first_row()->id, $categoria, 3);  	  				
+		  	  			}
+		  	  				else
+		  	  			{
+		  	  				$this->torneo_model->guardar_resultado_torneo($partidos_semifinal[$i]['jugador1'], $torneo->first_row()->id, $categoria, 3);  	  					
+		  	  			}
+	  	  			}
+	  	  			//obtengo el segundo puesto
+	  	  			$segundo =  $this->torneo_model->obtener_resultado_torneo($torneo->first_row()->id, $categoria, 2);
+
+	  	  			//si el segundo esta en el partido, entonces el oponente queda en cuarto puesto
+	  	  			if ($partidos_semifinal[$i]['jugador1'] == $segundo->first_row()->jugador or $partidos_semifinal[$i]['jugador2'] == $segundo->first_row()->jugador)
+  	  				{
+		  	  			if ($partidos_semifinal[$i]['jugador1'] == $segundo->first_row()->jugador)
+		  	  			{
+							$this->torneo_model->guardar_resultado_torneo($partidos_semifinal[$i]['jugador2'], $torneo->first_row()->id, $categoria, 4);  	  				
+		  	  			}
+		  	  				else
+		  	  			{
+		  	  				$this->torneo_model->guardar_resultado_torneo($partidos_semifinal[$i]['jugador1'], $torneo->first_row()->id, $categoria, 4);  	  					
+		  	  			}
+	  	  			}
+  	  			}
+
+
+  	  			
+				$this->session->set_flashdata('success', 'La llave ha sido procesada con éxito');
+				redirect('Welcome/llave');
+			}
+			else
+				{					
+					$this->session->set_flashdata('error', 'No es posible procesar la llave en este momento, parece que no ha finalizado');
+					redirect('Welcome/llave');
+				}
+
+
   }
 
 }
