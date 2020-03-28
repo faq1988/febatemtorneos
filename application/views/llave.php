@@ -23,7 +23,7 @@
           <?php } ?>  
 
 
-  <?php echo form_open('Welcome/llave', 'class= "text-center "'); ?>
+  <?php echo form_open('Welcome/llave', 'class= "text-center" method="GET"'); ?>
       <div class="form-row">
         <div class="form-group col-md-6 offset-md-3">
         <label for="inputAddress">Categoría</label>

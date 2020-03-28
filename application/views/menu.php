@@ -18,7 +18,7 @@
 
   <!-- Custom styles for this template-->
   <link href="<?=base_url()?>assets_template/css/sb-admin-2.min.css" rel="stylesheet">
-  <link href="<?=base_url()?>assets_template/css/llave.css" rel="stylesheet">
+  <link href="<?=base_url()?>assets_template/css/llave1.css" rel="stylesheet">
    <!-- Custom styles for this page -->
   <link href="<?=base_url()?>assets_template/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
@@ -99,7 +99,8 @@
             <a class="collapse-item" href="<?=base_url()?>Welcome/torneos">Ver torneos</a>
             <a class="collapse-item" href="<?=base_url()?>Welcome/inscripcion">Inscripción</a>
             <a class="collapse-item" href="<?=base_url()?>Welcome/mesas">Mesas</a>     
-            <a class="collapse-item" href="<?=base_url()?>Welcome/campeonatos">Campeonatos</a>                   
+            <a class="collapse-item" href="<?=base_url()?>Welcome/campeonatos">Campeonatos</a>  
+            <a class="collapse-item" href="<?=base_url()?>Welcome/resultados">Resultados</a>                   
           </div>
         </div>
       </li>      
@@ -118,9 +119,9 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <!--6 class="collapse-header">Custom Components:</h6-->            
             <a class="collapse-item" href="<?=base_url()?>Welcome/zonas">Zonas</a>
-            <a class="collapse-item" href="<?=base_url()?>Welcome/partidos_zona">Partidos de zona</a>
+            <!--a class="collapse-item" href="<?=base_url()?>Welcome/partidos_zona">Partidos de zona</a-->
             <a class="collapse-item" href="<?=base_url()?>Welcome/llave">Llaves</a>
-            <a class="collapse-item" href="<?=base_url()?>Welcome/partidos_llave">Partidos de llave</a>
+            <!--a class="collapse-item" href="<?=base_url()?>Welcome/partidos_llave">Partidos de llave</a-->
           </div>
         </div>
       </li>      

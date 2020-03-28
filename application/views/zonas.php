@@ -12,8 +12,19 @@
         </ol>
 
           <!-- DataTales Example -->
+           <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-cog"></i>
+              Opciones
+            </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">                
+                <a class="dropdown-item" href="<?=base_url()?>Welcome/deshacer_zonas">Deshacer zonas</a>
+                <a class="dropdown-item" href="<?=base_url()?>Welcome/definir_cant_set_zonas">Definir cant set</a>
+                
+              </div>
+        </div>
 
-  <?php echo form_open('Welcome/zonas', 'class= "text-center "'); ?>
+  <?php echo form_open('Welcome/zonas', 'class= "text-center" method="GET"'); ?>
   <div class="form-row">
     <div class="form-group col-md-6 offset-md-3">
     <label for="inputAddress">Categoría</label>
@@ -42,7 +53,97 @@
                         <div class="panel-heading">
                             Zona: <?php echo $zonas[$i]->letra;?>
                             ---
+                            Categoría: <?php echo $zonas[$i]->categoria;?>
+                            ---
                             Estado: <?php echo $zonas[$i]->estado;?>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-primary">
+                                    <thead>
+                                        <tr>                                            
+                                            <th class="col-sm-6">Jugador</th>
+                                            <th class="col-sm-1">vs</th>
+                                            <th class="col-sm-1">vs</th>
+                                            <th class="col-sm-1">vs</th>                                                                                                                             
+                                            <th class="col-sm-1">Puntos</th>
+                                            <th class="col-sm-1">Posición</th>
+                                            <?php //if ($zonas[$i]->estado!='FINALIZADA') {?>
+                                            <th>                                            
+                                            <a href="<?php echo base_url() ?>Welcome/editar_zona/<?php echo $zonas[$i]->id; ?>"> DETALLE</a> 
+                                            </th>                            
+                                          <?php //}?>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    
+                                        <tr>
+                                            <td><?php echo $zonas[$i]->jugador1;?>
+                                            </td> 
+                                            <td style="background-color:black;">-
+                                            </td>
+                                            <td>-
+                                            </td>
+                                            <td>-
+                                            </td>                                              
+                                            <td><?php echo $zonas[$i]->puntos1;?>
+                                            </td> 
+                                            <td><?php echo $zonas[$i]->pos1;?>
+                                            </td>                                                          
+                                        </tr>
+                                        <tr>
+                                            <td><?php echo $zonas[$i]->jugador2;?>
+                                            </td> 
+                                            </td> 
+                                            <td>-
+                                            </td>
+                                            <td style="background-color:black;">-
+                                            </td>
+                                            <td>-
+                                            </td>                                             
+                                            <td><?php echo $zonas[$i]->puntos2;?>
+                                            </td> 
+                                            <td><?php echo $zonas[$i]->pos2;?>
+                                            </td>                                                              
+                                        </tr>
+                                        <tr>
+                                            <td><?php echo $zonas[$i]->jugador3;?>
+                                            </td>
+                                            </td> 
+                                            <td>-
+                                            </td>
+                                            <td>-
+                                            </td>
+                                            <td style="background-color:black;">-                                            
+                                            <td><?php echo $zonas[$i]->puntos3;?>
+                                            </td>           
+                                            <td><?php echo $zonas[$i]->pos3;?>
+                                            </td>                                                  
+                                        </tr>
+                                       
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.table-responsive -->
+                        </div>
+                        <?php } }?> 
+                        <!-- /.panel-body -->
+
+
+
+
+
+
+                            <?php
+                                    if (isset($zonas_de_4)){
+                                     for($i=0; $i<sizeof($zonas_de_4); $i++){ ?>
+                        <div class="panel-heading">
+                            Zona: <?php echo $zonas_de_4[$i]->letra;?>
+                            ---
+                            Categoría: <?php echo $zonas_de_4[$i]->categoria;?>
+                            ---
+                            Estado: <?php echo $zonas_de_4[$i]->estado;?>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -59,7 +160,7 @@
                                             <th class="col-sm-1">Posición</th>
                                             <?php //if ($zonas[$i]->estado!='FINALIZADA') {?>
                                             <th>                                            
-                                            <a href="<?php echo base_url() ?>Welcome/editar_zona/<?php echo $zonas[$i]->id; ?>"> Cargar resultado</a> 
+                                            <a href="<?php echo base_url() ?>Welcome/editar_zona/<?php echo $zonas_de_4[$i]->id; ?>"> DETALLE</a> 
                                             </th>                            
                                           <?php //}?>
                                         </tr>
@@ -67,7 +168,7 @@
                                     <tbody>
                                     
                                         <tr>
-                                            <td><?php echo $zonas[$i]->jugador1;?>
+                                            <td><?php echo $zonas_de_4[$i]->jugador1;?>
                                             </td> 
                                             <td style="background-color:black;">-
                                             </td>
@@ -77,13 +178,13 @@
                                             </td> 
                                             <td>-
                                             </td>  
-                                            <td><?php echo $zonas[$i]->puntos1;?>
+                                            <td><?php echo $zonas_de_4[$i]->puntos1;?>
                                             </td> 
-                                            <td><?php echo $zonas[$i]->pos1;?>
+                                            <td><?php echo $zonas_de_4[$i]->pos1;?>
                                             </td>                                                          
                                         </tr>
                                         <tr>
-                                            <td><?php echo $zonas[$i]->jugador2;?>
+                                            <td><?php echo $zonas_de_4[$i]->jugador2;?>
                                             </td> 
                                             </td> 
                                             <td>-
@@ -94,13 +195,13 @@
                                             </td> 
                                             <td>-
                                             </td>  
-                                            <td><?php echo $zonas[$i]->puntos2;?>
+                                            <td><?php echo $zonas_de_4[$i]->puntos2;?>
                                             </td> 
-                                            <td><?php echo $zonas[$i]->pos2;?>
+                                            <td><?php echo $zonas_de_4[$i]->pos2;?>
                                             </td>                                                              
                                         </tr>
                                         <tr>
-                                            <td><?php echo $zonas[$i]->jugador3;?>
+                                            <td><?php echo $zonas_de_4[$i]->jugador3;?>
                                             </td>
                                             </td> 
                                             <td>-
@@ -111,14 +212,14 @@
                                             </td> 
                                             <td>-
                                             </td>     
-                                            <td><?php echo $zonas[$i]->puntos3;?>
+                                            <td><?php echo $zonas_de_4[$i]->puntos3;?>
                                             </td>           
-                                            <td><?php echo $zonas[$i]->pos3;?>
+                                            <td><?php echo $zonas_de_4[$i]->pos3;?>
                                             </td>                                                  
                                         </tr>
-                                        <?php if (isset($zonas[$i]->jugador4)){ ?>
+                                        <?php if (isset($zonas_de_4[$i]->jugador4)){ ?>
                                         <tr>
-                                            <td><?php echo $zonas[$i]->jugador4;?>
+                                            <td><?php echo $zonas_de_4[$i]->jugador4;?>
                                             </td> 
                                             </td> 
                                             <td>-
@@ -129,9 +230,9 @@
                                             </td>
                                             <td style="background-color:black;">-
                                             </td>    
-                                            <td><?php echo $zonas[$i]->puntos4;?>
+                                            <td><?php echo $zonas_de_4[$i]->puntos4;?>
                                             </td>  
-                                            <td><?php echo $zonas[$i]->pos4;?>
+                                            <td><?php echo $zonas_de_4[$i]->pos4;?>
                                             </td>                                                            
                                         </tr>
                                       <?php } ?>
@@ -143,6 +244,17 @@
                         </div>
                         <?php } }?> 
                         <!-- /.panel-body -->
+
+
+
+
+
+
+
+
+
+
+
                     </div>
                     <!-- /.panel -->
 

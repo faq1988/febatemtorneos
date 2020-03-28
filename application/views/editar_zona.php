@@ -52,8 +52,11 @@
                                             <th class="col-sm-1">vs</th>
                                             <th class="col-sm-1">vs</th>
                                             <th class="col-sm-1">vs</th>
+                                             <?php if (isset($jugador4)){ ?>
                                             <th class="col-sm-1">vs</th>
+                                              <?php } ?>
                                             <th class="col-sm-1">Posición</th>
+                                            <th class="col-sm-1">Puntos</th>
                                                                        
                                         </tr>
                                     </thead>
@@ -68,49 +71,58 @@
                                             </td>
                                             <td>-
                                             </td> 
-                                            <td>-
+                                            <?php if (isset($jugador4)){ ?>
+                                              <td>-
+                                            </td> 
+                                            <?php } ?>
+                                            <td><?php echo $pos1;?>
                                             </td>   
                                             <td>
-                                            -                                                            
+                                            <?php echo $puntos1;?>                                                            
                                             </td>                                                        
                                         </tr>
                                         <tr>
                                             <td><?php echo $jugador2;?>
-                                            </td> 
-                                            </td> 
+                                            </td>                                             
                                             <td>-
                                             </td>
                                             <td style="background-color:black;">-
                                             </td>
                                             <td>-
                                             </td> 
-                                            <td>-
+                                            <?php if (isset($jugador4)){ ?>
+                                              <td>-
+                                            </td> 
+                                            <?php } ?>
+                                            <td><?php echo $pos2;?>
                                             </td>    
                                             <td>
-                                            -                                                            
+                                            <?php echo $puntos2;?>
                                             </td>                                                           
                                         </tr>
                                         <tr>
                                             <td><?php echo $jugador3;?>
-                                            </td>
-                                            </td> 
+                                            </td>                                            
                                             <td>-
                                             </td>
                                             <td>-
                                             </td>
                                             <td style="background-color:black;">-
+                                            </td>
+                                            <?php if (isset($jugador4)){ ?>
+                                              <td>-
                                             </td> 
-                                            <td>-
+                                            <?php } ?> 
+                                            <td><?php echo $pos3;?>
                                             </td>   
                                             <td>
-                                            -                                                            
+                                            <?php echo $puntos3;?>
                                             </td>                                                             
                                         </tr>
                                         <?php if (isset($jugador4)){ ?>
                                         <tr>
                                             <td><?php echo $jugador4;?>
-                                            </td> 
-                                            </td> 
+                                            </td>                                             
                                             <td>-
                                             </td>
                                             <td>-
@@ -118,9 +130,11 @@
                                             <td>-
                                             </td>
                                             <td style="background-color:black;">-
+                                            </td>  
+                                            <td><?php echo $pos4;?>
                                             </td>    
                                             <td>
-                                            -                                                            
+                                            <?php echo $puntos4;?>
                                             </td>
                                         </tr>
                                       <?php } ?>
@@ -176,7 +190,7 @@
                                             <th class="col-sm-1">Set 5</th>                                          
                                             <th class="col-sm-1">Resultado</th>
                                             <th rowspan="3">
-                                             <a href="<?php echo base_url() ?>Welcome/editar_partido/<?php echo $partidos[$i]->id; ?>"> Cargar resultado</a>   
+                                             <a href="<?php echo base_url() ?>Welcome/editar_partido/<?php echo $partidos[$i]->id; ?>"> DETALLE</a>   
                                              </th>                                           
                                         </tr>
                                     </thead>
@@ -221,6 +235,13 @@
                                         
                                        
                                     </tbody>
+                                    <tfoot>
+                                      <tr>
+                                        <td colspan="7">
+                                        Arbitro: <?php echo $partidos[$i]->arbitro;?>
+                                        </td>
+                                      </tr>
+                                    </tfoot>
                                 </table>                                  
                                  
                                 
@@ -255,24 +276,6 @@
     <i class="fas fa-angle-up"></i>
   </a>
 
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- Bootstrap core JavaScript-->
   <script src="<?=base_url()?>assets_template/vendor/jquery/jquery.min.js"></script>

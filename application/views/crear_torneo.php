@@ -81,7 +81,7 @@
       <input type="text" name="costo_afiliacion" class="form-control" id="inputZip" required>
     </div>
     <div class="form-group col-md-3">
-      <label for="inputAddress">Categorías habilitadas</label>
+      <label for="inputAddress">Cat habilitadas por jugador</label>
       <select name="habilitadas[]" class="custom-select" required>  
         <option value="1">1</option>
         <option value="2">2</option>
@@ -92,7 +92,88 @@
     </select>
     </div>
   </div>
-  <div class="form-group">
+
+
+
+
+
+<div class="form-row">  
+<div class="input-group col-md-8 offset-md-2">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="">Cierre de categoría Super división</span>
+  </div>  
+  <select name="desplegablesd" class="custom-select" required>          
+        <option value="2">No</option>
+        <option value="1">Si</option>                
+    </select>
+  <input type="date" class="form-control" name="cierresd">
+</div>
+</div>
+
+<div class="form-row">
+<div class="input-group col-md-8 offset-md-2">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="">Cierre de categoría Primera</span>
+  </div>
+  <select name="desplegablesd" class="custom-select" required>  
+        <option value="2">No</option>
+        <option value="1">Si</option>        
+    </select>
+  <input type="datetime" class="form-control" name="cierreprimera">
+</div>
+</div>
+
+<div class="form-row">
+<div class="input-group col-md-8 offset-md-2">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="">Cierre de categoría Segunda</span>
+  </div>
+  <select name="desplegablesd" class="custom-select" required>  
+        <option value="2">No</option>
+        <option value="1">Si</option>        
+    </select>
+  <input type="date" class="form-control" name="cierresegunda">
+</div>
+</div>
+
+<div class="form-row">
+<div class="input-group col-md-8 offset-md-2">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="">Cierre de categoría Tercera</span>
+  </div>
+  <select name="desplegablesd" class="custom-select" required>  
+        <option value="2">No</option>
+        <option value="1">Si</option>        
+    </select>
+  <input type="date" class="form-control" name="cierretercera">
+</div>
+</div>
+
+<div class="form-row">
+<div class="input-group col-md-8 offset-md-2">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="">Cierre de categoría Cuarta</span>
+  </div>
+  <select name="desplegablesd" class="custom-select" required>  
+        <option value="2">No</option>
+        <option value="1">Si</option>        
+    </select>
+  <input type="date" class="form-control" name="cierrecuarta">
+</div>
+
+</div><div class="form-row">
+<div class="input-group col-md-8 offset-md-2">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="">Cierre de categoría Quinta</span>
+  </div>
+  <select name="desplegablesd" class="custom-select" required>  
+        <option value="2">No</option>
+        <option value="1">Si</option>        
+    </select>
+  <input type="date" class="form-control" name="cierrequinta">
+</div>
+</div>
+  <!--div class="form-group">
     <label for="inputAddress">Categorías</label>
     <select name="categorias[]" class="custom-select" multiple required>  
         <option value="0">SD</option>
@@ -102,7 +183,7 @@
         <option value="4">Cuarta</option>
         <option value="5">Quinta</option>
     </select>
-  </div>
+  </div-->
   
  
   
