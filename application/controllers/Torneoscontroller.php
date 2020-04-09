@@ -877,7 +877,8 @@ class Torneoscontroller extends CI_Controller {
         //zona de 3   
         if ($zona_a_procesar[0]['cant_jugadores'] == 3)
         {       	
-        	$posicion_final = $this->calcular_posiciones_zona_3($zona_a_procesar[0]['puntos1'], $zona_a_procesar[0]['puntos2'], $zona_a_procesar[0]['puntos3']);
+        	$posicion_final = $this->calcular_posiciones_zona_3($zona_a_procesar[0]['puntos1'], $zona_a_procesar[0]['puntos2'], $zona_a_procesar[0]['puntos3'], $zona_a_procesar[0]['id_jugador1'], 
+        		$zona_a_procesar[0]['id_jugador2'], $zona_a_procesar[0]['id_jugador3'], $zona_a_procesar[0]['id']);
         }
 
         //zona de 4
@@ -1154,12 +1155,20 @@ class Torneoscontroller extends CI_Controller {
 
 
 
+	
+
+
+
 	//calcula las posiciones finales de una zona de 3	
-	private function calcular_posiciones_zona_3($puntos1, $puntos2, $puntos3)
+	//zona de 3 se resuelve directamente por puntos o puede haber triple empate, resolviendo por coeficiente de set o de puntos
+	//zona de 4 se resuelve directamente 
+	private function calcular_posiciones_zona_3($puntos1, $puntos2, $puntos3, $jugador1, $jugador2, $jugador3, $zona)
 	{
 		$posicion1=0;
 		$posicion2=0;
 		$posicion3=0;
+		$torneo = $this->torneo_model->obtenerTorneoActual();
+		$row = $torneo->first_row();
 		//caso mas simple, todos los jugadores tienen puntaje diferente
 		//todos obtuvieron puntaje distinto --> zona definida
         	if ($puntos1 <> $puntos2 and $puntos2 <> $puntos3)
@@ -1167,57 +1176,261 @@ class Torneoscontroller extends CI_Controller {
         		//el jugador que saca mayor puntaje tiene el primer puesto
         		if ($puntos1 > $puntos2 and $puntos1 > $puntos3)
         			{
-        				$posicion1 = 1;
-        				
-        				if ($puntos2 > $puntos3)
-        				{
-        					$posicion2=2;
-        					$posicion3=3;
-        				}
-        				else
-        				{
-        					$posicion2=3;
-        					$posicion3=2;	
-        				}
+        				$posiciones = $this->obtener_posicion_puntaje_diferente($puntos1, $puntos2, $puntos3);
+        				$posicion1 = $posiciones[0];
+        				$posicion2 = $posiciones[1];
+        				$posicion3 = $posiciones[2];
         			}
         		if ($puntos2 > $puntos1 and $puntos2 > $puntos3)
         		{
-        			$posicion2 = 1;
-        				
-        				if ($puntos1 > $puntos3)
-        				{
-        					$posicion1=2;
-        					$posicion3=3;
-        				}
-        				else
-        				{
-        					$posicion1=3;
-        					$posicion3=2;	
-        				}
+        			$posiciones = $this->obtener_posicion_puntaje_diferente($puntos2, $puntos1, $puntos3);
+        			$posicion2 = $posiciones[0];
+        			$posicion1 = $posiciones[1];
+        			$posicion3 = $posiciones[2];
         		}
         		if ($puntos3 > $puntos1 and $puntos3 > $puntos2)
         			{
-        				$posicion3 = 1;
-        				
-        				if ($puntos1 > $puntos2)
-        				{
-        					$posicion1=2;
-        					$posicion2=3;
-        				}
-        				else
-        				{
-        					$posicion1=3;
-        					$posicion2=2;	
-        				}
+        				$posiciones = $this->obtener_posicion_puntaje_diferente($puntos3, $puntos1, $puntos2);
+	        			$posicion3 = $posiciones[0];
+	        			$posicion1 = $posiciones[1];
+	        			$posicion2 = $posiciones[2];
         			}	 
         	}
 
+
+
+        	//Caso de triple empate
+        	if ($puntos1 == $puntos2 and $puntos2 == $puntos3)
+        	{
+        		$set_a_favor1 =  $this->torneo_model->obtener_set_a_favor($row->id, $zona, $jugador1);
+        		$set_en_contra1 =  $this->torneo_model->obtener_set_en_contra($row->id, $zona, $jugador1);
+        		$set_a_favor2 =  $this->torneo_model->obtener_set_a_favor($row->id, $zona, $jugador2);
+        		$set_en_contra2 =  $this->torneo_model->obtener_set_en_contra($row->id, $zona, $jugador2);
+        		$set_a_favor3 =  $this->torneo_model->obtener_set_a_favor($row->id, $zona, $jugador3);
+        		$set_en_contra3 =  $this->torneo_model->obtener_set_en_contra($row->id, $zona, $jugador3);        			
+        	
+				//log_message('error', 'a favor ' . $set_a_favor3 . 'en contra ' . $set_en_contra3 . 'jugador '. $jugador3);			
+
+
+	        	$coeficiente1 = $set_a_favor1 / $set_en_contra1;
+	        	$coeficiente2 = $set_a_favor2 / $set_en_contra2;
+	        	$coeficiente3 = $set_a_favor3 / $set_en_contra3;
+
+	        	log_message('error', 'coef1 ' . $coeficiente1 . 'coef2 ' . $coeficiente2 . 'coef3 '. $coeficiente3);			
+
+	        	//si todos los coeficientes son distintos, se resuelve el triple empate
+	        	if ($coeficiente1 <> $coeficiente2 and $coeficiente2 <> $coeficiente3)
+	        	{
+	        		if ($coeficiente1 > $coeficiente2 and $coeficiente1 > $coeficiente3)
+	        			{
+	        				$posicion1 = 1;
+	        				
+	        				if ($coeficiente2 > $coeficiente3)
+	        				{
+	        					$posicion2=2;
+	        					$posicion3=3;
+	        				}
+	        				else
+	        				{
+	        					$posicion2=3;
+	        					$posicion3=2;	
+	        				}
+	        			}
+	        		if ($coeficiente2 > $coeficiente1 and $coeficiente2 > $coeficiente3)
+	        		{
+	        			$posicion2 = 1;
+	        				
+	        				if ($coeficiente1 > $coeficiente3)
+	        				{
+	        					$posicion1=2;
+	        					$posicion3=3;
+	        				}
+	        				else
+	        				{
+	        					$posicion1=3;
+	        					$posicion3=2;	
+	        				}
+	        		}
+	        		if ($coeficiente3 > $coeficiente1 and $coeficiente3 > $coeficiente2)
+	        			{
+	        				$posicion3 = 1;
+	        				
+	        				if ($coeficiente1 > $coeficiente2)
+	        				{
+	        					$posicion1=2;
+	        					$posicion2=3;
+	        				}
+	        				else
+	        				{
+	        					$posicion1=3;
+	        					$posicion2=2;	
+	        				}
+	        			}	 
+	        	}
+	        }
+
+        	
 
 
         	return array($posicion1, $posicion2, $posicion3);
 	}
 
 
+	private function obtener_posicion_puntaje_diferente($puntos1, $puntos2, $puntos3)
+	{
+			//el jugador que saca mayor puntaje tiene el primer puesto
+    		if ($puntos1 > $puntos2 and $puntos1 > $puntos3)
+    			{
+    				$posicion1 = 1;
+    				
+    				if ($puntos2 > $puntos3)
+    				{
+    					$posicion2=2;
+    					$posicion3=3;
+    				}
+    				else
+    				{
+    					$posicion2=3;
+    					$posicion3=2;	
+    				}
+    			}
+    			return array($posicion1, $posicion2, $posicion3);
+	}
+
+
+
+	private function calcular_posiciones_zona_4()
+	{
+		//////////////////////////////////////////////////////////////////////INICIO CONTROL DOBLE EMPATE //////////////////////////////////////////////////////////////////////////////
+        	//Caso de doble empate
+        	//empate entre 1 y 2
+        	if($puntos1 == $puntos2 and $puntos1 <> $puntos3 and $puntos2 <> $puntos3)
+        	{
+        		//observo el resultado del partido jugado entre los empatados
+        		$partido_desempate = $this->torneo_model->obtener_partido_desempate($row->id, $zona, $jugador1, $jugador2);
+
+        		//si el distinto tiene menos puntaje q los empatados, queda tercero, sino queda primero
+        		if ($puntos3 < $puntos1)
+        		{
+        			$posicion3 = 3;
+        			//el resultado entre los empatados define puesto 1 y 2
+        			if ($partido_desempate[0]->resultado1 > $partido_desempate[0]->resultado2)
+        				{
+        					$posicion1 = 1;
+        					$posicion2 = 2;
+        				}
+        			else
+        			{
+        				$posicion1 = 2;
+        				$posicion2 = 1;
+        			}
+
+
+        		}
+        		else
+        		{
+        			$posicion3 = 1;
+        			//el resultado entre los empatados define puesto 2 y 3
+        			if ($partido_desempate[0]->resultado1 > $partido_desempate[0]->resultado2)
+        				{
+        					$posicion1 = 2;
+        					$posicion2 = 3;
+        				}
+        			else
+        			{
+        				$posicion1 = 3;
+        				$posicion2 = 2;
+        			}
+        		}        		
+        	}
+
+        	//empate entre 2 y 3
+        	if($puntos2 == $puntos3 and $puntos1 <> $puntos2 and $puntos1 <> $puntos3)
+        	{
+        		//observo el resultado del partido jugado entre los empatados
+        		$partido_desempate = $this->torneo_model->obtener_partido_desempate($row->id, $zona, $jugador2, $jugador3);
+
+        		//si el distinto tiene menos puntaje q los empatados, queda tercero, sino queda primero
+        		if ($puntos1 < $puntos2)
+        		{
+        			$posicion1 = 3;
+        			//el resultado entre los empatados define puesto 1 y 2
+        			if ($partido_desempate[0]->resultado1 > $partido_desempate[0]->resultado2)
+        				{
+        					$posicion2 = 1;
+        					$posicion3 = 2;
+        				}
+        			else
+        			{
+        				$posicion2 = 2;
+        				$posicion3 = 1;
+        			}
+
+
+        		}
+        		else
+        		{
+        			$posicion1 = 1;
+        			//el resultado entre los empatados define puesto 2 y 3
+        			if ($partido_desempate[0]->resultado1 > $partido_desempate[0]->resultado2)
+        				{
+        					$posicion2 = 2;
+        					$posicion3 = 3;
+        				}
+        			else
+        			{
+        				$posicion2 = 3;
+        				$posicion3 = 2;
+        			}
+        		}        			
+        	}
+
+        	//empate entre 1 y 3
+        	if($puntos1 == $puntos3 and $puntos1 <> $puntos2 and $puntos2 <> $puntos3)
+        	{
+        		//observo el resultado del partido jugado entre los empatados
+        		$partido_desempate = $this->torneo_model->obtener_partido_desempate($row->id, $zona, $jugador1, $jugador3);
+
+        		//si el distinto tiene menos puntaje q los empatados, queda tercero, sino queda primero
+        		if ($puntos2 < $puntos1)
+        		{
+        			$posicion2 = 3;
+        			//el resultado entre los empatados define puesto 1 y 2
+        			if ($partido_desempate[0]->resultado1 > $partido_desempate[0]->resultado2)
+        				{
+        					$posicion1 = 1;
+        					$posicion3 = 2;
+        				}
+        			else
+        			{
+        				$posicion1 = 2;
+        				$posicion3 = 1;
+        			}
+
+
+        		}
+        		else
+        		{
+        			$posicion2 = 1;
+        			//el resultado entre los empatados define puesto 2 y 3
+        			if ($partido_desempate[0]->resultado1 > $partido_desempate[0]->resultado2)
+        				{
+        					$posicion1 = 2;
+        					$posicion3 = 3;
+        				}
+        			else
+        			{
+        				$posicion1 = 3;
+        				$posicion3 = 2;
+        			}
+        		}        		
+        	}
+///////////////////////////////////////////////////////////////FIN CONTROL DOBLE EMPATE ///////////////////////////////////////////////////////////////////////////////
+
+
+        	return array($posicion1, $posicion2, $posicion3);
+	
+	}
 
 
 	public function obtener_ganador_partido($partido)

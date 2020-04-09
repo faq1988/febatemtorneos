@@ -55,8 +55,9 @@
                                              <?php if (isset($jugador4)){ ?>
                                             <th class="col-sm-1">vs</th>
                                               <?php } ?>
-                                            <th class="col-sm-1">Posición</th>
                                             <th class="col-sm-1">Puntos</th>
+                                            <th class="col-sm-1">Posición</th>
+                                            
                                                                        
                                         </tr>
                                     </thead>
@@ -75,10 +76,10 @@
                                               <td>-
                                             </td> 
                                             <?php } ?>
-                                            <td><?php echo $pos1;?>
+                                            <td><?php echo $puntos1;?>
                                             </td>   
                                             <td>
-                                            <?php echo $puntos1;?>                                                            
+                                            <?php echo $pos1;?>                                                            
                                             </td>                                                        
                                         </tr>
                                         <tr>
@@ -94,10 +95,10 @@
                                               <td>-
                                             </td> 
                                             <?php } ?>
-                                            <td><?php echo $pos2;?>
+                                            <td><?php echo $puntos2;?>
                                             </td>    
                                             <td>
-                                            <?php echo $puntos2;?>
+                                            <?php echo $pos2;?>
                                             </td>                                                           
                                         </tr>
                                         <tr>
@@ -113,10 +114,10 @@
                                               <td>-
                                             </td> 
                                             <?php } ?> 
-                                            <td><?php echo $pos3;?>
+                                            <td><?php echo $puntos3;?>
                                             </td>   
                                             <td>
-                                            <?php echo $puntos3;?>
+                                            <?php echo $pos3;?>
                                             </td>                                                             
                                         </tr>
                                         <?php if (isset($jugador4)){ ?>
@@ -131,10 +132,10 @@
                                             </td>
                                             <td style="background-color:black;">-
                                             </td>  
-                                            <td><?php echo $pos4;?>
+                                            <td><?php echo $puntos4;?>
                                             </td>    
                                             <td>
-                                            <?php echo $puntos4;?>
+                                            <?php echo $pos4;?>
                                             </td>
                                         </tr>
                                       <?php } ?>
@@ -185,9 +186,11 @@
                                             <th class="col-sm-6">Jugador</th>   
                                             <th class="col-sm-1">Set 1</th> 
                                             <th class="col-sm-1">Set 2</th>                                          
-                                            <th class="col-sm-1">Set 3</th>                                          
-                                            <th class="col-sm-1">Set 4</th>                                          
-                                            <th class="col-sm-1">Set 5</th>                                          
+                                            <th class="col-sm-1">Set 3</th>         
+                                            <?php if ($partidos[$i]->cant_sets>3) {?>                                 
+                                            <th class="col-sm-1">Set 4</th>
+                                            <th class="col-sm-1">Set 5</th>
+                                            <?php } ?>                                          
                                             <th class="col-sm-1">Resultado</th>
                                             <th rowspan="3">
                                              <a href="<?php echo base_url() ?>Welcome/editar_partido/<?php echo $partidos[$i]->id; ?>"> DETALLE</a>   
@@ -205,10 +208,12 @@
                                             </td>
                                             <td><?php echo $partidos[$i]->set13;?>
                                             </td>
+                                            <?php if ($partidos[$i]->cant_sets>3){?>
                                             <td><?php echo $partidos[$i]->set14;?>
                                             </td>
                                             <td><?php echo $partidos[$i]->set15;?>
                                             </td>
+                                            <?php } ?>
                                             <td><?php echo $partidos[$i]->resultado1;?>
                                             </td> 
                                           
@@ -225,10 +230,12 @@
                                             </td>
                                             <td><?php echo $partidos[$i]->set23;?>
                                             </td>
+                                             <?php if ($partidos[$i]->cant_sets>3){?>
                                             <td><?php echo $partidos[$i]->set24;?>
                                             </td>
                                             <td><?php echo $partidos[$i]->set25;?>
                                             </td>
+                                            <?php } ?>
                                             <td><?php echo $partidos[$i]->resultado2;?>
                                             </td>                                                             
                                         </tr>

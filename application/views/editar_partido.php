@@ -46,6 +46,7 @@
       <label for="inputPassword4">Set 3</label>
       <input type="text" name="set13" id="set13" class="form-control" id="inputPassword4" required onfocusout="validacion()" tabindex="5">
     </div>   
+    <?php if ($cant_sets > 3) { ?>
     <div class="form-group col-md-1">
       <label for="inputPassword4">Set 4</label>
       <input type="text" name="set14" id="set14" class="form-control" id="inputPassword4" required onfocusout="validacion()" tabindex="7">
@@ -54,6 +55,7 @@
       <label for="inputPassword4">Set 5</label>
       <input type="text" name="set15" id="set15" class="form-control" id="inputPassword4" required onfocusout="validacion()" tabindex="9">
     </div>  
+  <?php } ?>
     <div class="form-group col-md-2">
       <label for="inputPassword4">Resultado</label>
       <input type="text" name="total1" id="total1" class="form-control" id="inputPassword4" required readonly>
@@ -76,6 +78,7 @@
       <label for="inputPassword4">Set 3</label>
       <input type="text" name="set23" id="set23" class="form-control" id="inputPassword4" required onfocusout="validacion()" tabindex="6">
     </div>   
+    <?php if ($cant_sets > 3) { ?>
     <div class="form-group col-md-1">
       <label for="inputPassword4">Set 4</label>
       <input type="text" name="set24" id="set24" class="form-control" id="inputPassword4" required onfocusout="validacion()" tabindex="8">
@@ -84,6 +87,7 @@
       <label for="inputPassword4">Set 5</label>
       <input type="text" name="set25" id="set25" class="form-control" id="inputPassword4" required onfocusout="validacion()" tabindex="10">
     </div>   
+    <?php } ?>
       <div class="form-group col-md-2">
       <label for="inputPassword4">Resultado</label>
       <input type="text" name="total2" id="total2" class="form-control" id="inputPassword4" required readonly>
@@ -182,6 +186,9 @@ function validacion() {
   else
     total2++;
 }
+
+if (document.getElementById("set14") != null && document.getElementById("set14") != null)
+{
   set14 = parseInt(document.getElementById("set14").value);
   set24 = parseInt(document.getElementById("set24").value);
 
@@ -192,8 +199,13 @@ if( !isNaN(set14) && !isNaN(set24))
   else
     total2++;
   }
+}
+
+if (document.getElementById("set15") != null && document.getElementById("set15") != null)
+{
   set15 = parseInt(document.getElementById("set15").value);
   set25 = parseInt(document.getElementById("set25").value);
+
 
 if( !isNaN(set15) && !isNaN(set25))
   {
@@ -201,6 +213,7 @@ if( !isNaN(set15) && !isNaN(set25))
     total1++;
   else
     total2++;
+}
 }
   
 //alert('totaluno '+total1 + ' totaldos ' + total2);

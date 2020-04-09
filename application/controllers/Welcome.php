@@ -1103,6 +1103,8 @@ public function editar_partido()
     $data['jugador1']= $partido_en_cuestion[0]->jugador1;
     $data['jugador2']= $partido_en_cuestion[0]->jugador2;
     $data['tipo']= $partido_en_cuestion[0]->tipo;
+    $data['cant_sets']= $partido_en_cuestion[0]->cant_sets;
+    
     //var_dump($data_id);exit;
 
     $torneo = $this->torneo_model->obtenerTorneoActual();  
