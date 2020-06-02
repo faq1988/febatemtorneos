@@ -23,167 +23,177 @@
   <div class="container">
 <!--form class="text-center border border-light p-5" action="#!"-->
   <?php echo form_open('Torneoscontroller/crear_torneo', 'class= "text-center "'); ?>
-<div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="inputEmail4">Nombre</label>
-      <input type="text" name="nombre" class="form-control" id="inputEmail4" required>
+
+  <div class="form-group row">
+    <label for="inputEmail3" class="col-sm-4 col-form-label">Nombre</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" name="nombre" required>
     </div>
-    <div class="form-group col-md-6">
-      <label for="inputPassword4">Lugar</label>
-      <input type="text" name="lugar" class="form-control" id="inputPassword4" required>
-    </div>
-   
   </div>
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="inputEmail4">Desde</label>
-      <input type="date" name="fecha_inicio" class="form-control" id="inputEmail4" required>
+  <div class="form-group row">
+    <label for="inputEmail3" class="col-sm-4 col-form-label">Lugar</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" name="lugar" required>
     </div>
-    <div class="form-group col-md-6">
-      <label for="inputPassword4">Hasta</label>
-      <input type="date" name="fecha_fin" class="form-control" id="inputPassword4" required>
-    </div>
-    
   </div>
-  <div class="form-row">
-     <div class="form-group col-md-2">
-      <label for="inputZip">Cantidad de mesas</label>
-      <input type="number" name="cant_mesas" class="form-control" id="inputZip" required>
+  <div class="form-group row">
+    <label for="inputEmail3" class="col-sm-4 col-form-label">Desde</label>
+    <div class="col-sm-6">
+      <input type="date" class="form-control" name="fecha_inicio" required>
     </div>
-    <div class="form-group col-md-4">
-      <label for="inputEmail4">Marca de mesas</label>
-      <input type="text" name="marca_mesas" class="form-control" id="inputEmail4" required>
+  </div>
+  <div class="form-group row">
+    <label for="inputEmail3" class="col-sm-4 col-form-label">Hasta</label>
+    <div class="col-sm-6">
+      <input type="date" class="form-control" name="fecha_fin" required>
     </div>
-    <div class="form-group col-md-2">
-       <label for="inputAddress">Tipo de pelota</label>
+  </div>
+   <div class="form-group row">
+    <label for="inputEmail3" class="col-sm-4 col-form-label">Cant de mesas</label>
+    <div class="col-sm-6">
+      <input type="number" class="form-control" name="cant_mesas" required>
+    </div>
+  </div>
+   <div class="form-group row">
+    <label for="inputEmail3" class="col-sm-4 col-form-label">Marca de las mesas</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" name="marca_mesas" required>
+    </div>
+  </div> 
+  <div class="form-group row">
+    <label for="inputEmail3" class="col-sm-4 col-form-label">Tipo de pelota</label>
+    <div class="col-sm-6">
       <select name="categorias[]" class="custom-select" required>  
-        <option value="1">*</option>
-        <option value="2">**</i></option>
-        <option value="3">***</i></option>        
+        <option value="1">1 estrella</option>
+        <option value="2">2 estrellas</i></option>
+        <option value="3">3 estrellas</i></option>        
     </select>
     </div>
-    <div class="form-group col-md-4">
-      <label for="inputZip">Marca de pelota</label>
-      <input type="text" name="marca_pelotas" class="form-control" id="inputZip" required>
-    </div>
   </div>
-  <div class="form-row">
-    <div class="form-group col-md-3">
-      <label for="inputEmail4">Cierre de inscripción</label>
-      <input type="text" name="cierre_inscripcion" class="form-control" id="inputEmail4" required>
+   <div class="form-group row">
+    <label for="inputEmail3" class="col-sm-4 col-form-label">Marca de pelota</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" name="marca_pelotas" required>
     </div>
-    <div class="form-group col-md-3">
-      <label for="inputPassword4">Costo de inscripción</label>
-      <input type="text" name="costo_inscripcion" class="form-control" id="inputPassword4" required>
+  </div> 
+   <div class="form-group row">
+    <label for="inputEmail3" class="col-sm-4 col-form-label">Cierre de inscripcion</label>
+    <div class="col-sm-6">
+      <input type="date" class="form-control" name="cierre_inscripcion" required>
     </div>
-    <div class="form-group col-md-3">
-      <label for="inputZip">Costo de afiliación</label>
-      <input type="text" name="costo_afiliacion" class="form-control" id="inputZip" required>
+  </div> 
+   <div class="form-group row">
+    <label for="inputEmail3" class="col-sm-4 col-form-label">Costo de inscripcion</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" name="costo_inscripcion" required>
     </div>
-    <div class="form-group col-md-3">
-      <label for="inputAddress">Cat habilitadas por jugador</label>
-      <select name="habilitadas[]" class="custom-select" required>  
+  </div> 
+   <div class="form-group row">
+    <label for="inputEmail3" class="col-sm-4 col-form-label">Costo de afiliacion</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" name="costo_afiliacion" required>
+    </div>
+  </div> 
+  <div class="form-group row">
+    <label for="inputEmail3" class="col-sm-4 col-form-label">Categorias habilitadas por jugador</label>
+    <div class="col-sm-6">
+      <select name="categorias[]" class="custom-select" required>  
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
         <option value="4">4</option>
         <option value="5">5</option>
-        <option value="6">6</option>
+        <option value="6">6</option>      
     </select>
     </div>
   </div>
 
-
-
-
-
-<div class="form-row">  
-<div class="input-group col-md-8 offset-md-2">
-  <div class="input-group-prepend">
-    <span class="input-group-text" id="">Cierre de categoría Super división</span>
-  </div>  
-  <select name="desplegablesd" class="custom-select" required>          
-        <option value="2">No</option>
-        <option value="1">Si</option>                
+ <div class="form-group row">
+    <label for="inputEmail3" class="col-sm-4 col-form-label">Juega super division?</label>
+    <div class="col-sm-2">
+      <select name="juega_sd" class="custom-select" required>  
+        <option value="1">No</option>
+        <option value="2">Si</option>        
     </select>
-  <input type="date" class="form-control" name="cierresd">
-</div>
-</div>
+    </div>
+    <label for="inputEmail3" class="col-sm-2 col-form-label">Cierra inscripcion</label>
+    <div class="col-sm-2">
+      <input type="date" class="form-control" name="cierre_sd">
+    </div>
+  </div> 
 
-<div class="form-row">
-<div class="input-group col-md-8 offset-md-2">
-  <div class="input-group-prepend">
-    <span class="input-group-text" id="">Cierre de categoría Primera</span>
-  </div>
-  <select name="desplegablesd" class="custom-select" required>  
-        <option value="2">No</option>
-        <option value="1">Si</option>        
+   <div class="form-group row">
+    <label for="inputEmail3" class="col-sm-4 col-form-label">Juega Primera?</label>
+    <div class="col-sm-2">
+      <select name="juega_primera" class="custom-select" required>  
+        <option value="1">No</option>
+        <option value="2">Si</option>        
     </select>
-  <input type="datetime" class="form-control" name="cierreprimera">
-</div>
-</div>
+    </div>
+    <label for="inputEmail3" class="col-sm-2 col-form-label">Cierra inscripcion</label>
+    <div class="col-sm-2">
+      <input type="date" class="form-control" name="cierre_primera">
+    </div>
+  </div> 
 
-<div class="form-row">
-<div class="input-group col-md-8 offset-md-2">
-  <div class="input-group-prepend">
-    <span class="input-group-text" id="">Cierre de categoría Segunda</span>
-  </div>
-  <select name="desplegablesd" class="custom-select" required>  
-        <option value="2">No</option>
-        <option value="1">Si</option>        
+   <div class="form-group row">
+    <label for="inputEmail3" class="col-sm-4 col-form-label">Juega segunda?</label>
+    <div class="col-sm-2">
+      <select name="juega_segunda" class="custom-select" required>  
+        <option value="1">No</option>
+        <option value="2">Si</option>        
     </select>
-  <input type="date" class="form-control" name="cierresegunda">
-</div>
-</div>
+    </div>
+    <label for="inputEmail3" class="col-sm-2 col-form-label">Cierra inscripcion</label>
+    <div class="col-sm-2">
+      <input type="date" class="form-control" name="cierre_segunda">
+    </div>
+  </div> 
 
-<div class="form-row">
-<div class="input-group col-md-8 offset-md-2">
-  <div class="input-group-prepend">
-    <span class="input-group-text" id="">Cierre de categoría Tercera</span>
-  </div>
-  <select name="desplegablesd" class="custom-select" required>  
-        <option value="2">No</option>
-        <option value="1">Si</option>        
+   <div class="form-group row">
+    <label for="inputEmail3" class="col-sm-4 col-form-label">Juega tercera?</label>
+    <div class="col-sm-2">
+      <select name="juega_tercera" class="custom-select" required>  
+        <option value="1">No</option>
+        <option value="2">Si</option>        
     </select>
-  <input type="date" class="form-control" name="cierretercera">
-</div>
-</div>
+    </div>
+    <label for="inputEmail3" class="col-sm-2 col-form-label">Cierra inscripcion</label>
+    <div class="col-sm-2">
+      <input type="date" class="form-control" name="cierre_tercera">
+    </div>
+  </div> 
 
-<div class="form-row">
-<div class="input-group col-md-8 offset-md-2">
-  <div class="input-group-prepend">
-    <span class="input-group-text" id="">Cierre de categoría Cuarta</span>
-  </div>
-  <select name="desplegablesd" class="custom-select" required>  
-        <option value="2">No</option>
-        <option value="1">Si</option>        
+   <div class="form-group row">
+    <label for="inputEmail3" class="col-sm-4 col-form-label">Juega cuarta?</label>
+    <div class="col-sm-2">
+      <select name="juega_cuarta" class="custom-select" required="">  
+        <option value="1">No</option>
+        <option value="2">Si</option>        
     </select>
-  <input type="date" class="form-control" name="cierrecuarta">
-</div>
+    </div>
+    <label for="inputEmail3" class="col-sm-2 col-form-label">Cierra inscripcion</label>
+    <div class="col-sm-2">
+      <input type="date" class="form-control" name="cierre_cuarta">
+    </div>
+  </div> 
 
-</div><div class="form-row">
-<div class="input-group col-md-8 offset-md-2">
-  <div class="input-group-prepend">
-    <span class="input-group-text" id="">Cierre de categoría Quinta</span>
-  </div>
-  <select name="desplegablesd" class="custom-select" required>  
-        <option value="2">No</option>
-        <option value="1">Si</option>        
+   <div class="form-group row">
+    <label for="inputEmail3" class="col-sm-4 col-form-label">Juega Quinta?</label>
+    <div class="col-sm-2">
+      <select name="juega_quinta" class="custom-select" required="">  
+        <option value="1">No</option>
+        <option value="2">Si</option>        
     </select>
-  <input type="date" class="form-control" name="cierrequinta">
-</div>
-</div>
-  <!--div class="form-group">
-    <label for="inputAddress">Categorías</label>
-    <select name="categorias[]" class="custom-select" multiple required>  
-        <option value="0">SD</option>
-        <option value="1">Primera</option>
-        <option value="2">Segunda</option>
-        <option value="3">Tercera</option>
-        <option value="4">Cuarta</option>
-        <option value="5">Quinta</option>
-    </select>
-  </div-->
+    </div>
+    <label for="inputEmail3" class="col-sm-2 col-form-label">Cierra inscripcion</label>
+    <div class="col-sm-2">
+      <input type="date" class="form-control" name="cierre_quinta">
+    </div>
+  </div> 
+
+
+
   
  
   

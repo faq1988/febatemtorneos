@@ -25,10 +25,10 @@
          
 
           <div class="row">
-          <div class="col-lg-6 offset-md-3">
+          <div class="col-lg-8 offset-md-2">
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Configure la cantidad de sets a jugar en partidos de zona</h6>
+              <h6 class="m-0 font-weight-bold text-primary">Configure la cantidad de sets a jugar en partidos</h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -36,7 +36,13 @@
                   <thead>
                     <tr>
                       <th>Categoría</th>
-                      <th>Cantidad de sets a jugar</th>
+                      <th>Zona</th>
+                      <th>32avos</th>
+                      <th>16avos</th>
+                      <th>Octavos</th>
+                      <th>Cuartos</th>
+                      <th>Semi</th>
+                      <th>Final</th>
                                            
                     </tr>
                   </thead>
@@ -50,7 +56,13 @@
 
                     <tr>
                       <td><?php echo $lista_cant_set_zonas[$i]['categoria'];?></td>
-                      <td><?php echo $lista_cant_set_zonas[$i]['cant_sets'] ;?></td>                  
+                      <td><?php echo $lista_cant_set_zonas[$i]['zona'] ;?></td>
+                      <td><?php echo $lista_cant_set_zonas[$i]['trentidosavos'] ;?></td>
+                      <td><?php echo $lista_cant_set_zonas[$i]['dieciseisavos'] ;?></td>
+                      <td><?php echo $lista_cant_set_zonas[$i]['octavos'] ;?></td>
+                      <td><?php echo $lista_cant_set_zonas[$i]['cuartos'] ;?></td>
+                      <td><?php echo $lista_cant_set_zonas[$i]['semi'] ;?></td>                  
+                      <td><?php echo $lista_cant_set_zonas[$i]['final'] ;?></td>                  
                     </tr>
                      <?php } }?>
                   </tbody>
@@ -61,7 +73,7 @@
 
               <?php echo form_open('Torneoscontroller/definir_cant_sets_zona', 'class= "text-center" method="GET"'); ?>
                 <div class="form-row">
-                      <div class="form-group col-md-4 offset-md-1">
+                      <div class="form-group col-md-3 offset-md-1">
                       <label for="inputAddress">Categoría</label>
                       <select name="categoria" class="custom-select">  
                           <option value="-1">Seleccionar</option>
@@ -74,21 +86,64 @@
                       </select>
                     </div>
 
-                    <div class="form-group col-md-4">
-                      <label for="inputAddress">Cantidad de sets</label>
-                      <select name="cant_sets" class="custom-select">  
+                    <div class="form-group col-md-1">
+                      <label for="inputAddress">Zonas</label>
+                      <select name="zonas" class="custom-select">  
                           <option value="-1">Seleccionar</option>
                           <option value="3">Tres</option>
-                          <option value="5">Cinco</option>
-                          <option value="6">Siete</option>                     
+                          <option value="5">Cinco</option>                                           
                       </select>
                     </div>
-
-                    <div class="form-group col-md-2">
-                      <label for="inputAddress">---</label>
-                      <button type="submit" class="btn btn-primary">Establecer</button>
+                    <div class="form-group col-md-1">
+                      <label for="inputAddress">32avos</label>
+                      <select name="trentidosavos" class="custom-select">  
+                          <option value="-1">Seleccionar</option>
+                          <option value="3">Tres</option>
+                          <option value="5">Cinco</option>                                           
+                      </select>
                     </div>
+                    <div class="form-group col-md-1">
+                      <label for="inputAddress">16avos</label>
+                      <select name="dieciseisavos" class="custom-select">  
+                          <option value="-1">Seleccionar</option>
+                          <option value="3">Tres</option>
+                          <option value="5">Cinco</option>                                           
+                      </select>
+                    </div>
+                    <div class="form-group col-md-1">
+                      <label for="inputAddress">Octavos</label>
+                      <select name="octavos" class="custom-select">  
+                          <option value="-1">Seleccionar</option>
+                          <option value="3">Tres</option>
+                          <option value="5">Cinco</option>                                           
+                      </select>
+                    </div>
+                    <div class="form-group col-md-1">
+                      <label for="inputAddress">Cuartos</label>
+                      <select name="cuartos" class="custom-select">  
+                          <option value="-1">Seleccionar</option>
+                          <option value="3">Tres</option>
+                          <option value="5">Cinco</option>                                           
+                      </select>
+                    </div>
+                    <div class="form-group col-md-1">
+                      <label for="inputAddress">Semis</label>
+                      <select name="semis" class="custom-select">  
+                          <option value="-1">Seleccionar</option>
+                          <option value="3">Tres</option>
+                          <option value="5">Cinco</option>                                           
+                      </select>
+                    </div>
+                    <div class="form-group col-md-1">
+                      <label for="inputAddress">Final</label>
+                      <select name="final" class="custom-select">  
+                          <option value="-1">Seleccionar</option>
+                          <option value="3">Tres</option>
+                          <option value="5">Cinco</option>                                           
+                      </select>
+                    </div>                    
               </div>
+               <button type="submit" class="btn btn-primary">Establecer</button>
                  
 
               </form>

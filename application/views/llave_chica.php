@@ -78,7 +78,7 @@
               <tbody class="tournament-bracket__content" onclick="location.href='<?php echo base_url() ?>Welcome/editar_partido_llave/<?php echo $llave_8[0]->id; ?>/<?php echo $llave_8[1]->id; ?>';">
                 <tr class="tournament-bracket__team tournament-bracket__team--winner">
                   <td class="tournament-bracket__country">
-                    <abbr class="tournament-bracket__code" title="Canada"><?php if (isset($llave_8[0]->jugador)) echo $llave_8[0]->jugador;?></abbr>
+                    <abbr class="tournament-bracket__code" title="Canada"><?php if (isset($llave_8[0]->jugador)) echo $llave_8[0]->jugador; else echo '';?></abbr>
                     <span class="tournament-bracket__flag flag-icon flag-icon-ca" aria-label="Flag"></span>
                   </td>
                   <!--td class="tournament-bracket__score">
@@ -87,7 +87,7 @@
                 </tr>
                 <tr class="tournament-bracket__team">
                   <td class="tournament-bracket__country">
-                    <abbr class="tournament-bracket__code" title="Kazakhstan"><?php if (isset($llave_8[1]->jugador)) echo $llave_8[1]->jugador;?></abbr>
+                    <abbr class="tournament-bracket__code" title="Kazakhstan"><?php if (isset($llave_8[1]->jugador)) echo $llave_8[1]->jugador; else echo '';?></abbr>
                     <span class="tournament-bracket__flag flag-icon flag-icon-kz" aria-label="Flag"></span>
                   </td>
                   <!--td class="tournament-bracket__score">
@@ -112,7 +112,7 @@
               <tbody class="tournament-bracket__content" onclick="location.href='<?php echo base_url() ?>Welcome/editar_partido_llave/<?php echo $llave_8[2]->id; ?>/<?php echo $llave_8[3]->id; ?>';">
                 <tr class="tournament-bracket__team tournament-bracket__team--winner">
                   <td class="tournament-bracket__country">
-                    <abbr class="tournament-bracket__code" title="Czech Republic"><?php if (isset($llave_8[2]->jugador)) echo $llave_8[2]->jugador;?></abbr>
+                    <abbr class="tournament-bracket__code" title="Czech Republic"><?php if (isset($llave_8[2]->jugador)) echo $llave_8[2]->jugador; else echo '';?></abbr>
                     <span class="tournament-bracket__flag flag-icon flag-icon-cz" aria-label="Flag"></span>
                   </td>
                   <!--td class="tournament-bracket__score">
@@ -121,7 +121,7 @@
                 </tr>
                 <tr class="tournament-bracket__team">
                   <td class="tournament-bracket__country">
-                    <abbr class="tournament-bracket__code" title="Unitede states of America"><?php if (isset($llave_8[3]->jugador)) echo $llave_8[3]->jugador;?></abbr>
+                    <abbr class="tournament-bracket__code" title="Unitede states of America"><?php if (isset($llave_8[3]->jugador)) echo $llave_8[3]->jugador; else echo '';?></abbr>
                     <span class="tournament-bracket__flag flag-icon flag-icon-us" aria-label="Flag"></span>
                   </td>
                   <!--td class="tournament-bracket__score">
@@ -145,7 +145,7 @@
               <tbody class="tournament-bracket__content" onclick="location.href='<?php echo base_url() ?>Welcome/editar_partido_llave/<?php echo $llave_8[4]->id; ?>/<?php echo $llave_8[5]->id; ?>';">
                 <tr class="tournament-bracket__team tournament-bracket__team--winner">
                   <td class="tournament-bracket__country">
-                    <abbr class="tournament-bracket__code" title="Finland"><?php if (isset($llave_8[4]->jugador)) echo $llave_8[4]->jugador;?></abbr>
+                    <abbr class="tournament-bracket__code" title="Finland"><?php if (isset($llave_8[4]->jugador)) echo $llave_8[4]->jugador; else echo '';?></abbr>
                     <span class="tournament-bracket__flag flag-icon flag-icon-fi" aria-label="Flag"></span>
                   </td>
                   <!--td class="tournament-bracket__score">
@@ -154,7 +154,7 @@
                 </tr>
                 <tr class="tournament-bracket__team">
                   <td class="tournament-bracket__country">
-                    <abbr class="tournament-bracket__code" title="Sweden"><?php if (isset($llave_8[5]->jugador)) echo $llave_8[5]->jugador;?></abbr>
+                    <abbr class="tournament-bracket__code" title="Sweden"><?php if (isset($llave_8[5]->jugador)) echo $llave_8[5]->jugador; else echo '';?></abbr>
                     <span class="tournament-bracket__flag flag-icon flag-icon-se" aria-label="Flag"></span>
                   </td>
                   <!--td class="tournament-bracket__score">
@@ -179,7 +179,7 @@
               <tbody class="tournament-bracket__content" onclick="location.href='<?php echo base_url() ?>Welcome/editar_partido_llave/<?php echo $llave_8[6]->id; ?>/<?php echo $llave_8[7]->id; ?>';">
                 <tr class="tournament-bracket__team tournament-bracket__team--winner">
                   <td class="tournament-bracket__country">
-                    <abbr class="tournament-bracket__code" title="Russia"><?php if (isset($llave_8[6]->jugador)) echo $llave_8[6]->jugador;?></abbr>
+                    <abbr class="tournament-bracket__code" title="Russia"><?php if (isset($llave_8[6]->jugador)) echo $llave_8[6]->jugador; else echo '';?></abbr>
                     <span class="tournament-bracket__flag flag-icon flag-icon-ru" aria-label="Flag"></span>
                   </td>
                   <!--td class="tournament-bracket__score">
@@ -188,7 +188,7 @@
                 </tr>
                 <tr class="tournament-bracket__team">
                   <td class="tournament-bracket__country">
-                    <abbr class="tournament-bracket__code" title="Belarus"><?php if (isset($llave_8[7]->jugador)) echo $llave_8[7]->jugador;?></abbr>
+                    <abbr class="tournament-bracket__code" title="Belarus"><?php if (isset($llave_8[7]->jugador)) echo $llave_8[7]->jugador; else echo '';?></abbr>
                     <span class="tournament-bracket__flag flag-icon flag-icon-by" aria-label="Flag"></span>
                   </td>
                   <!--td class="tournament-bracket__score">
@@ -225,7 +225,7 @@
               <tbody class="tournament-bracket__content" onclick="location.href='<?php echo base_url() ?>Welcome/editar_partido_llave/<?php echo $llave_4[0]->id; ?>/<?php echo $llave_4[1]->id; ?>';">
                 <tr class="tournament-bracket__team">
                   <td class="tournament-bracket__country">
-                    <abbr class="tournament-bracket__code" title="Canada"><?php if (isset($llave_4[0]->jugador)) echo $llave_4[0]->jugador;?></abbr>
+                    <abbr class="tournament-bracket__code" title="Canada"><?php if (isset($llave_4[0]->jugador)) echo $llave_4[0]->jugador; else echo '';?></abbr>
                     <span class="tournament-bracket__flag flag-icon flag-icon-ca" aria-label="Flag"></span>
                   </td>
                   <!--td class="tournament-bracket__score">
@@ -234,7 +234,7 @@
                 </tr>
                 <tr class="tournament-bracket__team tournament-bracket__team--winner">
                   <td class="tournament-bracket__country">
-                    <abbr class="tournament-bracket__code" title="Czech Republic"><?php if (isset($llave_4[1]->jugador)) echo $llave_4[1]->jugador;?></abbr>
+                    <abbr class="tournament-bracket__code" title="Czech Republic"><?php if (isset($llave_4[1]->jugador)) echo $llave_4[1]->jugador; else echo '';?></abbr>
                     <span class="tournament-bracket__flag flag-icon flag-icon-cz" aria-label="Flag"></span>
                   </td>
                   <!--td class="tournament-bracket__score">
@@ -261,7 +261,7 @@
               <tbody class="tournament-bracket__content" onclick="location.href='<?php echo base_url() ?>Welcome/editar_partido_llave/<?php echo $llave_4[2]->id; ?>/<?php echo $llave_4[3]->id; ?>';">
                 <tr class="tournament-bracket__team">
                   <td class="tournament-bracket__country">
-                    <abbr class="tournament-bracket__code" title="Finland"><?php if (isset($llave_4[2]->jugador)) echo $llave_4[2]->jugador;?></abbr>
+                    <abbr class="tournament-bracket__code" title="Finland"><?php if (isset($llave_4[2]->jugador)) echo $llave_4[2]->jugador; else echo '';?></abbr>
                     <span class="tournament-bracket__flag flag-icon flag-icon-fi" aria-label="Flag"></span>
                   </td>
                   <!--td class="tournament-bracket__score">
@@ -270,7 +270,7 @@
                 </tr>
                 <tr class="tournament-bracket__team tournament-bracket__team--winner">
                   <td class="tournament-bracket__country">
-                    <abbr class="tournament-bracket__code" title="Russia"><?php if (isset($llave_4[3]->jugador)) echo $llave_4[3]->jugador;?></abbr>
+                    <abbr class="tournament-bracket__code" title="Russia"><?php if (isset($llave_4[3]->jugador)) echo $llave_4[3]->jugador; else echo '';?></abbr>
                     <span class="tournament-bracket__flag flag-icon flag-icon-ru" aria-label="Flag"></span>
                   </td>
                   <!--td class="tournament-bracket__score">
@@ -307,7 +307,7 @@
               <tbody class="tournament-bracket__content" onclick="location.href='<?php echo base_url() ?>Welcome/editar_partido_llave/<?php echo $llave_2[0]->id; ?>/<?php echo $llave_2[1]->id; ?>';">
                 <tr class="tournament-bracket__team tournament-bracket__team--winner">
                   <td class="tournament-bracket__country">
-                    <abbr class="tournament-bracket__code" title="Finland"><?php if (isset($llave_2[0]->jugador)) echo $llave_2[0]->jugador;?></abbr>
+                    <abbr class="tournament-bracket__code" title="Finland"><?php if (isset($llave_2[0]->jugador)) echo $llave_2[0]->jugador; else echo '';?></abbr>
                     <span class="tournament-bracket__flag flag-icon flag-icon-fi" aria-label="Flag"></span>
                   </td>
                   <!--td class="tournament-bracket__score">
@@ -317,7 +317,7 @@
                 </tr>
                 <tr class="tournament-bracket__team">
                   <td class="tournament-bracket__country">
-                    <abbr class="tournament-bracket__code" title="Canada"><?php if (isset($llave_2[1]->jugador)) echo $llave_2[1]->jugador;?></abbr>
+                    <abbr class="tournament-bracket__code" title="Canada"><?php if (isset($llave_2[1]->jugador)) echo $llave_2[1]->jugador; else echo '';?></abbr>
                     <span class="tournament-bracket__flag flag-icon flag-icon-ca" aria-label="Flag"></span>
                   </td>
                   <!--td class="tournament-bracket__score">
@@ -391,11 +391,16 @@
 
 
 
-
+ <?php 
+         if ($cant_inscriptos > 5 and $cant_inscriptos < 9 and isset($llave_8[0]) and isset($llave_8[1]))
+         {
+     ?>
           </br>
               <button type="submit" class="btn btn-primary">Procesar Llave</button>
             </div>
-
+ <?php 
+         }
+     ?>
 
           </div>
 

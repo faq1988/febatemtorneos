@@ -15,7 +15,7 @@
 
         
           <ul class="navbar-nav">          
-          <li class="list-group-item list-group-item-success">Torneo actual: <?php echo $nombre_torneo; ?></li>         
+          <li class="list-group-item list-group-item-info">Torneo actual: <?php echo $nombre_torneo; ?></li>         
           </ul>
         
           <!-- Topbar Navbar -->

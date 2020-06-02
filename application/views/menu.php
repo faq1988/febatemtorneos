@@ -18,7 +18,7 @@
 
   <!-- Custom styles for this template-->
   <link href="<?=base_url()?>assets_template/css/sb-admin-2.min.css" rel="stylesheet">
-  <link href="<?=base_url()?>assets_template/css/llave1.css" rel="stylesheet">
+  <link href="<?=base_url()?>assets_template/css/llave2.css" rel="stylesheet">
    <!-- Custom styles for this page -->
   <link href="<?=base_url()?>assets_template/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
@@ -121,6 +121,7 @@
             <a class="collapse-item" href="<?=base_url()?>Welcome/zonas">Zonas</a>
             <!--a class="collapse-item" href="<?=base_url()?>Welcome/partidos_zona">Partidos de zona</a-->
             <a class="collapse-item" href="<?=base_url()?>Welcome/llave">Llaves</a>
+            <a class="collapse-item" href="<?=base_url()?>Welcome/definir_cant_set_zonas">Cantidad de sets</a>
             <!--a class="collapse-item" href="<?=base_url()?>Welcome/partidos_llave">Partidos de llave</a-->
           </div>
         </div>

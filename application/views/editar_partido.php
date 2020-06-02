@@ -27,6 +27,7 @@
    <input type="hidden" name="id" value="<?php echo $id_partido; ?>"/>
    <input type="hidden" name="id_zona" value="<?php echo $id_zona; ?>"/>
    <input type="hidden" name="tipo" value="<?php echo $tipo; ?>"/>
+   <input type="hidden" id="cant_sets" value="<?php echo $cant_sets; ?>"/>
 
 
 <div class="form-row">
@@ -36,24 +37,24 @@
     </div>
     <div class="form-group col-md-1">
       <label for="inputEmail4">Set 1</label>
-      <input type="text" name="set11" id="set11" class="form-control" id="inputEmail4" required onfocusout="validacion()" tabindex="1">
+      <input type="text" name="set11" id="set11" class="form-control" id="inputEmail4"  onfocusout="validacion()" tabindex="1">
     </div>
     <div class="form-group col-md-1">
       <label for="inputPassword4">Set 2</label>
-      <input type="text" name="set12" id="set12" class="form-control" id="inputPassword4" required onfocusout="validacion()" tabindex="3">
+      <input type="text" name="set12" id="set12" class="form-control" id="inputPassword4"  onfocusout="validacion()" tabindex="3">
     </div>   
     <div class="form-group col-md-1">
       <label for="inputPassword4">Set 3</label>
-      <input type="text" name="set13" id="set13" class="form-control" id="inputPassword4" required onfocusout="validacion()" tabindex="5">
+      <input type="text" name="set13" id="set13" class="form-control" id="inputPassword4"  onfocusout="validacion()" tabindex="5">
     </div>   
     <?php if ($cant_sets > 3) { ?>
     <div class="form-group col-md-1">
       <label for="inputPassword4">Set 4</label>
-      <input type="text" name="set14" id="set14" class="form-control" id="inputPassword4" required onfocusout="validacion()" tabindex="7">
+      <input type="text" name="set14" id="set14" class="form-control" id="inputPassword4"  onfocusout="validacion()" tabindex="7">
     </div>   
     <div class="form-group col-md-1">
       <label for="inputPassword4">Set 5</label>
-      <input type="text" name="set15" id="set15" class="form-control" id="inputPassword4" required onfocusout="validacion()" tabindex="9">
+      <input type="text" name="set15" id="set15" class="form-control" id="inputPassword4"  onfocusout="validacion()" tabindex="9">
     </div>  
   <?php } ?>
     <div class="form-group col-md-2">
@@ -68,24 +69,24 @@
     </div>
     <div class="form-group col-md-1">
       <label for="inputEmail4">Set 1</label>
-      <input type="text" name="set21" id="set21" class="form-control" id="inputEmail4" required onfocusout="validacion()" tabindex="2">
+      <input type="text" name="set21" id="set21" class="form-control" id="inputEmail4"  onfocusout="validacion()" tabindex="2">
     </div>
     <div class="form-group col-md-1">
       <label for="inputPassword4">Set 2</label>
-      <input type="text" name="set22" id="set22" class="form-control" id="inputPassword4" required onfocusout="validacion()" tabindex="4">
+      <input type="text" name="set22" id="set22" class="form-control" id="inputPassword4"  onfocusout="validacion()" tabindex="4">
     </div>   
     <div class="form-group col-md-1">
       <label for="inputPassword4">Set 3</label>
-      <input type="text" name="set23" id="set23" class="form-control" id="inputPassword4" required onfocusout="validacion()" tabindex="6">
+      <input type="text" name="set23" id="set23" class="form-control" id="inputPassword4"  onfocusout="validacion()" tabindex="6">
     </div>   
     <?php if ($cant_sets > 3) { ?>
     <div class="form-group col-md-1">
       <label for="inputPassword4">Set 4</label>
-      <input type="text" name="set24" id="set24" class="form-control" id="inputPassword4" required onfocusout="validacion()" tabindex="8">
+      <input type="text" name="set24" id="set24" class="form-control" id="inputPassword4"  onfocusout="validacion()" tabindex="8">
     </div>   
     <div class="form-group col-md-1">
       <label for="inputPassword4">Set 5</label>
-      <input type="text" name="set25" id="set25" class="form-control" id="inputPassword4" required onfocusout="validacion()" tabindex="10">
+      <input type="text" name="set25" id="set25" class="form-control" id="inputPassword4"  onfocusout="validacion()" tabindex="10">
     </div>   
     <?php } ?>
       <div class="form-group col-md-2">
@@ -98,7 +99,7 @@
   
  
   
-  <button type="submit" class="btn btn-primary" tabindex="11">Aceptar</button>
+  <button type="submit" class="btn btn-primary" onclick="validacion()" tabindex="11">Aceptar</button>
 </form>
 
    </div>
@@ -143,10 +144,9 @@
  <script>
 function validacion() {
   
+
   var total1= 0;
   var total2= 0;
-
-
 
   set11 = parseInt(document.getElementById("set11").value);
   set21 = parseInt(document.getElementById("set21").value);
@@ -176,6 +176,18 @@ function validacion() {
     else
       total2++;
   }
+
+  cant_set = document.getElementById('cant_sets').value;
+
+  if(cant_set == 3)
+  {
+    if (total1 == 2 || total2 ==2)
+    {
+      document.getElementById('set13').disabled = true;
+      document.getElementById('set23').disabled = true;
+    }
+  }
+
   set13 = parseInt(document.getElementById("set13").value);
   set23 = parseInt(document.getElementById("set23").value);
 
@@ -186,6 +198,19 @@ function validacion() {
   else
     total2++;
 }
+
+cant_set = document.getElementById('cant_sets').value;
+
+  if(cant_set == 5)
+  {
+    if (total1 == 3 || total2 ==3)
+    {
+      document.getElementById('set14').disabled = true;
+      document.getElementById('set15').disabled = true;
+      document.getElementById('set24').disabled = true;
+      document.getElementById('set25').disabled = true;
+    }
+  }
 
 if (document.getElementById("set14") != null && document.getElementById("set14") != null)
 {
@@ -220,22 +245,6 @@ if( !isNaN(set15) && !isNaN(set25))
     document.getElementById("total1").value = total1;
     document.getElementById("total2").value = total2;
 
-  /*if( set11 != null ) {
-    alert('[ERROR] Debe ingresar el primer set');
-    return false;
-
-}*/
-
-
-/*
-  indice = document.getElementById("set12").value;
-  if( indice == null || indice == 0 ) {
-    alert('[ERROR] Debe seleccionar un profesional');
-    return false;
-}
-*/
-  // Si el script ha llegado a este punto, todas las condiciones
-  // se han cumplido, por lo que se devuelve el valor true
   return true;
 }
 </script>

@@ -30,7 +30,12 @@ class Torneoscontroller extends CI_Controller {
 
 	public function crear_torneo()
 	{
-		$categorias= $this->input->post('categorias');		
+		$juega_sd= $this->input->post('juega_sd');		
+		$juega_primera= $this->input->post('juega_primera');		
+		$juega_segunda= $this->input->post('juega_segunda');		
+		$juega_tercera= $this->input->post('juega_tercera');		
+		$juega_cuarta= $this->input->post('juega_cuarta');		
+		$juega_quinta= $this->input->post('juega_quinta');		
 		
 		$sd=FALSE;
 		$primera=FALSE;
@@ -38,23 +43,19 @@ class Torneoscontroller extends CI_Controller {
 		$tercera=FALSE;
 		$cuarta=FALSE;
 		$quinta=FALSE;
-		if (isset($categorias)){
-             for($i=0; $i<sizeof($categorias); $i++)
-             {
-             	if ($categorias[$i]==0)
-             		$sd=TRUE;
-             	if ($categorias[$i]==1)
-             		$primera=TRUE;
-             	if ($categorias[$i]==2)
-             		$segunda=TRUE;
-             	if ($categorias[$i]==3)
-             		$tercera=TRUE;
-             	if ($categorias[$i]==4)
-             		$cuarta=TRUE;
-             	if ($categorias[$i]==5)
-             		$quinta=TRUE;
-             }
-         }
+
+    	if ($juega_sd==2)
+     		$sd=TRUE;
+     	if ($juega_primera==2)
+     		$primera=TRUE;
+     	if ($juega_segunda==2)
+     		$segunda=TRUE;
+     	if ($juega_tercera==2)
+     		$tercera=TRUE;
+     	if ($juega_cuarta==2)
+     		$cuarta=TRUE;
+     	if ($juega_quinta==2)
+     		$quinta=TRUE;
 
 		
 			$data = array(		    
@@ -70,6 +71,11 @@ class Torneoscontroller extends CI_Controller {
 			'quinta' => $quinta,
 			'activo' => TRUE,		
 			'estado' => "CREADO",	
+			'habilitadas' => $this->input->post('habilitadas'),
+			'costo_inscripcion' => $this->input->post('costo_inscripcion'),
+			'costo_afiliacion' => $this->input->post('costo_afiliacion'),
+			'cant_set_zona' => 3,
+			'cant_set_llave' => 3,
 			);
 
 			$this->torneo_model->desactivar_torneos($this->session->userdata('id_usuario'));
@@ -78,9 +84,57 @@ class Torneoscontroller extends CI_Controller {
 			$torneo= $this->torneo_model->obtenerTorneoActual();
 			$this->torneo_model->crear_mesas($data['cant_mesas'], $torneo->first_row()->id);
 
+			$this->definir_cant_set($torneo);
+			
 			redirect('Welcome/torneos');
 	}
 
+
+	private function definir_cant_set($torneo){
+		
+		$data = array(
+				'torneo' => $torneo->first_row()->id,
+				'zona' => -1,
+				'trentidosavos' => -1,
+				'dieciseisavos' => -1,
+				'octavos' => -1,
+				'cuartos' => -1,
+				'semi' => -1,
+				'final' => -1,
+			);
+
+		if ($torneo->first_row()->superdivision)
+		{
+			$data['categoria'] = 0;
+			$this->torneo_model->crear_cant_set($data);
+		}
+		if ($torneo->first_row()->primera)
+		{
+			$data['categoria'] = 1;
+			$this->torneo_model->crear_cant_set($data);
+		}
+		if ($torneo->first_row()->segunda)
+		{
+			$data['categoria'] = 2;
+			$this->torneo_model->crear_cant_set($data);
+		}
+		if ($torneo->first_row()->tercera)
+		{
+			$data['categoria'] = 3;
+			$this->torneo_model->crear_cant_set($data);
+		}
+		if ($torneo->first_row()->cuarta)
+		{
+			$data['categoria'] = 4;
+			$this->torneo_model->crear_cant_set($data);
+		}
+		if ($torneo->first_row()->quinta)
+		{
+			$data['categoria'] = 5;
+			$this->torneo_model->crear_cant_set($data);
+		}	
+
+	}
 
 
 
@@ -203,9 +257,9 @@ class Torneoscontroller extends CI_Controller {
 			if (isset($inscriptos))
 				$cantPrimera = sizeof($inscriptos->result());	
 
-			if ($cantPrimera < 1)
+			if ($cantPrimera < 6)
 			{
-				$this->session->set_flashdata('error', 'Para cerrar inscripciones debe haber al menos 1 jugador');
+				$this->session->set_flashdata('error', 'Para cerrar inscripciones debe haber al menos 6 jugadores');
 				redirect('Welcome/inscripcion');
 			}
 
@@ -493,16 +547,16 @@ class Torneoscontroller extends CI_Controller {
 			'id' => $this->input->post('id'),			
 			'set11' => $this->input->post('set11'),			
 			'set12' => $this->input->post('set12'),							
-			'set13' => $this->input->post('set13'),							
-			'set14' => $this->input->post('set14'),							
-			'set15' => $this->input->post('set15'),
+			'set13' => $this->input->post('set13') != NULL ? $this->input->post('set13') : 0,							
+			'set14' => $this->input->post('set14') != NULL ? $this->input->post('set14') : 0,							
+			'set15' => $this->input->post('set15') != NULL ? $this->input->post('set15') : 0,
 			'resultado1' => $this->input->post('total1'),
 
 			'set21' => $this->input->post('set21'),			
 			'set22' => $this->input->post('set22'),							
-			'set23' => $this->input->post('set23'),							
-			'set24' => $this->input->post('set24'),							
-			'set25' => $this->input->post('set25'),							
+			'set23' => $this->input->post('set23') != NULL ? $this->input->post('set23') : 0,							
+			'set24' => $this->input->post('set24') != NULL ? $this->input->post('set24') : 0,							
+			'set25' => $this->input->post('set25') != NULL ? $this->input->post('set25') : 0,							
 			'resultado2' => $this->input->post('total2'),
 
 			'estado' => 'FINALIZADO',
@@ -567,7 +621,7 @@ class Torneoscontroller extends CI_Controller {
 						$partido = array(		    											
 						'jugador1' => $llave_oponente[0]->jugador,			
 						'jugador2' => $llave_rival[0]->jugador,
-						'cant_sets'=> 0,
+						'cant_sets'=> $this->torneo_model->obtener_cant_set_instancia($llave['torneo'], $llave['categoria'], 'LLAVE', $llave['instancia'])->first_row()->cant_set,
 						'estado'   => 'SIN JUGAR',
 						'torneo'   => $llave['torneo'],
 						'categoria'=> $llave['categoria'],
@@ -594,7 +648,7 @@ class Torneoscontroller extends CI_Controller {
 						$partido = array(		    											
 						'jugador1' => $llave_rival[0]->jugador,			
 						'jugador2' => $llave_oponente[0]->jugador,
-						'cant_sets'=> 0,
+						'cant_sets'=> $this->torneo_model->obtener_cant_set_instancia($llave['torneo'], $llave['categoria'], 'LLAVE', $llave['instancia'])->first_row()->cant_set,
 						'estado'   => 'SIN JUGAR',
 						'torneo'   => $llave['torneo'],
 						'categoria'=> $llave['categoria'],
@@ -607,7 +661,7 @@ class Torneoscontroller extends CI_Controller {
 					}
 				}
 
-				redirect('welcome/llave');
+				redirect('welcome/llave/'.$llave['categoria']);
 
 			}
 
@@ -640,7 +694,7 @@ class Torneoscontroller extends CI_Controller {
 					'jugador1' => $zonas[$i]->id_jugador1,			
 					'jugador2' => $zonas[$i]->id_jugador2,
 					'arbitro' => $zonas[$i]->id_jugador3,
-					'cant_sets'=> 0,
+					'cant_sets'=> $this->torneo_model->obtener_cant_set_instancia($id_torneo, $categoria, 'ZONA', NULL)->first_row()->cant_set,
 					'estado'   => 'SIN JUGAR',
 					'torneo'   => $id_torneo,
 					'categoria'=> $categoria,
@@ -657,7 +711,7 @@ class Torneoscontroller extends CI_Controller {
 					'jugador1' => $zonas[$i]->id_jugador1,			
 					'jugador2' => $zonas[$i]->id_jugador3,
 					'arbitro' => $zonas[$i]->id_jugador2,
-					'cant_sets'=> 0,
+					'cant_sets'=> $this->torneo_model->obtener_cant_set_instancia($id_torneo, $categoria, 'ZONA', NULL)->first_row()->cant_set,
 					'estado'   => 'SIN JUGAR',
 					'torneo'   => $id_torneo,
 					'categoria'=> $categoria,
@@ -675,7 +729,7 @@ class Torneoscontroller extends CI_Controller {
 					'jugador1' => $zonas[$i]->id_jugador2,			
 					'jugador2' => $zonas[$i]->id_jugador3,
 					'arbitro' => $zonas[$i]->id_jugador1,
-					'cant_sets'=> 0,
+					'cant_sets'=> $this->torneo_model->obtener_cant_set_instancia($id_torneo, $categoria, 'ZONA', NULL)->first_row()->cant_set,
 					'estado'   => 'SIN JUGAR',
 					'torneo'   => $id_torneo,
 					'categoria'=> $categoria,
@@ -699,7 +753,7 @@ class Torneoscontroller extends CI_Controller {
 					'jugador1' => $zonas_de_4[$i]->id_jugador1,			
 					'jugador2' => $zonas_de_4[$i]->id_jugador3,
 					'arbitro' => $zonas_de_4[$i]->id_jugador4,
-					'cant_sets'=> 0,
+					'cant_sets'=> $this->torneo_model->obtener_cant_set_instancia($id_torneo, $categoria, 'ZONA', NULL)->first_row()->cant_set,
 					'estado'   => 'SIN JUGAR',
 					'torneo'   => $id_torneo,
 					'categoria'=> $categoria,
@@ -717,7 +771,7 @@ class Torneoscontroller extends CI_Controller {
 					'jugador1' => $zonas_de_4[$i]->id_jugador2,			
 					'jugador2' => $zonas_de_4[$i]->id_jugador4,
 					'arbitro' => $zonas_de_4[$i]->id_jugador1,
-					'cant_sets'=> 0,
+					'cant_sets'=> $this->torneo_model->obtener_cant_set_instancia($id_torneo, $categoria, 'ZONA', NULL)->first_row()->cant_set,
 					'estado'   => 'SIN JUGAR',
 					'torneo'   => $id_torneo,
 					'categoria'=> $categoria,
@@ -735,7 +789,7 @@ class Torneoscontroller extends CI_Controller {
 					'jugador1' => $zonas_de_4[$i]->id_jugador1,			
 					'jugador2' => $zonas_de_4[$i]->id_jugador2,
 					'arbitro' => $zonas_de_4[$i]->id_jugador3,
-					'cant_sets'=> 0,
+					'cant_sets'=> $this->torneo_model->obtener_cant_set_instancia($id_torneo, $categoria, 'ZONA', NULL)->first_row()->cant_set,
 					'estado'   => 'SIN JUGAR',
 					'torneo'   => $id_torneo,
 					'categoria'=> $categoria,
@@ -753,7 +807,7 @@ class Torneoscontroller extends CI_Controller {
 					'jugador1' => $zonas_de_4[$i]->id_jugador3,			
 					'jugador2' => $zonas_de_4[$i]->id_jugador4,
 					'arbitro' => $zonas_de_4[$i]->id_jugador2,
-					'cant_sets'=> 0,
+					'cant_sets'=> $this->torneo_model->obtener_cant_set_instancia($id_torneo, $categoria, 'ZONA', NULL)->first_row()->cant_set,
 					'estado'   => 'SIN JUGAR',
 					'torneo'   => $id_torneo,
 					'categoria'=> $categoria,
@@ -771,7 +825,7 @@ class Torneoscontroller extends CI_Controller {
 					'jugador1' => $zonas_de_4[$i]->id_jugador1,			
 					'jugador2' => $zonas_de_4[$i]->id_jugador4,
 					'arbitro' => $zonas_de_4[$i]->id_jugador3,
-					'cant_sets'=> 0,
+					'cant_sets'=> $this->torneo_model->obtener_cant_set_instancia($id_torneo, $categoria, 'ZONA', NULL)->first_row()->cant_set,
 					'estado'   => 'SIN JUGAR',
 					'torneo'   => $id_torneo,
 					'categoria'=> $categoria,
@@ -789,7 +843,7 @@ class Torneoscontroller extends CI_Controller {
 					'jugador1' => $zonas_de_4[$i]->id_jugador2,			
 					'jugador2' => $zonas_de_4[$i]->id_jugador3,
 					'arbitro' => $zonas_de_4[$i]->id_jugador4,
-					'cant_sets'=> 0,
+					'cant_sets'=> $this->torneo_model->obtener_cant_set_instancia($id_torneo, $categoria, 'ZONA', NULL)->first_row()->cant_set,
 					'estado'   => 'SIN JUGAR',
 					'torneo'   => $id_torneo,
 					'categoria'=> $categoria,
@@ -816,6 +870,14 @@ class Torneoscontroller extends CI_Controller {
 	public function guardar_zona()
 	{			
 		$id_zona=$this->input->post('id');
+
+		$zona_ya_procesada = $this->torneo_model->zona_ya_procesada($id_zona);
+
+		if ($zona_ya_procesada)
+		{
+			$this->session->set_flashdata('error', 'No es posible procesar la zona, ya tiene posiciones establecidas');
+			redirect('welcome/editar_zona/'.$id_zona);	
+		}
 
 		//controlo que todos los partidos tengan resultado
 		$partidos_inconclusos= $this->torneo_model->hay_partidos_sin_finalizar($id_zona);
@@ -872,6 +934,7 @@ class Torneoscontroller extends CI_Controller {
 
            }
 
+//var_dump($zona_a_procesar[0]['puntos1'] .'--'. $zona_a_procesar[0]['puntos2'] .'--'. $zona_a_procesar[0]['puntos3']);exit;
 
         //calculo las posiciones finales de zona
         //zona de 3   
@@ -883,14 +946,19 @@ class Torneoscontroller extends CI_Controller {
 
         //zona de 4
         if ($zona_a_procesar[0]['cant_jugadores'] == 4)
-        {
-        	$posicion_final = array(1,2,3,4);
+        {        
+			//$posicion_final = array(1,2,3,4);
+
+        	$posicion_final = $this -> calcular_posiciones_zona_4($zona_a_procesar[0]['puntos1'], $zona_a_procesar[0]['puntos2'], $zona_a_procesar[0]['puntos3'], $zona_a_procesar[0]['puntos4'], 
+        		$zona_a_procesar[0]['id_jugador1'], $zona_a_procesar[0]['id_jugador2'], $zona_a_procesar[0]['id_jugador3'], $zona_a_procesar[0]['id_jugador4'], $zona_a_procesar[0]['id']);
         }
 
 
-
-
-
+        if ($posicion_final[0] == 0 or $posicion_final[1] == 0 or $posicion_final[2] == 0)
+        {
+        	$this->session->set_flashdata('error', 'Ha ocurrido un error al procesar las posiciones de la zona');
+			redirect('welcome/editar_zona/'.$id_zona);
+        }
 
 
 
@@ -1201,7 +1269,8 @@ class Torneoscontroller extends CI_Controller {
 
         	//Caso de triple empate
         	if ($puntos1 == $puntos2 and $puntos2 == $puntos3)
-        	{
+        	{      		
+
         		$set_a_favor1 =  $this->torneo_model->obtener_set_a_favor($row->id, $zona, $jugador1);
         		$set_en_contra1 =  $this->torneo_model->obtener_set_en_contra($row->id, $zona, $jugador1);
         		$set_a_favor2 =  $this->torneo_model->obtener_set_a_favor($row->id, $zona, $jugador2);
@@ -1209,7 +1278,7 @@ class Torneoscontroller extends CI_Controller {
         		$set_a_favor3 =  $this->torneo_model->obtener_set_a_favor($row->id, $zona, $jugador3);
         		$set_en_contra3 =  $this->torneo_model->obtener_set_en_contra($row->id, $zona, $jugador3);        			
         	
-				//log_message('error', 'a favor ' . $set_a_favor3 . 'en contra ' . $set_en_contra3 . 'jugador '. $jugador3);			
+				//var_dump(a favor ' . $set_a_favor3 . 'en contra ' . $set_en_contra3 . 'jugador '. $jugador3);exit;			
 
 
 	        	$coeficiente1 = $set_a_favor1 / $set_en_contra1;
@@ -1223,56 +1292,79 @@ class Torneoscontroller extends CI_Controller {
 	        	{
 	        		if ($coeficiente1 > $coeficiente2 and $coeficiente1 > $coeficiente3)
 	        			{
-	        				$posicion1 = 1;
-	        				
-	        				if ($coeficiente2 > $coeficiente3)
-	        				{
-	        					$posicion2=2;
-	        					$posicion3=3;
-	        				}
-	        				else
-	        				{
-	        					$posicion2=3;
-	        					$posicion3=2;	
-	        				}
+	        				$posiciones = $this->obtener_posicion_puntaje_diferente($coeficiente1, $coeficiente2, $coeficiente3);
+	        				$posicion1 = $posiciones[0];
+	        				$posicion2 = $posiciones[1];
+	        				$posicion3 = $posiciones[2];
 	        			}
 	        		if ($coeficiente2 > $coeficiente1 and $coeficiente2 > $coeficiente3)
-	        		{
-	        			$posicion2 = 1;
-	        				
-	        				if ($coeficiente1 > $coeficiente3)
-	        				{
-	        					$posicion1=2;
-	        					$posicion3=3;
-	        				}
-	        				else
-	        				{
-	        					$posicion1=3;
-	        					$posicion3=2;	
-	        				}
-	        		}
+		        		{
+		        			$posiciones = $this->obtener_posicion_puntaje_diferente($coeficiente2, $coeficiente1, $coeficiente3);
+		        			$posicion2 = $posiciones[0];
+		        			$posicion1 = $posiciones[1];
+		        			$posicion3 = $posiciones[2];
+		        		}
 	        		if ($coeficiente3 > $coeficiente1 and $coeficiente3 > $coeficiente2)
-	        			{
-	        				$posicion3 = 1;
-	        				
-	        				if ($coeficiente1 > $coeficiente2)
-	        				{
-	        					$posicion1=2;
-	        					$posicion2=3;
-	        				}
-	        				else
-	        				{
-	        					$posicion1=3;
-	        					$posicion2=2;	
-	        				}
-	        			}	 
-	        	}
-	        }
+		        		{
+		        			$posiciones = $this->obtener_posicion_puntaje_diferente($coeficiente3, $coeficiente1, $coeficiente2);
+		        			$posicion3 = $posiciones[0];
+		        			$posicion1 = $posiciones[1];
+		        			$posicion2 = $posiciones[2];
+		        		}
+		        }
 
-        	
+	        	//si los coeficientes de set son iguales, defino por coeficiente de puntos
+	        	if ($coeficiente1 == $coeficiente2 and $coeficiente2 == $coeficiente3)
+	        	{
+
+	        		$puntos_a_favor1 =  $this->torneo_model->obtener_puntos_a_favor($row->id, $zona, $jugador1, 3);
+	        		$puntos_en_contra1 =  $this->torneo_model->obtener_puntos_en_contra($row->id, $zona, $jugador1, 3);
+	        		$puntos_a_favor2 =  $this->torneo_model->obtener_puntos_a_favor($row->id, $zona, $jugador2, 3);
+	        		$puntos_en_contra2 =  $this->torneo_model->obtener_puntos_en_contra($row->id, $zona, $jugador2, 3);
+	        		$puntos_a_favor3 =  $this->torneo_model->obtener_puntos_a_favor($row->id, $zona, $jugador3, 3);
+	        		$puntos_en_contra3 =  $this->torneo_model->obtener_puntos_en_contra($row->id, $zona, $jugador3, 3);        			
+	        	
+					log_message('error', 'puntos a favor ' . $puntos_a_favor1 . 'puntos en contra ' . $puntos_en_contra1 . 'jugador '. $jugador1);			
 
 
-        	return array($posicion1, $posicion2, $posicion3);
+		        	$coef_puntos1 = $puntos_a_favor1 / $puntos_en_contra1;
+		        	$coef_puntos2 = $puntos_a_favor2 / $puntos_en_contra2;
+		        	$coef_puntos3 = $puntos_a_favor3 / $puntos_en_contra3;
+
+
+		        	if ($coef_puntos1 <> $coef_puntos2 and $coef_puntos2 <> $coef_puntos3)
+		        	{
+		        		if ($coef_puntos1 > $coef_puntos2 and $coef_puntos1 > $coef_puntos3)
+		        			{
+		        				$posiciones = $this->obtener_posicion_puntaje_diferente($coef_puntos1, $coef_puntos2, $coef_puntos3);
+	        					$posicion1 = $posiciones[0];
+	        					$posicion2 = $posiciones[1];
+	        					$posicion3 = $posiciones[2];
+		        			}
+		        		if ($coef_puntos2 > $coef_puntos1 and $coef_puntos2 > $coef_puntos3)
+			        		{
+			        			$posiciones = $this->obtener_posicion_puntaje_diferente($coef_puntos2, $coef_puntos1, $coef_puntos3);
+			        			$posicion2 = $posiciones[0];
+			        			$posicion1 = $posiciones[1];
+			        			$posicion3 = $posiciones[2];
+			        		}
+		        		if ($coef_puntos3 > $coef_puntos1 and $coef_puntos3 > $coef_puntos2)
+		        			{
+		        				$posiciones = $this->obtener_posicion_puntaje_diferente($coef_puntos3, $coef_puntos1, $coef_puntos2);
+			        			$posicion3 = $posiciones[0];
+			        			$posicion1 = $posiciones[1];
+			        			$posicion2 = $posiciones[2];
+		        			}	 
+		        	}
+
+			        	log_message('error', 'coefpuntos1 ' . $coef_puntos1 . 'coefpuntos2 ' . $coef_puntos2 . 'coefpuntos3 '. $coef_puntos3);	
+			    }
+
+		     }
+
+        
+		return array($posicion1, $posicion2, $posicion3);
+
 	}
 
 
@@ -1299,137 +1391,367 @@ class Torneoscontroller extends CI_Controller {
 
 
 
-	private function calcular_posiciones_zona_4()
+	private function calcular_posiciones_zona_4($puntos1, $puntos2, $puntos3, $puntos4, $jugador1, $jugador2, $jugador3, $jugador4, $zona)
 	{
+
+		$posicion1=0;
+		$posicion2=0;
+		$posicion3=0;
+		$posicion4=0;
+		$torneo = $this->torneo_model->obtenerTorneoActual();
+		$row = $torneo->first_row();
+
+		//var_dump($puntos1 .' -- '. $puntos2 .' -- '. $puntos3 .' -- '. $puntos4);exit;
+
+		//caso mas simple, todos los jugadores tienen puntaje diferente
+		//todos obtuvieron puntaje distinto --> zona definida
+        	if ($puntos1 <> $puntos2 and $puntos2 <> $puntos3 and $puntos3 <> $puntos4)
+        	{        	
+        		$posiciones = $this->obtener_posicion_puntaje_diferente_4($puntos1, $puntos2, $puntos3, $puntos4);
+				$posicion1 = $posiciones[0];
+				$posicion2 = $posiciones[1];
+				$posicion3 = $posiciones[2];
+				$posicion4 = $posiciones[3];
+
+				//var_dump($posicion1 .' -- '. $posicion2 .' -- '. $posicion3 .' -- '. $posicion4);exit;
+        	}
 		//////////////////////////////////////////////////////////////////////INICIO CONTROL DOBLE EMPATE //////////////////////////////////////////////////////////////////////////////
         	//Caso de doble empate
-        	//empate entre 1 y 2
-        	if($puntos1 == $puntos2 and $puntos1 <> $puntos3 and $puntos2 <> $puntos3)
+        	//empate entre 1/2 y 3/4
+        	if($puntos1 == $puntos2 and $puntos1 <> $puntos3 and $puntos3 == $puntos4)
         	{
-        		//observo el resultado del partido jugado entre los empatados
-        		$partido_desempate = $this->torneo_model->obtener_partido_desempate($row->id, $zona, $jugador1, $jugador2);
-
-        		//si el distinto tiene menos puntaje q los empatados, queda tercero, sino queda primero
-        		if ($puntos3 < $puntos1)
+        		if ($puntos1 > $puntos3)
         		{
-        			$posicion3 = 3;
-        			//el resultado entre los empatados define puesto 1 y 2
-        			if ($partido_desempate[0]->resultado1 > $partido_desempate[0]->resultado2)
-        				{
-        					$posicion1 = 1;
-        					$posicion2 = 2;
-        				}
-        			else
-        			{
-        				$posicion1 = 2;
-        				$posicion2 = 1;
-        			}
-
-
+        			$posiciones = $this->obtener_posicion_doble_empate($jugador1, $jugador2, $jugador3, $jugador4, $zona);
+        			$posicion1 = $posiciones[0];
+					$posicion2 = $posiciones[1];
+					$posicion3 = $posiciones[2];
+					$posicion4 = $posiciones[3];
         		}
         		else
         		{
-        			$posicion3 = 1;
-        			//el resultado entre los empatados define puesto 2 y 3
-        			if ($partido_desempate[0]->resultado1 > $partido_desempate[0]->resultado2)
-        				{
-        					$posicion1 = 2;
-        					$posicion2 = 3;
-        				}
-        			else
-        			{
-        				$posicion1 = 3;
-        				$posicion2 = 2;
-        			}
-        		}        		
+        			$posiciones = $this->obtener_posicion_doble_empate($jugador3, $jugador4, $jugador1, $jugador2, $zona);
+	        		$posicion3 = $posiciones[0];
+					$posicion4 = $posiciones[1];
+					$posicion1 = $posiciones[2];
+					$posicion2 = $posiciones[3];
+				}
         	}
 
-        	//empate entre 2 y 3
-        	if($puntos2 == $puntos3 and $puntos1 <> $puntos2 and $puntos1 <> $puntos3)
+        	//empate entre 1/4 y 2/3
+        	if($puntos1 == $puntos4 and $puntos2 <> $puntos4 and $puntos2 == $puntos3)
         	{
-        		//observo el resultado del partido jugado entre los empatados
-        		$partido_desempate = $this->torneo_model->obtener_partido_desempate($row->id, $zona, $jugador2, $jugador3);
-
-        		//si el distinto tiene menos puntaje q los empatados, queda tercero, sino queda primero
-        		if ($puntos1 < $puntos2)
+        		if ($puntos1 > $puntos2)
         		{
-        			$posicion1 = 3;
-        			//el resultado entre los empatados define puesto 1 y 2
-        			if ($partido_desempate[0]->resultado1 > $partido_desempate[0]->resultado2)
-        				{
-        					$posicion2 = 1;
-        					$posicion3 = 2;
-        				}
-        			else
-        			{
-        				$posicion2 = 2;
-        				$posicion3 = 1;
-        			}
-
-
+        			$posiciones = $this->obtener_posicion_doble_empate($jugador1, $jugador4, $jugador2, $jugador3, $zona);
+        			$posicion1 = $posiciones[0];
+					$posicion4 = $posiciones[1];
+					$posicion2 = $posiciones[2];
+					$posicion3 = $posiciones[3];
         		}
         		else
         		{
-        			$posicion1 = 1;
-        			//el resultado entre los empatados define puesto 2 y 3
-        			if ($partido_desempate[0]->resultado1 > $partido_desempate[0]->resultado2)
-        				{
-        					$posicion2 = 2;
-        					$posicion3 = 3;
-        				}
-        			else
-        			{
-        				$posicion2 = 3;
-        				$posicion3 = 2;
-        			}
-        		}        			
+        			$posiciones = $this->obtener_posicion_doble_empate($jugador2, $jugador3, $jugador1, $jugador4, $zona);
+	        		$posicion2 = $posiciones[0];
+					$posicion3 = $posiciones[1];
+					$posicion1 = $posiciones[2];
+					$posicion4 = $posiciones[3];
+				}
         	}
 
-        	//empate entre 1 y 3
-        	if($puntos1 == $puntos3 and $puntos1 <> $puntos2 and $puntos2 <> $puntos3)
+        	//empate entre 1/3 y 2/4
+        	if($puntos1 == $puntos3 and $puntos1 <> $puntos2 and $puntos2 == $puntos4)
         	{
-        		//observo el resultado del partido jugado entre los empatados
-        		$partido_desempate = $this->torneo_model->obtener_partido_desempate($row->id, $zona, $jugador1, $jugador3);
-
-        		//si el distinto tiene menos puntaje q los empatados, queda tercero, sino queda primero
-        		if ($puntos2 < $puntos1)
+        		if ($puntos1 > $puntos2)
         		{
-        			$posicion2 = 3;
-        			//el resultado entre los empatados define puesto 1 y 2
-        			if ($partido_desempate[0]->resultado1 > $partido_desempate[0]->resultado2)
-        				{
-        					$posicion1 = 1;
-        					$posicion3 = 2;
-        				}
-        			else
-        			{
-        				$posicion1 = 2;
-        				$posicion3 = 1;
-        			}
-
-
+        			$posiciones = $this->obtener_posicion_doble_empate($jugador1, $jugador3, $jugador2, $jugador4, $zona);
+        			$posicion1 = $posiciones[0];
+					$posicion3 = $posiciones[1];
+					$posicion2 = $posiciones[2];
+					$posicion4 = $posiciones[3];
         		}
         		else
         		{
-        			$posicion2 = 1;
-        			//el resultado entre los empatados define puesto 2 y 3
-        			if ($partido_desempate[0]->resultado1 > $partido_desempate[0]->resultado2)
-        				{
-        					$posicion1 = 2;
-        					$posicion3 = 3;
-        				}
-        			else
-        			{
-        				$posicion1 = 3;
-        				$posicion3 = 2;
-        			}
-        		}        		
+        			$posiciones = $this->obtener_posicion_doble_empate($jugador2, $jugador4, $jugador1, $jugador3, $zona);        		
+	        		$posicion2 = $posiciones[0];
+					$posicion3 = $posiciones[1];
+					$posicion1 = $posiciones[2];
+					$posicion3 = $posiciones[3];
+				}
         	}
 ///////////////////////////////////////////////////////////////FIN CONTROL DOBLE EMPATE ///////////////////////////////////////////////////////////////////////////////
 
 
-        	return array($posicion1, $posicion2, $posicion3);
+//////////////////////////////////////////////////////////////INICIO CONTROL TRIPLE EMPATE/////////////////////////////////////////////////////////////////////////////
+        	$triple_empate = $this->existe_triple_empate($puntos1, $puntos2, $puntos3, $puntos4);
+
+        	if ( $triple_empate != NULL )
+        	{
+        		//reviso quien es el jugador con distinto puntaje y analizo si queda primero o ultimo
+        		if ($triple_empate[0] == 1 && $triple_empate[1] == 2 && $triple_empate[2] == 3)
+        		{
+        			$posiciones_finales = $this->triple_empate_coeficiente_sets($row->id, $zona, $jugador1, $jugador2, $jugador3);
+        			
+        			//si se pudo resolver por ceoficiente de sets ya esta
+        			if ($posiciones_finales != NULL)
+        			{
+	        			if ($puntos4 > $puntos1)
+	        				{$posicion4 = 1; $posicion1 = $posiciones_finales[0]+1; $posicion2 = $posiciones_finales[1]+1; $posicion3 = $posiciones_finales[2]+1;}
+	        			else
+	        				{$posicion4 = 4; $posicion1 = $posiciones_finales[0]; $posicion2 = $posiciones_finales[1]; $posicion3 = $posiciones_finales[2];}
+        			}        			
+        			else //sino voy por coeficiente de puntos
+        			{
+        				$posiciones_finales = $this->triple_empate_coeficiente_puntos($row->id, $zona, $jugador1, $jugador2, $jugador3);
+        				if ($posiciones_finales != NULL)
+	        			{
+		        			if ($puntos4 > $puntos1)
+		        				{$posicion4 = 1; $posicion1 = $posiciones_finales[0]+1; $posicion2 = $posiciones_finales[1]+1; $posicion3 = $posiciones_finales[2]+1;}
+		        			else
+		        				{$posicion4 = 4; $posicion1 = $posiciones_finales[0]; $posicion2 = $posiciones_finales[1]; $posicion3 = $posiciones_finales[2];}
+	        			}        	
+        			}
+        		}
+        		if ($triple_empate[0] == 1 && $triple_empate[1] == 2 && $triple_empate[2] == 4)
+        		{
+        			$posiciones_finales = $this->triple_empate_coeficiente_sets($row->id, $zona, $jugador1, $jugador2, $jugador4);
+        			if ($posiciones_finales != NULL)
+        			{
+	        			if ($puntos3 > $puntos1)
+	        				{$posicion3 = 1; $posicion1 = $posiciones_finales[0]+1; $posicion2 = $posiciones_finales[1]+1; $posicion4 = $posiciones_finales[2]+1;}
+	        			else
+	        				{$posicion3 = 4; $posicion1 = $posiciones_finales[0]; $posicion2 = $posiciones_finales[1]; $posicion4 = $posiciones_finales[2];}
+        			}
+        			else //sino voy por coeficiente de puntos
+        			{
+
+        			}
+        		}
+        		if ($triple_empate[0] == 1 && $triple_empate[1] == 3 && $triple_empate[2] == 4)
+        		{
+        			$posiciones_finales = $this->triple_empate_coeficiente_sets($row->id, $zona, $jugador1, $jugador3, $jugador4);
+        			if ($posiciones_finales != NULL)
+        			{
+	        			if ($puntos2 > $puntos1)
+	        				{$posicion2 = 1; $posicion1 = $posiciones_finales[0]+1; $posicion3 = $posiciones_finales[1]+1; $posicion4 = $posiciones_finales[2]+1;}
+	        			else
+	        				{$posicion2 = 4; $posicion1 = $posiciones_finales[0]; $posicion3 = $posiciones_finales[1]; $posicion4 = $posiciones_finales[2];}
+	        		}
+	        		else //sino voy por coeficiente de puntos
+        			{
+
+        			}
+        		}
+        		if ($triple_empate[0] == 2 && $triple_empate[1] == 3 && $triple_empate[2] == 4)
+        		{
+        			$posiciones_finales = $this->triple_empate_coeficiente_sets($row->id, $zona, $jugador2, $jugador3, $jugador4);
+        			if ($posiciones_finales != NULL)
+        			{
+	        			if ($puntos1 > $puntos2)
+	        				{$posicion1 = 1; $posicion2 = $posiciones_finales[0]+1; $posicion3 = $posiciones_finales[1]+1; $posicion4 = $posiciones_finales[2]+1;}
+	        			else
+	        				{$posicion1 = 4; $posicion2 = $posiciones_finales[0]; $posicion3 = $posiciones_finales[1]; $posicion4 = $posiciones_finales[2];}
+	        		}
+	        		else //sino voy por coeficiente de puntos
+        			{
+
+        			}
+        		}
+        	}
+
+
+
+
+//////////////////////////////////////////////////////////////FIN CONTROL TRIPLE EMPATE/////////////////////////////////////////////////////////////////////////////
+
+
+        	return array($posicion1, $posicion2, $posicion3, $posicion4);
 	
+	}
+
+
+	//analiza si existe triple empate en la zona
+	private function existe_triple_empate($puntos1, $puntos2, $puntos3, $puntos4)
+	{
+		if ($puntos1 == $puntos2 and $puntos2 == $puntos3)
+		{
+			return array(1,2,3);
+		}
+		if ($puntos1 == $puntos2 and $puntos2 == $puntos4)
+		{
+			return array(1,2,4);
+		}
+		if ($puntos1 == $puntos3 and $puntos3 == $puntos4)
+		{
+			return array(1,3,4);
+		}
+		if ($puntos2 == $puntos3 and $puntos3 == $puntos4)
+		{
+			return array(2,3,4);
+		}
+
+		return NULL;
+	}
+
+
+	private function triple_empate_coeficiente_sets($torneo, $zona, $jugador1, $jugador2, $jugador3)
+	{
+				$set_a_favor1 =  $this->torneo_model->obtener_set_a_favor($torneo, $zona, $jugador1);
+        		$set_en_contra1 =  $this->torneo_model->obtener_set_en_contra($torneo, $zona, $jugador1);
+        		$set_a_favor2 =  $this->torneo_model->obtener_set_a_favor($torneo, $zona, $jugador2);
+        		$set_en_contra2 =  $this->torneo_model->obtener_set_en_contra($torneo, $zona, $jugador2);
+        		$set_a_favor3 =  $this->torneo_model->obtener_set_a_favor($torneo, $zona, $jugador3);
+        		$set_en_contra3 =  $this->torneo_model->obtener_set_en_contra($torneo, $zona, $jugador3);        			
+        					
+	        	$coeficiente1 = $set_a_favor1 / $set_en_contra1;
+	        	$coeficiente2 = $set_a_favor2 / $set_en_contra2;
+	        	$coeficiente3 = $set_a_favor3 / $set_en_contra3;
+
+	        	log_message('error', 'CALCULO DE COEFICIENTE DE SET//// coef1 ' . $coeficiente1 . 'coef2 ' . $coeficiente2 . 'coef3 '. $coeficiente3);			
+
+	        	//si todos los coeficientes son distintos, se resuelve el triple empate
+	        	if ($coeficiente1 <> $coeficiente2 and $coeficiente2 <> $coeficiente3)
+	        	{
+	        		if ($coeficiente1 > $coeficiente2 and $coeficiente1 > $coeficiente3)
+	        			{
+	        				$posiciones = $this->obtener_posicion_puntaje_diferente($coeficiente1, $coeficiente2, $coeficiente3);
+	        				$posicion1 = $posiciones[0];
+	        				$posicion2 = $posiciones[1];
+	        				$posicion3 = $posiciones[2];
+	        				return array($posicion1, $posicion2, $posicion3);
+	        			}
+	        		if ($coeficiente2 > $coeficiente1 and $coeficiente2 > $coeficiente3)
+		        		{
+		        			$posiciones = $this->obtener_posicion_puntaje_diferente($coeficiente2, $coeficiente1, $coeficiente3);
+		        			$posicion2 = $posiciones[0];
+		        			$posicion1 = $posiciones[1];
+		        			$posicion3 = $posiciones[2];
+		        			return array($posicion1, $posicion2, $posicion3);
+		        		}
+	        		if ($coeficiente3 > $coeficiente1 and $coeficiente3 > $coeficiente2)
+		        		{
+		        			$posiciones = $this->obtener_posicion_puntaje_diferente($coeficiente3, $coeficiente1, $coeficiente2);
+		        			$posicion3 = $posiciones[0];
+		        			$posicion1 = $posiciones[1];
+		        			$posicion2 = $posiciones[2];
+		        			return array($posicion1, $posicion2, $posicion3);
+		        		}
+		        }
+		        return NULL;
+	}
+
+
+	private function triple_empate_coeficiente_puntos($torneo, $zona, $jugador1, $jugador2, $jugador3)
+	{
+		$puntos_a_favor1 =  $this->torneo_model->obtener_puntos_a_favor($torneo, $zona, $jugador1, 3);
+		$puntos_en_contra1 =  $this->torneo_model->obtener_puntos_en_contra($torneo, $zona, $jugador1, 3);
+		$puntos_a_favor2 =  $this->torneo_model->obtener_puntos_a_favor($torneo, $zona, $jugador2, 3);
+		$puntos_en_contra2 =  $this->torneo_model->obtener_puntos_en_contra($torneo, $zona, $jugador2, 3);
+		$puntos_a_favor3 =  $this->torneo_model->obtener_puntos_a_favor($torneo, $zona, $jugador3, 3);
+		$puntos_en_contra3 =  $this->torneo_model->obtener_puntos_en_contra($torneo, $zona, $jugador3, 3);        			
+	 	
+	 	$coef_puntos1 = $puntos_a_favor1 / $puntos_en_contra1;
+        $coef_puntos2 = $puntos_a_favor2 / $puntos_en_contra2;
+        $coef_puntos3 = $puntos_a_favor3 / $puntos_en_contra3;
+
+        log_message('error', 'CALCULO DE COEFICIENTE DE PUNTOS//// coef1 ' . $coef_puntos1 . 'coef2 ' . $coef_puntos2 . 'coef3 '. $coef_puntos3);	
+
+           	//si todos los coeficientes son distintos, se resuelve el triple empate
+        	if ($coef_puntos1 <> $coef_puntos2 and $coef_puntos2 <> $coef_puntos3)
+	        	{
+	        		if ($coef_puntos1 > $coef_puntos2 and $coef_puntos1 > $coef_puntos3)
+	        			{
+	        				$posiciones = $this->obtener_posicion_puntaje_diferente($coef_puntos1, $coef_puntos2, $coef_puntos3);
+        					$posicion1 = $posiciones[0];
+        					$posicion2 = $posiciones[1];
+        					$posicion3 = $posiciones[2];
+        				return array($posicion1, $posicion2, $posicion3);
+        			}
+        		if ($coef_puntos2 > $coef_puntos1 and $coef_puntos2 > $coef_puntos3)
+		        		{
+		        			$posiciones = $this->obtener_posicion_puntaje_diferente($coef_puntos2, $coef_puntos1, $coef_puntos3);
+		        			$posicion2 = $posiciones[0];
+		        			$posicion1 = $posiciones[1];
+		        			$posicion3 = $posiciones[2];
+	        			return array($posicion1, $posicion2, $posicion3);
+	        		}
+        		if ($coef_puntos3 > $coef_puntos1 and $coef_puntos3 > $coef_puntos2)
+	        			{
+	        				$posiciones = $this->obtener_posicion_puntaje_diferente($coef_puntos3, $coef_puntos1, $coef_puntos2);
+		        			$posicion3 = $posiciones[0];
+		        			$posicion1 = $posiciones[1];
+		        			$posicion2 = $posiciones[2];
+	        			return array($posicion1, $posicion2, $posicion3);
+	        		}
+	        }
+	        return NULL;
+
+	}
+
+
+
+
+	private function obtener_posicion_doble_empate($jugador1, $jugador2, $jugador3, $jugador4, $zona)
+	{
+		//observo el enfrentamiento entre ambos empates
+		$partido_empate_1 = $this->torneo_model->obtener_partido_empatado_zona($jugador1, $jugador2, $zona)->result_array();
+		$partido_empate_2 = $this->torneo_model->obtener_partido_empatado_zona($jugador3, $jugador4, $zona)->result_array();
+
+		$ganador1 = $this->obtener_ganador_partido($partido_empate_1[0]);
+		$ganador2 = $this->obtener_ganador_partido($partido_empate_2[0]);
+
+		if ($ganador1 == $jugador1)
+		{
+			$posicion1 = 1;
+			$posicion2 = 2;
+		}
+		else
+		{
+			$posicion1 = 2;
+			$posicion2 = 1;
+		}
+
+
+		if ($ganador2 == $jugador3)
+		{
+			$posicion3 = 3;
+			$posicion4 = 4;
+		}
+		else
+		{
+			$posicion3 = 4;
+			$posicion4 = 3;
+		}
+
+		return array($posicion1, $posicion2, $posicion3, $posicion4);
+
+	}
+
+
+
+
+
+
+		private function obtener_posicion_puntaje_diferente_4($puntos1, $puntos2, $puntos3, $puntos4)
+	{
+			//el jugador que saca mayor puntaje tiene el primer puesto
+    		
+    				$posiciones = array($puntos1, $puntos2, $puntos3, $puntos4);
+					rsort($posiciones);
+
+					for ($i = 0; $i<4 ; $i++)
+					{
+						if ($posiciones[$i] == $puntos1)
+							$posicion1 = $i+1;
+						if ($posiciones[$i] == $puntos2)
+							$posicion2 = $i+1;
+						if ($posiciones[$i] == $puntos3)
+							$posicion3 = $i+1;
+						if ($posiciones[$i] == $puntos4)
+							$posicion4 = $i+1;							
+					}
+    			
+    			return array($posicion1, $posicion2, $posicion3, $posicion4);
 	}
 
 
@@ -1460,13 +1782,14 @@ class Torneoscontroller extends CI_Controller {
 						'jugador1' => $llave_oponente[0]->jugador,			
 						'jugador2' => $llave_rival[0]->jugador,
 						'arbitro' => NULL,
-						'cant_sets'=> 5,
+						'cant_sets'=> $this->torneo_model->obtener_cant_set_instancia($torneo, $categoria, 'LLAVE', $instancia)->first_row()->cant_set,
 						'estado'   => 'SIN JUGAR',
 						'torneo'   => $torneo,
 						'categoria'=> $categoria,
 						'tipo'     => 'LLAVE',
 						'id_llave1'  => $llave_oponente[0]->id,								
-						'id_llave2'  => $llave_rival[0]->id,								
+						'id_llave2'  => $llave_rival[0]->id,	
+						'id_zona' => NULL,							
 						
 						);
 									
@@ -1488,13 +1811,14 @@ class Torneoscontroller extends CI_Controller {
 						'jugador1' => $llave_rival[0]->jugador,			
 						'jugador2' => $llave_oponente[0]->jugador,
 						'arbitro' => NULL,
-						'cant_sets'=> 5,
+						'cant_sets'=> $this->torneo_model->obtener_cant_set_instancia($torneo, $categoria, 'LLAVE', $instancia)->first_row()->cant_set,
 						'estado'   => 'SIN JUGAR',
 						'torneo'   => $torneo,
 						'categoria'=> $categoria,
 						'tipo'     => 'LLAVE',
 						'id_llave1'  => $llave_rival[0]->id,					
-						'id_llave2'  => $llave_oponente[0]->id,				
+						'id_llave2'  => $llave_oponente[0]->id,		
+						'id_zona' => NULL,		
 						);
 									
 						$this->torneo_model->crear_partido($partido);
@@ -2018,7 +2342,7 @@ class Torneoscontroller extends CI_Controller {
 				$partido = array(		    											
 					'jugador1' => $array['jugador1'],			
 					'jugador2' => $array['jugador2'],
-					'cant_sets'=> 5,
+					'cant_sets'=> 3,
 					'estado'   => 'SIN JUGAR',
 					'torneo'   => $id_torneo,
 					'categoria'=> 0,
@@ -2049,7 +2373,7 @@ class Torneoscontroller extends CI_Controller {
 				$partido = array(		    											
 					'jugador1' => $array['jugador1'],			
 					'jugador2' => $array['jugador2'],
-					'cant_sets'=> 5,
+					'cant_sets'=> 3,
 					'estado'   => 'SIN JUGAR',
 					'torneo'   => $id_torneo,
 					'categoria'=> 0,
@@ -2064,7 +2388,7 @@ class Torneoscontroller extends CI_Controller {
 				$partido = array(		    											
 					'jugador1' => $array['jugador1'],			
 					'jugador2' => $array['jugador3'],
-					'cant_sets'=> 5,
+					'cant_sets'=> 3,
 					'estado'   => 'SIN JUGAR',
 					'torneo'   => $id_torneo,
 					'categoria'=> 0,
@@ -2079,7 +2403,7 @@ class Torneoscontroller extends CI_Controller {
 				$partido = array(		    											
 					'jugador1' => $array['jugador2'],			
 					'jugador2' => $array['jugador3'],
-					'cant_sets'=> 5,
+					'cant_sets'=> 3,
 					'estado'   => 'SIN JUGAR',
 					'torneo'   => $id_torneo,
 					'categoria'=> 0,
@@ -2108,7 +2432,7 @@ class Torneoscontroller extends CI_Controller {
 				$partido = array(		    											
 					'jugador1' => $array['jugador1'],			
 					'jugador2' => $array['jugador2'],
-					'cant_sets'=> 5,
+					'cant_sets'=> 3,
 					'estado'   => 'SIN JUGAR',
 					'torneo'   => $id_torneo,
 					'categoria'=> 0,
@@ -2122,7 +2446,7 @@ class Torneoscontroller extends CI_Controller {
 				$partido = array(		    											
 					'jugador1' => $array['jugador1'],			
 					'jugador2' => $array['jugador3'],
-					'cant_sets'=> 5,
+					'cant_sets'=> 3,
 					'estado'   => 'SIN JUGAR',
 					'torneo'   => $id_torneo,
 					'categoria'=> 0,
@@ -2136,7 +2460,7 @@ class Torneoscontroller extends CI_Controller {
 				$partido = array(		    											
 					'jugador1' => $array['jugador1'],			
 					'jugador2' => $array['jugador4'],
-					'cant_sets'=> 5,
+					'cant_sets'=> 3,
 					'estado'   => 'SIN JUGAR',
 					'torneo'   => $id_torneo,
 					'categoria'=> 0,
@@ -2150,7 +2474,7 @@ class Torneoscontroller extends CI_Controller {
 				$partido = array(		    											
 					'jugador1' => $array['jugador2'],			
 					'jugador2' => $array['jugador3'],
-					'cant_sets'=> 5,
+					'cant_sets'=> 3,
 					'estado'   => 'SIN JUGAR',
 					'torneo'   => $id_torneo,
 					'categoria'=> 0,
@@ -2164,7 +2488,7 @@ class Torneoscontroller extends CI_Controller {
 				$partido = array(		    											
 					'jugador1' => $array['jugador2'],			
 					'jugador2' => $array['jugador4'],
-					'cant_sets'=> 5,
+					'cant_sets'=> 3,
 					'estado'   => 'SIN JUGAR',
 					'torneo'   => $id_torneo,
 					'categoria'=> 0,
@@ -2178,7 +2502,7 @@ class Torneoscontroller extends CI_Controller {
 				$partido = array(		    											
 					'jugador1' => $array['jugador3'],			
 					'jugador2' => $array['jugador4'],
-					'cant_sets'=> 5,
+					'cant_sets'=> 3,
 					'estado'   => 'SIN JUGAR',
 					'torneo'   => $id_torneo,
 					'categoria'=> 0,
@@ -2739,8 +3063,11 @@ public function eliminar_inscripcion()
   public function procesar_llave()
   {  	
 
-  	  $categoria = $this->input->post('id_categoria');
+  	  //$categoria = $this->input->post('id_categoria');
+  		$categoria = $this->uri->segment(3);
   	  $torneo = $this->torneo_model->obtenerTorneoActual();
+
+
 
 		if ($this->torneo_model->existen_resultados_llave($torneo->first_row()->id, $categoria))
 		  	{
@@ -2750,14 +3077,11 @@ public function eliminar_inscripcion()
 
   	  $ganador_llave = $this->torneo_model->obtener_llave($torneo->first_row()->id, $categoria, 1);
 
-  	  $partidos_llave = $this->torneo_model->obtenerPartidos($torneo->first_row()->id,$categoria,'LLAVE')->result();
-
-
-  	  if (isset($ganador_llave[0]))
+  	  if ($ganador_llave != NULL and isset($ganador_llave[0]))
   	  		{
   	  			//registro el ganador del torneo en la primera posicion
   	  			$this->torneo_model->guardar_resultado_torneo($ganador_llave[0]->id_jugador, $torneo->first_row()->id, $categoria, 1);
-
+  	  			$partidos_llave = $this->torneo_model->obtenerPartidos($torneo->first_row()->id,$categoria,'LLAVE')->result();
   	  			 if (isset($partidos_llave)){
                            for($i=0; $i<sizeof($partidos_llave); $i++){
                            		//si el jugador 1 perdio le calculo la posicion correspondiente sabiendo la del ganador
@@ -2889,7 +3213,13 @@ public function eliminar_inscripcion()
 public function definir_cant_sets_zona()
 {
 	$categoria= $this->input->get('categoria');
-	$cant_sets= $this->input->get('cant_sets');	
+	$zonas= $this->input->get('zonas');	
+	$trentidosavos= $this->input->get('trentidosavos');	
+	$dieciseisavos= $this->input->get('dieciseisavos');	
+	$octavos= $this->input->get('octavos');	
+	$cuartos= $this->input->get('cuartos');	
+	$semi= $this->input->get('semis');	
+	$final= $this->input->get('final');	
 
 	$torneo = $this->torneo_model->obtenerTorneoActual();
 
@@ -2898,14 +3228,18 @@ public function definir_cant_sets_zona()
 		  		$this->session->set_flashdata('error', 'Debe seleccionar una categoría');
 				redirect('Welcome/definir_cant_set_zonas');
 		  	}	
-	if ($cant_sets == -1)
-		  	{
-		  		$this->session->set_flashdata('error', 'Debe seleccionar una cantidad de sets a definir');
-				redirect('Welcome/definir_cant_set_zonas');
-		  	}	
 
 
-	$this->torneo_model->definir_cant_set_zonas($torneo->first_row()->id, $categoria, $cant_sets);	  	
+	$this->torneo_model->definir_cant_set($torneo->first_row()->id, $categoria, $zonas, $trentidosavos, $dieciseisavos, $octavos, $cuartos, $semi, $final);	  	
+
+	//seteo cant set a los partidos ya creados
+	$this->torneo_model->definir_cant_set_zonas($torneo->first_row()->id, $categoria, $zonas);
+	$this->torneo_model->definir_cant_set_llaves($torneo->first_row()->id, $categoria, 32, $trentidosavos);
+	$this->torneo_model->definir_cant_set_llaves($torneo->first_row()->id, $categoria, 16, $dieciseisavos);
+	$this->torneo_model->definir_cant_set_llaves($torneo->first_row()->id, $categoria, 8, $octavos);
+	$this->torneo_model->definir_cant_set_llaves($torneo->first_row()->id, $categoria, 4, $cuartos);
+	$this->torneo_model->definir_cant_set_llaves($torneo->first_row()->id, $categoria, 2, $semi);
+	$this->torneo_model->definir_cant_set_llaves($torneo->first_row()->id, $categoria, 1, $final);
 
 	$this->session->set_flashdata('success', 'La cantidad de sets se ha configurado correctamente');
 	redirect('Welcome/definir_cant_set_zonas');

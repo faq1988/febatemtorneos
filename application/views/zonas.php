@@ -11,6 +11,19 @@
           <li class="breadcrumb-item active">Zonas</li>
         </ol>
 
+
+         <?php if ($this->session->flashdata('error')) {?>
+                    <div class="alert alert-danger">                                
+                      <?php echo $this->session->flashdata('error');?>
+                    </div>
+                  <?php } ?>    
+                  <?php if ($this->session->flashdata('success')) {?>
+                    <div class="alert alert-success">                               
+                      <?php echo $this->session->flashdata('success');?>
+                    </div>
+          <?php } ?>  
+
+          
           <!-- DataTales Example -->
            <div class="dropdown">
             <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -18,9 +31,7 @@
               Opciones
             </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">                
-                <a class="dropdown-item" href="<?=base_url()?>Welcome/deshacer_zonas">Deshacer zonas</a>
-                <a class="dropdown-item" href="<?=base_url()?>Welcome/definir_cant_set_zonas">Definir cant set</a>
-                
+                <a class="dropdown-item" href="<?=base_url()?>Welcome/deshacer_zonas">Deshacer zonas</a>                                
               </div>
         </div>
 

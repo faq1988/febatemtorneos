@@ -79,7 +79,7 @@
                       <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $cant_primera;?></div>
                     </div>
                     <div class="col-auto">
-                      <a class="" href="<?=base_url()?>Welcome/ver_inscriptos/1"><i class="fas fa-users fa-2x text-gray-300"></i></a>
+                      <a class="" href="<?=base_url()?>Welcome/ver_inscriptos/1">VER INSCRIPTOS</a>
                     </div>
                   </div>
                 </div>

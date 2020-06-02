@@ -318,7 +318,18 @@ public function clubes()
     }
     $data=array();
     $this->load->model('torneo_model');
-    $categoria = $this->input->get('categoria');
+    $id_categoria = $this->uri->segment(3);
+
+//var_dump($id_categoria);exit;
+
+    if (isset($id_categoria))
+      $categoria = $id_categoria;
+    else
+      $categoria = $this->input->get('categoria');
+
+    if ($categoria == NULL)
+      $categoria= 0;
+
     //obtengo el torneo activo actual
     $torneo = $this->torneo_model->obtenerTorneoActual();
 
@@ -366,18 +377,21 @@ public function clubes()
       }
 
       $data['id_categoria'] = $categoria;
-        
+    
+
     $this->load->view('menu');    
     $this->load->view('header', $t);
 
-    if ($cant_inscriptos > 17)
+
+ /*  if ($cant_inscriptos > 17)
       $this->load->view('llave_grande', $data);
     if ($cant_inscriptos > 8 and $cant_inscriptos < 17)
       $this->load->view('llave_media', $data);
     if ($cant_inscriptos >5 and $cant_inscriptos < 9)
-      $this->load->view('llave_chica', $data);
+      $this->load->view('llave2', $data);
     else
-      $this->load->view('llave', $data);
+   */ 
+      $this->load->view('llave2', $data);
     
   }
 
@@ -450,7 +464,7 @@ public function zonas()
     if (isset($torneo) & $categoria != -1)
     {
         $row = $torneo->first_row();  
-
+       
         $zonas=  $this->torneo_model->obtenerZonas($row->id, $categoria);
         $zonas_de_4=  $this->torneo_model->obtener_zonas_4($row->id, $categoria);
 
@@ -465,6 +479,7 @@ public function zonas()
     }
     else
         $t['nombre_torneo']="NINGUNO"; 
+
 
     $this->load->view('menu');
     $this->load->view('header', $t);
@@ -685,7 +700,15 @@ public function inscribir_categoria()
 
     $jugador= $this->torneo_model->obtener_jugador($id_jugador);
 
-    $categorias= $this->torneo_model->obtener_categorias_habilitadas($jugador->first_row()->id_categoria, $torneo->first_row()->cat_habilitadas+1);
+    $cat_en_juego= array();
+    if ($torneo->first_row()->superdivision) array_push($cat_en_juego, 0);
+    if ($torneo->first_row()->primera) array_push($cat_en_juego, 1);
+    if ($torneo->first_row()->segunda) array_push($cat_en_juego, 2);
+    if ($torneo->first_row()->tercera) array_push($cat_en_juego, 3);
+    if ($torneo->first_row()->cuarta) array_push($cat_en_juego, 4);
+    if ($torneo->first_row()->quinta) array_push($cat_en_juego, 5);
+
+    $categorias= $this->torneo_model->obtener_categorias_habilitadas($jugador->first_row()->id_categoria, $torneo->first_row()->cat_habilitadas+1, $cat_en_juego);
 
     if(isset($categorias))
       $data['categorias_habilitadas'] = $categorias->result_array();
@@ -850,13 +873,24 @@ public function crear_club()
     $id_zona = $this->uri->segment(3);
     $this->load->model('torneo_model');
     $zona_en_cuestion=  $this->torneo_model->obtener_zona_por_id($id_zona);
-
+    $torneo = $this->torneo_model->obtenerTorneoActual(); 
     $zonas_de_4_en_cuestion= $this->torneo_model->obtener_zona_de_4_por_id($id_zona);
 
 
     if (isset($zona_en_cuestion))
     {
       $zona_en_cuestion = $zona_en_cuestion->result();
+
+      $cant_set_a_jugar = $this->torneo_model->obtener_cant_set_instancia($torneo->first_row()->id, $zona_en_cuestion[0]->categoria, 'ZONA', NULL)->first_row()->cant_set; 
+
+      
+      if ($cant_set_a_jugar == -1)
+      {
+        $this->session->set_flashdata('error', 'Atencion, antes de cargar resultados de zonas configure la cantidad de sets a jugar desde Partidos->Cantidad de sets');
+        redirect('Welcome/zonas');
+      }
+
+
 
       $data['id_zona']=$id_zona;
       $data['letra']=$zona_en_cuestion[0]->letra;
@@ -877,6 +911,15 @@ public function crear_club()
       {
 
         $zonas_de_4_en_cuestion = $zonas_de_4_en_cuestion->result();
+
+         $cant_set_a_jugar = $this->torneo_model->obtener_cant_set_instancia($torneo->first_row()->id, $zonas_de_4_en_cuestion[0]->categoria, 'ZONA', NULL)->first_row()->cant_set; 
+
+      
+        if ($cant_set_a_jugar == -1)
+        {
+          $this->session->set_flashdata('error', 'Atencion, antes de cargar resultados de zonas configure la cantidad de sets a jugar desde Partidos->Cantidad de sets');
+          redirect('Welcome/zonas');
+        }
 
         $data['id_zona']=$id_zona;
         $data['letra']=$zonas_de_4_en_cuestion[0]->letra;
@@ -904,7 +947,7 @@ public function crear_club()
           $data['partidos']= $partidos->result();
 
         
-    $torneo = $this->torneo_model->obtenerTorneoActual();   
+      
     if (isset($torneo))
       $t['nombre_torneo'] = $torneo->first_row()->nombre;
     else
@@ -1132,24 +1175,29 @@ public function editar_partido()
     $id_llave1 = $this->uri->segment(3);
     $id_llave2 = $this->uri->segment(4);
 
-    
-    $partido_en_cuestion=  $this->torneo_model->obtener_partido_por_llave($id_llave1, $id_llave2);
-    $data['id_partido']=$partido_en_cuestion[0]->id;
-    $data['id_zona']=$partido_en_cuestion[0]->id_zona;
-    $data['jugador1']= $partido_en_cuestion[0]->jugador1;
-    $data['jugador2']= $partido_en_cuestion[0]->jugador2;
-    $data['tipo']= $partido_en_cuestion[0]->tipo;
-    //var_dump($data_id);exit;
+    if (isset($id_llave1) and isset($id_llave2))
+    {        
+        $partido_en_cuestion=  $this->torneo_model->obtener_partido_por_llave($id_llave1, $id_llave2);
+        $data['id_partido']=$partido_en_cuestion[0]->id;
+        $data['id_zona']=$partido_en_cuestion[0]->id_zona;
+        $data['jugador1']= $partido_en_cuestion[0]->jugador1;
+        $data['jugador2']= $partido_en_cuestion[0]->jugador2;
+        $data['tipo']= $partido_en_cuestion[0]->tipo;
+        $data['cant_sets']= $partido_en_cuestion[0]->cant_sets;
+        //var_dump($data_id);exit;
 
-    $torneo = $this->torneo_model->obtenerTorneoActual();  
-    if (isset($torneo))
-      $t['nombre_torneo'] = $torneo->first_row()->nombre;
+        $torneo = $this->torneo_model->obtenerTorneoActual();  
+        if (isset($torneo))
+          $t['nombre_torneo'] = $torneo->first_row()->nombre;
+        else
+          $t['nombre_torneo'] = "NINGUNO"; 
+        
+        $this->load->view('menu');
+        $this->load->view('header', $t);
+        $this->load->view('editar_partido', $data);
+    }
     else
-      $t['nombre_torneo'] = "NINGUNO"; 
-    
-    $this->load->view('menu');
-    $this->load->view('header', $t);
-    $this->load->view('editar_partido', $data);
+      redirect('welcome/llave');
   }
 
 
@@ -1205,7 +1253,7 @@ public function resultados()
     $data=array();  
     $torneo = $this->torneo_model->obtenerTorneoActual();   
 
-    $lista_cant_set_zonas=  $this->torneo_model->obtener_cant_set_zonas($torneo->first_row()->id);
+    $lista_cant_set_zonas=  $this->torneo_model->obtener_cant_set_completo($torneo->first_row()->id);
     
     if (isset($lista_cant_set_zonas))
       $data['lista_cant_set_zonas']= $lista_cant_set_zonas->result_array();

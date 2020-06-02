@@ -12,7 +12,9 @@ public function __construct()
 
 
 
-	function obtener_campeonatos(){		
+	function obtener_campeonatos(){	
+		$usuario = $this->session->userdata('id_usuario');		
+		$this->db->where('usuario = ', $usuario);	
 		$query = $this->db->get('campeonato');
 		if ($query->num_rows() >0 ) return $query;
 	}

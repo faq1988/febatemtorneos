@@ -35,7 +35,7 @@
 
               <?php echo form_open('Torneoscontroller/deshacer_zonas', 'class= "text-center" method="GET"'); ?>
                 <div class="form-row">
-                      <div class="form-group col-md-4 offset-md-3">
+                      <div class="form-group col-md-6 offset-md-3">
                       <label for="inputAddress">Categoría</label>
                       <select name="categoria" class="custom-select">  
                           <option value="-1">Seleccionar</option>
@@ -48,13 +48,8 @@
                       </select>
                     </div>
 
-               
-                    <div class="form-group col-md-2">
-                      <label for="inputAddress">---</label>
-                      <button type="submit" class="btn btn-primary">Confirmar</button>
-                    </div>
               </div>
-                 
+                 <button type="submit" class="btn btn-primary">Confirmar</button>
 
               </form>
 
