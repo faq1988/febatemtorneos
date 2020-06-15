@@ -24,7 +24,6 @@
           <?php } ?>  
 
           
-          <!-- DataTales Example -->
            <div class="dropdown">
             <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fas fa-cog"></i>
@@ -33,7 +32,7 @@
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">                
                 <a class="dropdown-item" href="<?=base_url()?>Welcome/deshacer_zonas">Deshacer zonas</a>                                
               </div>
-        </div>
+          </div>
 
   <?php echo form_open('Welcome/zonas', 'class= "text-center" method="GET"'); ?>
   <div class="form-row">

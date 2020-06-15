@@ -58,7 +58,7 @@ class Torneo_model extends CI_Model {
 	}
 
 	public function obtener_jugador($id)
-	{	$this->db->select('j.id, j.dni, CONCAT(j.nombre,", ", j.apellido) as jugador, c.nombre as categoria, c.id as id_categoria');
+	{	$this->db->select('j.id, j.dni, CONCAT(j.nombre," ", j.apellido) as jugador, c.nombre as categoria, c.id as id_categoria');
 	    $this->db->where('j.id =', $id);    
 	    $this->db->join('categoria as c', 'c.id=j.categoria');
 	    $this->db->from('jugador as j');
@@ -84,7 +84,7 @@ class Torneo_model extends CI_Model {
 
 
 	function buscar_inscriptos($torneo, $categoria){
-		$this->db->select('p.id as id, j.dni as dni, CONCAT(j.nombre,", ", j.apellido) as jugador, c.nombre as categoria');
+		$this->db->select('p.id as id, j.dni as dni, CONCAT(j.nombre," ", j.apellido) as jugador, c.nombre as categoria');
 		$this->db->where('p.torneo =', $torneo);    
 		$this->db->where('p.categoria =', $categoria);    
 		$this->db->join('jugador as j', 'j.id=p.jugador');
@@ -121,7 +121,7 @@ class Torneo_model extends CI_Model {
 
 	function obtenerZonas($torneo, $categoria){
 
-		$this->db->select('p.id, p.letra, p.estado, j1.id as id_jugador1, j2.id as id_jugador2, j3.id as id_jugador3, CONCAT(j1.nombre,", ", j1.apellido) as jugador1, CONCAT(j2.nombre,", ", j2.apellido) as jugador2, c.nombre as categoria,
+		$this->db->select('p.id, p.letra, p.estado, j1.id as id_jugador1, j2.id as id_jugador2, j3.id as id_jugador3, CONCAT(j1.nombre," ", j1.apellido) as jugador1, CONCAT(j2.nombre," ", j2.apellido) as jugador2, c.nombre as categoria,
 			CONCAT(j3.nombre,", ", j3.apellido) as jugador3, p.pos1, p.pos2, p.pos3, p.puntos1, p.puntos2, p.puntos3');
 		$this->db->where('p.torneo =', $torneo);    
 		$this->db->where('p.categoria =', $categoria);    		
@@ -140,8 +140,8 @@ class Torneo_model extends CI_Model {
 
 	function obtener_zonas_4($torneo, $categoria){
 
-		$this->db->select('p.id, p.letra, p.estado, j1.id as id_jugador1, j2.id as id_jugador2, j3.id as id_jugador3, j4.id as id_jugador4, CONCAT(j1.nombre,", ", j1.apellido) as jugador1, CONCAT(j2.nombre,", ", j2.apellido) as jugador2,  c.nombre as categoria,
-			CONCAT(j3.nombre,", ", j3.apellido) as jugador3, CONCAT(j4.nombre,", ", j4.apellido) as jugador4, p.pos1, p.pos2, p.pos3, p.pos4, p.puntos1, p.puntos2, p.puntos3, p.puntos4');
+		$this->db->select('p.id, p.letra, p.estado, j1.id as id_jugador1, j2.id as id_jugador2, j3.id as id_jugador3, j4.id as id_jugador4, CONCAT(j1.nombre," ", j1.apellido) as jugador1, CONCAT(j2.nombre," ", j2.apellido) as jugador2,  c.nombre as categoria,
+			CONCAT(j3.nombre," ", j3.apellido) as jugador3, CONCAT(j4.nombre," ", j4.apellido) as jugador4, p.pos1, p.pos2, p.pos3, p.pos4, p.puntos1, p.puntos2, p.puntos3, p.puntos4');
 		$this->db->where('p.torneo =', $torneo);    
 		$this->db->where('p.categoria =', $categoria);    		
 		$this->db->join('jugador as j1', 'j1.id = p.jugador1');
@@ -161,7 +161,7 @@ class Torneo_model extends CI_Model {
 		$llave= array();
 		for($i=1; $i<=$instancia; $i++)
 		{
-			$this->db->select('p.id, CONCAT(j1.nombre,", ", j1.apellido) as jugador, p.resultado, p.torneo, p.instancia, c.nombre as categoria, p.orden, j1.id as id_jugador');
+			$this->db->select('p.id, CONCAT(j1.nombre," ", j1.apellido) as jugador, p.resultado, p.torneo, p.instancia, c.nombre as categoria, p.orden, j1.id as id_jugador');
 			$this->db->where('p.torneo =', $torneo);    
 			$this->db->where('p.categoria =', $categoria);
 			$this->db->where('p.instancia =', $instancia);
@@ -215,9 +215,9 @@ class Torneo_model extends CI_Model {
 	function obtenerPartidos($torneo, $categoria, $tipo){
 		
 		if ($tipo == 'ZONA')   
-			$this->db->select('p.id, CONCAT(j1.nombre,", ", j1.apellido) as jugador1,CONCAT(j2.nombre,", ", j2.apellido) as jugador2, p.set11, p.set12, p.set13, p.set14, p.set15, p.set21, p.set22, p.set23, p.set24, p.set25, p.resultado1, p.resultado2, z.letra as zona, p.estado');
+			$this->db->select('p.id, CONCAT(j1.nombre," ", j1.apellido) as jugador1,CONCAT(j2.nombre," ", j2.apellido) as jugador2, p.set11, p.set12, p.set13, p.set14, p.set15, p.set21, p.set22, p.set23, p.set24, p.set25, p.resultado1, p.resultado2, z.letra as zona, p.estado');
 		if ($tipo == 'LLAVE')   
-			$this->db->select('p.id, CONCAT(j1.nombre,", ", j1.apellido) as jugador1, CONCAT(j2.nombre,", ", j2.apellido) as jugador2, j1.id as id_jugador1, j2.id as id_jugador2, p.set11, p.set12, p.set13, p.set14, p.set15, p.set21, p.set22, p.set23, p.set24, p.set25, p.resultado1, p.resultado2, p.estado, l1.instancia');
+			$this->db->select('p.id, CONCAT(j1.nombre," ", j1.apellido) as jugador1, CONCAT(j2.nombre," ", j2.apellido) as jugador2, j1.id as id_jugador1, j2.id as id_jugador2, p.set11, p.set12, p.set13, p.set14, p.set15, p.set21, p.set22, p.set23, p.set24, p.set25, p.resultado1, p.resultado2, p.estado, l1.instancia');
 		$this->db->from('partido as p');
 		$this->db->where('p.torneo =', $torneo);    
 		$this->db->where('p.categoria =', $categoria); 
@@ -241,8 +241,8 @@ class Torneo_model extends CI_Model {
 
 	function obtener_partidos_zona($zona){		
 		
-			$this->db->select('p.id, CONCAT(j1.nombre,", ", j1.apellido) as jugador1,CONCAT(j2.nombre,", ", j2.apellido) as jugador2, 
-				CONCAT(j3.nombre,", ", j3.apellido) as arbitro, p.cant_sets,
+			$this->db->select('p.id, CONCAT(j1.nombre," ", j1.apellido) as jugador1,CONCAT(j2.nombre," ", j2.apellido) as jugador2, 
+				CONCAT(j3.nombre," ", j3.apellido) as arbitro, p.cant_sets,
 				p.set11, p.set12, p.set13, p.set14, p.set15, p.set21, p.set22, p.set23, p.set24, p.set25, p.resultado1, p.resultado2, z.letra as zona, p.estado, j1.id as id_jugador1, j2.id as id_jugador2');
 		
 		$this->db->from('partido as p');		
@@ -329,7 +329,7 @@ class Torneo_model extends CI_Model {
 
 
 	function obtener_partido_por_id($id){
-		$this->db->select('p.id, j1.id as id_jugador1, j2.id as id_jugador2, CONCAT(j1.nombre,", ", j1.apellido) as jugador1, CONCAT(j2.nombre,", ", j2.apellido) as jugador2, p.set11, p.set12, p.set13, p.set14, p.set15, p.set21, p.set22, p.set23, p.set24, p.set25, p.resultado1, p.resultado2, p.estado, p.tipo, p.id_llave1, p.id_llave2, p.categoria, p.torneo, p.id_zona, 
+		$this->db->select('p.id, j1.id as id_jugador1, j2.id as id_jugador2, CONCAT(j1.nombre," ", j1.apellido) as jugador1, CONCAT(j2.nombre," ", j2.apellido) as jugador2, p.set11, p.set12, p.set13, p.set14, p.set15, p.set21, p.set22, p.set23, p.set24, p.set25, p.resultado1, p.resultado2, p.estado, p.tipo, p.id_llave1, p.id_llave2, p.categoria, p.torneo, p.id_zona, 
 			p.cant_sets');
 		$this->db->join('jugador as j1', 'j1.id = p.jugador1');
 		$this->db->join('jugador as j2', 'j2.id = p.jugador2');
@@ -343,8 +343,8 @@ class Torneo_model extends CI_Model {
 
 	function obtener_zona_por_id($id){
 
-		$this->db->select('p.id, p.letra, p.estado, p.torneo, p.categoria, j1.id as id_jugador1, j2.id as id_jugador2, j3.id as id_jugador3, CONCAT(j1.nombre,", ", j1.apellido) as jugador1, CONCAT(j2.nombre,", ", j2.apellido) as jugador2, 
-			CONCAT(j3.nombre,", ", j3.apellido) as jugador3, p.puntos1, p.puntos2, p.puntos3, p.pos1, p.pos2, p.pos3, p.cant_jugadores');
+		$this->db->select('p.id, p.letra, p.estado, p.torneo, p.categoria, j1.id as id_jugador1, j2.id as id_jugador2, j3.id as id_jugador3, CONCAT(j1.nombre," ", j1.apellido) as jugador1, CONCAT(j2.nombre," ", j2.apellido) as jugador2, 
+			CONCAT(j3.nombre," ", j3.apellido) as jugador3, p.puntos1, p.puntos2, p.puntos3, p.pos1, p.pos2, p.pos3, p.cant_jugadores');
 		$this->db->where('p.id =', $id);    
 		$this->db->where('p.jugador4 =', NULL);    
 		$this->db->join('jugador as j1', 'j1.id = p.jugador1');
@@ -359,7 +359,7 @@ class Torneo_model extends CI_Model {
 
 
 	function obtener_partido_desempate($torneo, $zona, $jugador1, $jugador2){
-		$this->db->select('p.id, j1.id as id_jugador1, j2.id as id_jugador2, CONCAT(j1.nombre,", ", j1.apellido) as jugador1, CONCAT(j2.nombre,", ", j2.apellido) as jugador2, p.set11, p.set12, p.set13, p.set14, p.set15, p.set21, p.set22, p.set23, p.set24, p.set25, p.resultado1, p.resultado2, p.estado, p.tipo, p.id_llave1, p.id_llave2, p.categoria, p.torneo, p.id_zona');
+		$this->db->select('p.id, j1.id as id_jugador1, j2.id as id_jugador2, CONCAT(j1.nombre," ", j1.apellido) as jugador1, CONCAT(j2.nombre," ", j2.apellido) as jugador2, p.set11, p.set12, p.set13, p.set14, p.set15, p.set21, p.set22, p.set23, p.set24, p.set25, p.resultado1, p.resultado2, p.estado, p.tipo, p.id_llave1, p.id_llave2, p.categoria, p.torneo, p.id_zona');
 		$this->db->from('partido as p');
 		$this->db->where('p.torneo =', $torneo);
 		$this->db->where('p.tipo =', "ZONA");
@@ -374,8 +374,8 @@ class Torneo_model extends CI_Model {
 
 	function obtener_zona_de_4_por_id($id){
 
-		$this->db->select('p.id, p.letra, p.estado, p.torneo, p.categoria, j1.id as id_jugador1, j2.id as id_jugador2, j3.id as id_jugador3, j4.id as id_jugador4, CONCAT(j1.nombre,", ", j1.apellido) as jugador1, CONCAT(j2.nombre,", ", j2.apellido) as jugador2, 
-			CONCAT(j3.nombre,", ", j3.apellido) as jugador3, CONCAT(j4.nombre,", ", j4.apellido) as jugador4, p.puntos1, p.puntos2, p.puntos3, p.puntos4, p.pos1, p.pos2, p.pos3, p.pos4, p.cant_jugadores');
+		$this->db->select('p.id, p.letra, p.estado, p.torneo, p.categoria, j1.id as id_jugador1, j2.id as id_jugador2, j3.id as id_jugador3, j4.id as id_jugador4, CONCAT(j1.nombre," ", j1.apellido) as jugador1, CONCAT(j2.nombre," ", j2.apellido) as jugador2, 
+			CONCAT(j3.nombre," ", j3.apellido) as jugador3, CONCAT(j4.nombre," ", j4.apellido) as jugador4, p.puntos1, p.puntos2, p.puntos3, p.puntos4, p.pos1, p.pos2, p.pos3, p.pos4, p.cant_jugadores');
 		$this->db->where('p.id =', $id);    
 		$this->db->join('jugador as j1', 'j1.id = p.jugador1');
 		$this->db->join('jugador as j2', 'j2.id = p.jugador2');
@@ -389,7 +389,7 @@ class Torneo_model extends CI_Model {
 
 
 	function obtener_partido_por_llave($llave1 , $llave2){
-		$this->db->select('p.id, j1.id as id_jugador1, j2.id as id_jugador2, CONCAT(j1.nombre,", ", j1.apellido) as jugador1, CONCAT(j2.nombre,", ", j2.apellido) as jugador2, p.set11, p.set12, p.set13, p.set14, p.set15, p.set21, p.set22, p.set23, p.set24, p.set25, p.resultado1, p.resultado2, p.estado, p.tipo, p.id_llave1, p.id_llave2, p.categoria, p.torneo, p.id_zona,
+		$this->db->select('p.id, j1.id as id_jugador1, j2.id as id_jugador2, CONCAT(j1.nombre," ", j1.apellido) as jugador1, CONCAT(j2.nombre," ", j2.apellido) as jugador2, p.set11, p.set12, p.set13, p.set14, p.set15, p.set21, p.set22, p.set23, p.set24, p.set25, p.resultado1, p.resultado2, p.estado, p.tipo, p.id_llave1, p.id_llave2, p.categoria, p.torneo, p.id_zona,
 			p.cant_sets');
 		$this->db->join('jugador as j1', 'j1.id = p.jugador1');
 		$this->db->join('jugador as j2', 'j2.id = p.jugador2');
@@ -416,6 +416,8 @@ class Torneo_model extends CI_Model {
 		'cant_sets'=>$data['cant_sets'],'estado'=>$data['estado'],'torneo'=>$data['torneo'],
 		'categoria'=>$data['categoria'],'tipo'=>$data['tipo'],'id_zona'=>$data['id_zona'],
 		'id_llave1' => $data['id_llave1'], 'id_llave2' => $data['id_llave2'])); 
+
+		return $this->db->insert_id();
 	}
 
 
@@ -459,7 +461,7 @@ class Torneo_model extends CI_Model {
 
 	function obtener_rating(){
 		   
-		$this->db->select('CONCAT(j1.nombre,", ", j1.apellido) as jugador, p.puntaje_anterior, p.sd, p.primera, p.segunda, p.tercera, p.cuarta, p.quinta, p.puntaje_posterior');
+		$this->db->select('CONCAT(j1.nombre," ", j1.apellido) as jugador, p.puntaje_anterior, p.sd, p.primera, p.segunda, p.tercera, p.cuarta, p.quinta, p.puntaje_posterior');
 		$this->db->from('rating as p');				
 		$this->db->join('jugador as j1', 'j1.id = p.jugador');		
 		$this->db->order_by('p.puntaje_posterior', 'DESC'); 
@@ -579,14 +581,17 @@ class Torneo_model extends CI_Model {
 	}
 
 
-	function obtener_set_a_favor($torneo, $zona, $jugador)
+	function obtener_set_a_favor($torneo, $zona, $jugador, $distinto)
 	{
+		if ($distinto <> NULL)
+		{
 		$query = $this->db->query(' select
 									(
 									select  if(p.jugador1='.$jugador.',sum(p.resultado1), 0)
 									from partido p
 									where p.id_zona='.$zona.'
 									and p.jugador1='.$jugador.'
+									and p.jugador2<>'.$distinto.'
 									)
 									+
 									(
@@ -594,20 +599,40 @@ class Torneo_model extends CI_Model {
 									from partido p
 									where p.id_zona='.$zona.'
 									and p.jugador2='.$jugador.'
-									) as res');
+									and p.jugador1<>'.$distinto.'
+									) as res');				
+		}
+		else{
+		$query = $this->db->query(' select
+									(
+									select  if(p.jugador1='.$jugador.',sum(p.resultado1), 0)
+									from partido p
+									where p.id_zona='.$zona.'
+									and p.jugador1='.$jugador.'									
+									)
+									+
+									(
+									select  if(p.jugador2='.$jugador.',sum(p.resultado2), 0)
+									from partido p
+									where p.id_zona='.$zona.'
+									and p.jugador2='.$jugador.'									
+									) as res');		
 		
-		return $query->first_row()->res;
-		
+		}
+		return $query->first_row()->res;	
 	}
 
-	function obtener_set_en_contra($torneo, $zona, $jugador)
+	function obtener_set_en_contra($torneo, $zona, $jugador, $distinto)
 	{
+		if ($distinto <> NULL)
+		{
 		$query = $this->db->query(' select
 									(
 									select  if(p.jugador1='.$jugador.',sum(p.resultado2), 0)
 									from partido p
 									where p.id_zona='.$zona.'
 									and p.jugador1='.$jugador.'
+									and p.jugador2<>'.$distinto.'
 									)
 									+
 									(
@@ -615,15 +640,35 @@ class Torneo_model extends CI_Model {
 									from partido p
 									where p.id_zona='.$zona.'
 									and p.jugador2='.$jugador.'
+									and p.jugador1<>'.$distinto.'
 									) as res');
+		}
+		else{
+			$query = $this->db->query(' select
+									(
+									select  if(p.jugador1='.$jugador.',sum(p.resultado2), 0)
+									from partido p
+									where p.id_zona='.$zona.'
+									and p.jugador1='.$jugador.'									
+									)
+									+
+									(
+									select  if(p.jugador2='.$jugador.',sum(p.resultado1), 0)
+									from partido p
+									where p.id_zona='.$zona.'
+									and p.jugador2='.$jugador.'									
+									) as res');	
+		}
 		
 		return $query->first_row()->res;
 		
 
 	}
 
-	function obtener_puntos_a_favor($torneo, $zona, $jugador, $cant_sets)
+	function obtener_puntos_a_favor($torneo, $zona, $jugador, $cant_sets, $distinto)
 	{
+		if($distinto <> NULL)
+		{
 		if ($cant_sets == 3)
 		$query = $this->db->query(' select
 									(
@@ -631,6 +676,7 @@ class Torneo_model extends CI_Model {
 									from partido p
 									where p.id_zona='.$zona.'
 									and p.jugador1='.$jugador.'
+									and p.jugador2<>'.$distinto.'
 									)
 									+
 									(
@@ -638,6 +684,7 @@ class Torneo_model extends CI_Model {
 									from partido p
 									where p.id_zona='.$zona.'
 									and p.jugador2='.$jugador.'
+									and p.jugador1<>'.$distinto.'
 									) as res');
 		if ($cant_sets == 5)
 		$query = $this->db->query(' select
@@ -646,6 +693,7 @@ class Torneo_model extends CI_Model {
 									from partido p
 									where p.id_zona='.$zona.'
 									and p.jugador1='.$jugador.'
+									and p.jugador2<>'.$distinto.'
 									)
 									+
 									(
@@ -653,15 +701,55 @@ class Torneo_model extends CI_Model {
 									from partido p
 									where p.id_zona='.$zona.'
 									and p.jugador2='.$jugador.'
+									and p.jugador1<>'.$distinto.'
 									) as res');
-		
+		}
+		else{
+
+		if ($cant_sets == 3)
+		$query = $this->db->query(' select
+									(
+									select  if(p.jugador1='.$jugador.',sum(p.set11) + sum(p.set12) + sum(p.set13), 0)
+									from partido p
+									where p.id_zona='.$zona.'
+									and p.jugador1='.$jugador.'
+									
+									)
+									+
+									(
+									select  if(p.jugador2='.$jugador.',sum(p.set21) + sum(p.set22) + sum(p.set23), 0)
+									from partido p
+									where p.id_zona='.$zona.'
+									and p.jugador2='.$jugador.'
+									
+									) as res');
+		if ($cant_sets == 5)
+		$query = $this->db->query(' select
+									(
+									select  if(p.jugador1='.$jugador.',sum(p.set11) + sum(p.set12) + sum(p.set13) + sum(p.set14) + sum(p.set15), 0)
+									from partido p
+									where p.id_zona='.$zona.'
+									and p.jugador1='.$jugador.'
+									
+									)
+									+
+									(
+									select  if(p.jugador2='.$jugador.',sum(p.set21) + sum(p.set22) + sum(p.set23) + sum(p.set24) + sum(p.set25), 0)
+									from partido p
+									where p.id_zona='.$zona.'
+									and p.jugador2='.$jugador.'
+									
+									) as res');	
+		}
 		return $query->first_row()->res;
 		
 	}
 
 
-	function obtener_puntos_en_contra($torneo, $zona, $jugador, $cant_sets)
+	function obtener_puntos_en_contra($torneo, $zona, $jugador, $cant_sets, $distinto)
 	{
+		if ($distinto <> NULL)
+		{
 		if ($cant_sets == 3)
 		$query = $this->db->query(' select
 									(
@@ -669,6 +757,7 @@ class Torneo_model extends CI_Model {
 									from partido p
 									where p.id_zona='.$zona.'
 									and p.jugador1='.$jugador.'
+									and p.jugador2<>'.$distinto.'
 									)
 									+
 									(
@@ -676,6 +765,7 @@ class Torneo_model extends CI_Model {
 									from partido p
 									where p.id_zona='.$zona.'
 									and p.jugador2='.$jugador.'
+									and p.jugador1<>'.$distinto.'
 									) as res');
 		if ($cant_sets == 5)
 		$query = $this->db->query(' select
@@ -684,6 +774,7 @@ class Torneo_model extends CI_Model {
 									from partido p
 									where p.id_zona='.$zona.'
 									and p.jugador1='.$jugador.'
+									and p.jugador2<>'.$distinto.'
 									)
 									+
 									(
@@ -691,8 +782,46 @@ class Torneo_model extends CI_Model {
 									from partido p
 									where p.id_zona='.$zona.'
 									and p.jugador2='.$jugador.'
+									and p.jugador1<>'.$distinto.'
 									) as res');
-		
+		}
+		else{
+
+		if ($cant_sets == 3)
+		$query = $this->db->query(' select
+									(
+									select  if(p.jugador1='.$jugador.',sum(p.set21) + sum(p.set22) + sum(p.set23), 0)
+									from partido p
+									where p.id_zona='.$zona.'
+									and p.jugador1='.$jugador.'
+									
+									)
+									+
+									(
+									select  if(p.jugador2='.$jugador.',sum(p.set11) + sum(p.set12) + sum(p.set13), 0)
+									from partido p
+									where p.id_zona='.$zona.'
+									and p.jugador2='.$jugador.'
+									
+									) as res');
+		if ($cant_sets == 5)
+		$query = $this->db->query(' select
+									(
+									select  if(p.jugador1='.$jugador.',sum(p.set21) + sum(p.set22) + sum(p.set23) + sum(p.set24) + sum(p.set25), 0)
+									from partido p
+									where p.id_zona='.$zona.'
+									and p.jugador1='.$jugador.'
+									
+									)
+									+
+									(
+									select  if(p.jugador2='.$jugador.',sum(p.set11) + sum(p.set12) + sum(p.set13) + sum(p.set14) + sum(p.set15), 0)
+									from partido p
+									where p.id_zona='.$zona.'
+									and p.jugador2='.$jugador.'
+									
+									) as res');	
+		}
 		return $query->first_row()->res;
 	}
 
@@ -901,7 +1030,7 @@ class Torneo_model extends CI_Model {
 	function obtener_resultados_torneo($torneo, $categoria)
 	{
 
-		$this->db->select('CONCAT(j.nombre,", ", j.apellido) as jugador, r.posicion, r.jugador as id_jugador, r.id');
+		$this->db->select('CONCAT(j.nombre," ", j.apellido) as jugador, r.posicion, r.jugador as id_jugador, r.id');
 		
 		$this->db->where('r.categoria = ',$categoria);		
 		$this->db->where('r.torneo = ',$torneo);		
@@ -993,6 +1122,8 @@ class Torneo_model extends CI_Model {
 		$query = $this->db->get();
 		if ($query->num_rows() >0 ) return $query;
 	}
+
+
 
 
 

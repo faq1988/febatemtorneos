@@ -67,6 +67,7 @@
 <body>
 
 <div class="bracket">
+  <h5>DIECISEISAVOS DE FINAL</h5>
   <section class="round trentifinals">
      <div class="winners">
       <div class="matchups">
@@ -230,6 +231,7 @@
     </div>
   </section>
   <section class="round octofinals">
+    <h5>OCTAVOS DE FINAL</h5>
     <div class="winners">
       <div class="matchups">
         <div class="matchup">
@@ -312,6 +314,7 @@
     </div>
   </section>
   <section class="round quarterfinals">
+    <h5>CUARTOS DE FINAL</h5>
     <div class="winners">
       <div class="matchups">
         <div class="matchup">
@@ -358,6 +361,7 @@
     </div>
   </section>
   <section class="round semifinals">
+    <h5>SEMIFINAL</h5>
     <div class="winners">
       <div class="matchups">
         <div class="matchup">
@@ -382,6 +386,7 @@
     </div>
   </section>
   <section class="round finals">
+    <h5>FINAL</h5>
     <div class="winners">
       <div class="matchups">
         <div class="matchup">

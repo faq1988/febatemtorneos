@@ -1100,6 +1100,205 @@ public function crear_club()
 
 
 
+
+  public function generar_pdf_zona()
+  {
+    $id_zona = $this->uri->segment(3); 
+    $this->load->model('torneo_model');
+    $torneo = $this->torneo_model->obtenerTorneoActual();   
+    $zona = $this->torneo_model->obtener_zona_por_id($id_zona);
+    $zona_4 = $this->torneo_model->obtener_zona_de_4_por_id($id_zona);
+
+    if (isset($zona))
+    {
+      $zona = $zona->result();
+    }
+    if(isset($zona_4))
+    {
+      $zona = $zona_4->result();
+    }
+
+    $cant_set_zonas=  $this->torneo_model->obtener_cant_set_instancia($zona[0]->torneo, $zona[0]->categoria, 'ZONA', NULL)->result();
+    $cant_set_zonas = $cant_set_zonas[0]->cant_set;
+
+    $pdf = new FPDF();
+    if($zona[0]->cant_jugadores == 3)
+    {
+      $header = array('Jugador', '1', '2', '3', 'Resultado', 'Posicion');
+      $w = array(70, 20, 20, 20, 20, 20);
+    }
+    if($zona[0]->cant_jugadores == 4)
+    {
+      $header = array('Jugador', '1', '2', '3', '4', 'Resultado', 'Posicion');
+      $w = array(70, 20, 20, 20, 20, 20, 20);
+    }
+
+    $pdf->AddPage();
+    $pdf->SetFont('Arial','B',9);
+    //$w = array(70, 20, 20, 20, 20, 20, 20);
+    for($i=0;$i<count($header);$i++)
+        $pdf->Cell($w[$i],7,$header[$i],1,0,'C',0);
+    $pdf->Ln();
+    
+  
+    $pdf->Cell(70,10,$zona[0]->jugador1,1,0,'L',0);
+    $pdf->SetFillColor(0,0,0);
+    $pdf->Cell(20,10,'',1,0,'L',true);
+    $pdf->Cell(20,10,'',1,0,'L',0);
+    $pdf->Cell(20,10,'',1,0,'L',0);
+    $pdf->Cell(20,10,'',1,0,'L',0);
+    $pdf->Cell(20,10,'',1,0,'L',0);
+    if ($zona[0]->cant_jugadores == 4)
+      $pdf->Cell(20,10,'',1,0,'L',0);
+      
+    $pdf->Ln();
+    $pdf->Cell(70,10,$zona[0]->jugador2,1,0,'L',0);
+    $pdf->Cell(20,10,'',1,0,'L',0);
+    $pdf->Cell(20,10,'',1,0,'L',true);
+    $pdf->Cell(20,10,'',1,0,'L',0);
+    $pdf->Cell(20,10,'',1,0,'L',0);
+    $pdf->Cell(20,10,'',1,0,'L',0);
+    if ($zona[0]->cant_jugadores == 4)
+      $pdf->Cell(20,10,'',1,0,'L',0);
+     
+    $pdf->Ln();
+        
+    $pdf->Cell(70,10,$zona[0]->jugador3,1,0,'L',0);
+    $pdf->Cell(20,10,'',1,0,'L',0);
+    $pdf->Cell(20,10,'',1,0,'L',0);
+    $pdf->Cell(20,10,'',1,0,'L',true);
+    $pdf->Cell(20,10,'',1,0,'L',0);
+    $pdf->Cell(20,10,'',1,0,'L',0);
+    if ($zona[0]->cant_jugadores == 4)
+      $pdf->Cell(20,10,'',1,0,'L',0);
+
+    if($zona[0]->cant_jugadores == 4)
+    {
+      $pdf->Ln();        
+      $pdf->Cell(70,10,$zona[0]->jugador4,1,0,'L',0);
+      $pdf->Cell(20,10,'',1,0,'L',0);
+      $pdf->Cell(20,10,'',1,0,'L',0);
+      $pdf->Cell(20,10,'',1,0,'L',0);
+      $pdf->Cell(20,10,'',1,0,'L',true);
+      $pdf->Cell(20,10,'',1,0,'L',0);
+      if ($zona[0]->cant_jugadores == 4)
+        $pdf->Cell(20,10,'',1,0,'L',0);
+    }
+   
+    $pdf->Ln();
+    $pdf->Ln();
+
+
+    if($cant_set_zonas == 3)
+      $header = array('Jugador', '1', '2', '3', 'Resultado');
+    if($cant_set_zonas == 5)
+      $header = array('Jugador', '1', '2', '3', '4', '5', 'Resultado');
+    
+    $pdf->SetFont('Arial','B',9);
+    $w = array(70, 20, 20, 20 ,20, 20, 20);
+    for($i=0;$i<count($header);$i++)
+        $pdf->Cell($w[$i],7,$header[$i],1,0,'C',0);
+    $pdf->Ln();
+
+    $pdf->Cell(70,10,$zona[0]->jugador1,1,0,'L',0);
+    $pdf->SetFillColor(0,0,0);
+    $pdf->Cell(20,10,'',1,0,'L',0);
+    $pdf->Cell(20,10,'',1,0,'L',0);
+    $pdf->Cell(20,10,'',1,0,'L',0);
+    $pdf->Cell(20,10,'',1,0,'L',0);
+    if($cant_set_zonas == 5)
+    {
+      $pdf->Cell(20,10,'',1,0,'L',0);
+      $pdf->Cell(20,10,'',1,0,'L',0);
+    } 
+    $pdf->Ln();
+    $pdf->Cell(70,10,$zona[0]->jugador2,1,0,'L',0);
+    $pdf->Cell(20,10,'',1,0,'L',0);
+    $pdf->Cell(20,10,'',1,0,'L',0);
+    $pdf->Cell(20,10,'',1,0,'L',0);
+    $pdf->Cell(20,10,'',1,0,'L',0);
+    if($cant_set_zonas == 5)
+    {
+      $pdf->Cell(20,10,'',1,0,'L',0);
+      $pdf->Cell(20,10,'',1,0,'L',0);
+    }
+
+    $pdf->Ln();
+    $pdf->Ln();
+
+
+    
+
+    
+    $pdf->SetFont('Arial','B',9);
+    $w = array(70, 20, 20, 20 ,20, 20, 20);
+    for($i=0;$i<count($header);$i++)
+        $pdf->Cell($w[$i],7,$header[$i],1,0,'C',0);
+    $pdf->Ln();
+
+     $pdf->Cell(70,10,$zona[0]->jugador1,1,0,'L',0);
+   $pdf->SetFillColor(0,0,0);
+    $pdf->Cell(20,10,'',1,0,'L',0);
+    $pdf->Cell(20,10,'',1,0,'L',0);
+    $pdf->Cell(20,10,'',1,0,'L',0);
+    $pdf->Cell(20,10,'',1,0,'L',0);
+    if($cant_set_zonas == 5)
+    {
+      $pdf->Cell(20,10,'',1,0,'L',0);
+      $pdf->Cell(20,10,'',1,0,'L',0);
+    }
+      
+    $pdf->Ln();
+    $pdf->Cell(70,10,$zona[0]->jugador3,1,0,'L',0);
+    $pdf->Cell(20,10,'',1,0,'L',0);
+    $pdf->Cell(20,10,'',1,0,'L',0);
+    $pdf->Cell(20,10,'',1,0,'L',0);
+    $pdf->Cell(20,10,'',1,0,'L',0);
+    if($cant_set_zonas == 5)
+    {
+      $pdf->Cell(20,10,'',1,0,'L',0);
+      $pdf->Cell(20,10,'',1,0,'L',0);
+    }
+
+    $pdf->Ln();
+    $pdf->Ln();
+    
+    
+    $pdf->SetFont('Arial','B',9);
+    $w = array(70, 20, 20, 20 ,20, 20, 20);
+    for($i=0;$i<count($header);$i++)
+        $pdf->Cell($w[$i],7,$header[$i],1,0,'C',0);
+    $pdf->Ln();
+
+     $pdf->Cell(70,10,$zona[0]->jugador2,1,0,'L',0);
+   $pdf->SetFillColor(0,0,0);
+    $pdf->Cell(20,10,'',1,0,'L',0);
+    $pdf->Cell(20,10,'',1,0,'L',0);
+    $pdf->Cell(20,10,'',1,0,'L',0);
+    $pdf->Cell(20,10,'',1,0,'L',0);
+    if($cant_set_zonas == 5)
+    {
+      $pdf->Cell(20,10,'',1,0,'L',0);
+      $pdf->Cell(20,10,'',1,0,'L',0);
+    }
+      
+    $pdf->Ln();
+    $pdf->Cell(70,10,$zona[0]->jugador3,1,0,'L',0);
+    $pdf->Cell(20,10,'',1,0,'L',0);
+    $pdf->Cell(20,10,'',1,0,'L',0);
+    $pdf->Cell(20,10,'',1,0,'L',0);
+    $pdf->Cell(20,10,'',1,0,'L',0);
+    if($cant_set_zonas == 5)
+    {
+      $pdf->Cell(20,10,'',1,0,'L',0);
+      $pdf->Cell(20,10,'',1,0,'L',0);
+    }
+
+    $pdf->Output();
+
+  }
+
+
 public function ver_inscriptos()
   {
     if (!$this->session->userdata('username'))

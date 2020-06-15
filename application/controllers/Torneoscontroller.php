@@ -989,14 +989,12 @@ class Torneoscontroller extends CI_Controller {
 				$zona_cargada= $this->torneo_model->obtener_zona_de_4_por_id($id_zona)->result_array();
 
 
-			$cant_inscriptos= $this->torneo_model->obtener_cant_inscriptos($zona_cargada[0]['torneo'], 
-				$zona_cargada[0]['categoria']);
+			$cant_inscriptos= $this->torneo_model->obtener_cant_inscriptos($zona_cargada[0]['torneo'], $zona_cargada[0]['categoria']);
 
 			//entre 6 y 8 inscriptos la instancia de llave comienza en 8vos
 			if ($cant_inscriptos > 5 and $cant_inscriptos < 9)
 			{
-				$orden_llave= $this->torneo_model->obtener_posicion_plantilla($cant_inscriptos, '1'.$zona_cargada[0]
-					['letra']);
+				$orden_llave= $this->torneo_model->obtener_posicion_plantilla($cant_inscriptos, '1'.$zona_cargada[0]['letra']);
 				$primero= $this->torneo_model->obtener_posicion_jugador_zona($data['id'], 1);
 
 				$data_llave = array(
@@ -1267,16 +1265,16 @@ class Torneoscontroller extends CI_Controller {
 
 
 
-        	//Caso de triple empate
+        	//Caso de triple empate, coeficiente de set
         	if ($puntos1 == $puntos2 and $puntos2 == $puntos3)
         	{      		
 
-        		$set_a_favor1 =  $this->torneo_model->obtener_set_a_favor($row->id, $zona, $jugador1);
-        		$set_en_contra1 =  $this->torneo_model->obtener_set_en_contra($row->id, $zona, $jugador1);
-        		$set_a_favor2 =  $this->torneo_model->obtener_set_a_favor($row->id, $zona, $jugador2);
-        		$set_en_contra2 =  $this->torneo_model->obtener_set_en_contra($row->id, $zona, $jugador2);
-        		$set_a_favor3 =  $this->torneo_model->obtener_set_a_favor($row->id, $zona, $jugador3);
-        		$set_en_contra3 =  $this->torneo_model->obtener_set_en_contra($row->id, $zona, $jugador3);        			
+        		$set_a_favor1 =  $this->torneo_model->obtener_set_a_favor($row->id, $zona, $jugador1, NULL);
+        		$set_en_contra1 =  $this->torneo_model->obtener_set_en_contra($row->id, $zona, $jugador1, NULL);
+        		$set_a_favor2 =  $this->torneo_model->obtener_set_a_favor($row->id, $zona, $jugador2, NULL);
+        		$set_en_contra2 =  $this->torneo_model->obtener_set_en_contra($row->id, $zona, $jugador2, NULL);
+        		$set_a_favor3 =  $this->torneo_model->obtener_set_a_favor($row->id, $zona, $jugador3, NULL);
+        		$set_en_contra3 =  $this->torneo_model->obtener_set_en_contra($row->id, $zona, $jugador3, NULL);        			
         	
 				//var_dump(a favor ' . $set_a_favor3 . 'en contra ' . $set_en_contra3 . 'jugador '. $jugador3);exit;			
 
@@ -1317,12 +1315,12 @@ class Torneoscontroller extends CI_Controller {
 	        	if ($coeficiente1 == $coeficiente2 and $coeficiente2 == $coeficiente3)
 	        	{
 
-	        		$puntos_a_favor1 =  $this->torneo_model->obtener_puntos_a_favor($row->id, $zona, $jugador1, 3);
-	        		$puntos_en_contra1 =  $this->torneo_model->obtener_puntos_en_contra($row->id, $zona, $jugador1, 3);
-	        		$puntos_a_favor2 =  $this->torneo_model->obtener_puntos_a_favor($row->id, $zona, $jugador2, 3);
-	        		$puntos_en_contra2 =  $this->torneo_model->obtener_puntos_en_contra($row->id, $zona, $jugador2, 3);
-	        		$puntos_a_favor3 =  $this->torneo_model->obtener_puntos_a_favor($row->id, $zona, $jugador3, 3);
-	        		$puntos_en_contra3 =  $this->torneo_model->obtener_puntos_en_contra($row->id, $zona, $jugador3, 3);        			
+	        		$puntos_a_favor1 =  $this->torneo_model->obtener_puntos_a_favor($row->id, $zona, $jugador1, 3, NULL);
+	        		$puntos_en_contra1 =  $this->torneo_model->obtener_puntos_en_contra($row->id, $zona, $jugador1, 3, NULL);
+	        		$puntos_a_favor2 =  $this->torneo_model->obtener_puntos_a_favor($row->id, $zona, $jugador2, 3, NULL);
+	        		$puntos_en_contra2 =  $this->torneo_model->obtener_puntos_en_contra($row->id, $zona, $jugador2, 3, NULL);
+	        		$puntos_a_favor3 =  $this->torneo_model->obtener_puntos_a_favor($row->id, $zona, $jugador3, 3, NULL);
+	        		$puntos_en_contra3 =  $this->torneo_model->obtener_puntos_en_contra($row->id, $zona, $jugador3, 3, NULL);        			
 	        	
 					log_message('error', 'puntos a favor ' . $puntos_a_favor1 . 'puntos en contra ' . $puntos_en_contra1 . 'jugador '. $jugador1);			
 
@@ -1357,10 +1355,21 @@ class Torneoscontroller extends CI_Controller {
 		        			}	 
 		        	}
 
-			        	log_message('error', 'coefpuntos1 ' . $coef_puntos1 . 'coefpuntos2 ' . $coef_puntos2 . 'coefpuntos3 '. $coef_puntos3);	
+			        	//log_message('error', 'coefpuntos1 ' . $coef_puntos1 . 'coefpuntos2 ' . $coef_puntos2 . 'coefpuntos3 '. $coef_puntos3);	
 			    }
 
 		     }
+
+		//si no se pudo definir por coeficiente de set, ni coeficiente de puntos, procedo a definir random
+		if ($posicion1 == 0 and $posicion2 == 0 and $posicion3 == 0)
+		{
+			//defino posiciones de forma random
+			$sorteo = array(1,2,3);
+			shuffle($sorteo);
+			$posicion1 = $sorteo[0];
+			$posicion2 = $sorteo[1];
+			$posicion3 = $sorteo[2];
+		}
 
         
 		return array($posicion1, $posicion2, $posicion3);
@@ -1490,7 +1499,7 @@ class Torneoscontroller extends CI_Controller {
         		//reviso quien es el jugador con distinto puntaje y analizo si queda primero o ultimo
         		if ($triple_empate[0] == 1 && $triple_empate[1] == 2 && $triple_empate[2] == 3)
         		{
-        			$posiciones_finales = $this->triple_empate_coeficiente_sets($row->id, $zona, $jugador1, $jugador2, $jugador3);
+        			$posiciones_finales = $this->triple_empate_coeficiente_sets($row->id, $zona, $jugador1, $jugador2, $jugador3, $jugador4);
         			
         			//si se pudo resolver por ceoficiente de sets ya esta
         			if ($posiciones_finales != NULL)
@@ -1502,7 +1511,7 @@ class Torneoscontroller extends CI_Controller {
         			}        			
         			else //sino voy por coeficiente de puntos
         			{
-        				$posiciones_finales = $this->triple_empate_coeficiente_puntos($row->id, $zona, $jugador1, $jugador2, $jugador3);
+        				$posiciones_finales = $this->triple_empate_coeficiente_puntos($row->id, $zona, $jugador1, $jugador2, $jugador3, $jugador4);
         				if ($posiciones_finales != NULL)
 	        			{
 		        			if ($puntos4 > $puntos1)
@@ -1514,7 +1523,7 @@ class Torneoscontroller extends CI_Controller {
         		}
         		if ($triple_empate[0] == 1 && $triple_empate[1] == 2 && $triple_empate[2] == 4)
         		{
-        			$posiciones_finales = $this->triple_empate_coeficiente_sets($row->id, $zona, $jugador1, $jugador2, $jugador4);
+        			$posiciones_finales = $this->triple_empate_coeficiente_sets($row->id, $zona, $jugador1, $jugador2, $jugador4, $jugador3);
         			if ($posiciones_finales != NULL)
         			{
 	        			if ($puntos3 > $puntos1)
@@ -1524,12 +1533,19 @@ class Torneoscontroller extends CI_Controller {
         			}
         			else //sino voy por coeficiente de puntos
         			{
-
+        				$posiciones_finales = $this->triple_empate_coeficiente_puntos($row->id, $jugador1, $jugador2, $jugador4, $jugador3);
+        				if ($posiciones_finales != NULL)
+	        			{
+		        			if ($puntos3 > $puntos1)
+		        				{$posicion3 = 1; $posicion1 = $posiciones_finales[0]+1; $posicion2 = $posiciones_finales[1]+1; $posicion4 = $posiciones_finales[2]+1;}
+		        			else
+		        				{$posicion3 = 4; $posicion1 = $posiciones_finales[0]; $posicion2 = $posiciones_finales[1]; $posicion4 = $posiciones_finales[2];}
+	        			}        
         			}
         		}
         		if ($triple_empate[0] == 1 && $triple_empate[1] == 3 && $triple_empate[2] == 4)
         		{
-        			$posiciones_finales = $this->triple_empate_coeficiente_sets($row->id, $zona, $jugador1, $jugador3, $jugador4);
+        			$posiciones_finales = $this->triple_empate_coeficiente_sets($row->id, $zona, $jugador1, $jugador3, $jugador4, $jugador2);
         			if ($posiciones_finales != NULL)
         			{
 	        			if ($puntos2 > $puntos1)
@@ -1539,12 +1555,19 @@ class Torneoscontroller extends CI_Controller {
 	        		}
 	        		else //sino voy por coeficiente de puntos
         			{
-
+        				$posiciones_finales = $this->triple_empate_coeficiente_puntos($row->id, $jugador1, $jugador3, $jugador4, $jugador2);
+        				if ($posiciones_finales != NULL)
+	        			{
+		        			if ($puntos2 > $puntos1)
+		        				{$posicion2 = 1; $posicion1 = $posiciones_finales[0]+1; $posicion3 = $posiciones_finales[1]+1; $posicion4 = $posiciones_finales[2]+1;}
+		        			else
+		        				{$posicion2 = 4; $posicion1 = $posiciones_finales[0]; $posicion3 = $posiciones_finales[1]; $posicion4 = $posiciones_finales[2];}
+	        			}     	
         			}
         		}
         		if ($triple_empate[0] == 2 && $triple_empate[1] == 3 && $triple_empate[2] == 4)
         		{
-        			$posiciones_finales = $this->triple_empate_coeficiente_sets($row->id, $zona, $jugador2, $jugador3, $jugador4);
+        			$posiciones_finales = $this->triple_empate_coeficiente_sets($row->id, $zona, $jugador2, $jugador3, $jugador4, $jugador1);
         			if ($posiciones_finales != NULL)
         			{
 	        			if ($puntos1 > $puntos2)
@@ -1554,7 +1577,14 @@ class Torneoscontroller extends CI_Controller {
 	        		}
 	        		else //sino voy por coeficiente de puntos
         			{
-
+        				$posiciones_finales = $this->triple_empate_coeficiente_puntos($row->id, $jugador2, $jugador3, $jugador4, $jugador1);
+        				if ($posiciones_finales != NULL)
+	        			{
+		        			if ($puntos1 > $puntos2)
+		        				{$posicion1 = 1; $posicion2 = $posiciones_finales[0]+1; $posicion3 = $posiciones_finales[1]+1; $posicion4 = $posiciones_finales[2]+1;}
+		        			else
+		        				{$posicion1 = 4; $posicion2 = $posiciones_finales[0]; $posicion3 = $posiciones_finales[1]; $posicion4 = $posiciones_finales[2];}
+	        			}     
         			}
         		}
         	}
@@ -1564,6 +1594,17 @@ class Torneoscontroller extends CI_Controller {
 
 //////////////////////////////////////////////////////////////FIN CONTROL TRIPLE EMPATE/////////////////////////////////////////////////////////////////////////////
 
+		//si no se pudo definir por coeficiente de set, ni coeficiente de puntos, procedo a definir random
+		if ($posicion1 == 0 and $posicion2 == 0 and $posicion3 == 0 and $posicion4 = 0)
+		{
+			//defino posiciones de forma random
+			$sorteo = array(1,2,3,4);
+			shuffle($sorteo);
+			$posicion1 = $sorteo[0];
+			$posicion2 = $sorteo[1];
+			$posicion3 = $sorteo[2];
+			$posicion4 = $sorteo[3];
+		}
 
         	return array($posicion1, $posicion2, $posicion3, $posicion4);
 	
@@ -1594,14 +1635,15 @@ class Torneoscontroller extends CI_Controller {
 	}
 
 
-	private function triple_empate_coeficiente_sets($torneo, $zona, $jugador1, $jugador2, $jugador3)
+	private function triple_empate_coeficiente_sets($torneo, $zona, $jugador1, $jugador2, $jugador3, $distinto)
 	{
-				$set_a_favor1 =  $this->torneo_model->obtener_set_a_favor($torneo, $zona, $jugador1);
-        		$set_en_contra1 =  $this->torneo_model->obtener_set_en_contra($torneo, $zona, $jugador1);
-        		$set_a_favor2 =  $this->torneo_model->obtener_set_a_favor($torneo, $zona, $jugador2);
-        		$set_en_contra2 =  $this->torneo_model->obtener_set_en_contra($torneo, $zona, $jugador2);
-        		$set_a_favor3 =  $this->torneo_model->obtener_set_a_favor($torneo, $zona, $jugador3);
-        		$set_en_contra3 =  $this->torneo_model->obtener_set_en_contra($torneo, $zona, $jugador3);        			
+				$set_a_favor1 =  $this->torneo_model->obtener_set_a_favor($torneo, $zona, $jugador1, $distinto);
+        		$set_en_contra1 =  $this->torneo_model->obtener_set_en_contra($torneo, $zona, $jugador1, $distinto);
+        		$set_a_favor2 =  $this->torneo_model->obtener_set_a_favor($torneo, $zona, $jugador2, $distinto);
+        		$set_en_contra2 =  $this->torneo_model->obtener_set_en_contra($torneo, $zona, $jugador2, $distinto);
+        		$set_a_favor3 =  $this->torneo_model->obtener_set_a_favor($torneo, $zona, $jugador3, $distinto);
+        		$set_en_contra3 =  $this->torneo_model->obtener_set_en_contra($torneo, $zona, $jugador3, $distinto);        			
+	        	log_message('error', 'SET A FAVOR/SET EN CONTRA//// set1 ' . $set_a_favor1 . '/' . $set_en_contra1 . 'set2 '. $set_a_favor2 .'/'. $set_en_contra2 .'set3 '. $set_a_favor3 .'/'. $set_en_contra3);			
         					
 	        	$coeficiente1 = $set_a_favor1 / $set_en_contra1;
 	        	$coeficiente2 = $set_a_favor2 / $set_en_contra2;
@@ -1641,15 +1683,17 @@ class Torneoscontroller extends CI_Controller {
 	}
 
 
-	private function triple_empate_coeficiente_puntos($torneo, $zona, $jugador1, $jugador2, $jugador3)
+	private function triple_empate_coeficiente_puntos($torneo, $zona, $jugador1, $jugador2, $jugador3, $distinto)
 	{
-		$puntos_a_favor1 =  $this->torneo_model->obtener_puntos_a_favor($torneo, $zona, $jugador1, 3);
-		$puntos_en_contra1 =  $this->torneo_model->obtener_puntos_en_contra($torneo, $zona, $jugador1, 3);
-		$puntos_a_favor2 =  $this->torneo_model->obtener_puntos_a_favor($torneo, $zona, $jugador2, 3);
-		$puntos_en_contra2 =  $this->torneo_model->obtener_puntos_en_contra($torneo, $zona, $jugador2, 3);
-		$puntos_a_favor3 =  $this->torneo_model->obtener_puntos_a_favor($torneo, $zona, $jugador3, 3);
-		$puntos_en_contra3 =  $this->torneo_model->obtener_puntos_en_contra($torneo, $zona, $jugador3, 3);        			
+		$puntos_a_favor1 =  $this->torneo_model->obtener_puntos_a_favor($torneo, $zona, $jugador1, 3, $distinto);
+		$puntos_en_contra1 =  $this->torneo_model->obtener_puntos_en_contra($torneo, $zona, $jugador1, 3, $distinto);
+		$puntos_a_favor2 =  $this->torneo_model->obtener_puntos_a_favor($torneo, $zona, $jugador2, 3, $distinto);
+		$puntos_en_contra2 =  $this->torneo_model->obtener_puntos_en_contra($torneo, $zona, $jugador2, 3, $distinto);
+		$puntos_a_favor3 =  $this->torneo_model->obtener_puntos_a_favor($torneo, $zona, $jugador3, 3, $distinto);
+		$puntos_en_contra3 =  $this->torneo_model->obtener_puntos_en_contra($torneo, $zona, $jugador3, 3, $distinto);        			
 	 	
+	 	log_message('error', 'PUNTOS A FAVOR/PUNTOS EN CONTRA//// Puntos1 ' . $puntos_a_favor1 . '/' . $puntos_en_contra1 . 'Puntos2 '. $puntos_a_favor2 .'/'. $puntos_en_contra2 .'Puntos3 '. $puntos_a_favor3 .'/'. $puntos_en_contra3);			
+        					
 	 	$coef_puntos1 = $puntos_a_favor1 / $puntos_en_contra1;
         $coef_puntos2 = $puntos_a_favor2 / $puntos_en_contra2;
         $coef_puntos3 = $puntos_a_favor3 / $puntos_en_contra3;
@@ -1765,16 +1809,13 @@ class Torneoscontroller extends CI_Controller {
 
 	public function crear_partido_llave($torneo, $categoria, $orden, $instancia)
 	{
-		
 				//si encuentro creada la llave del rival, creo el partido entre ambos
 				if ($orden %2 == 0)
 				{
 					//var_dump("entro por par");exit;
-					$llave_oponente = $this-> torneo_model -> obtener_llave_oponente ($torneo, $categoria, 
-						$instancia, $orden-1);
+					$llave_oponente = $this-> torneo_model -> obtener_llave_oponente ($torneo, $categoria, $instancia, $orden-1);
 
-					$llave_rival = $this-> torneo_model -> obtener_llave_oponente ($torneo, $categoria, 
-						$instancia, $orden);
+					$llave_rival = $this-> torneo_model -> obtener_llave_oponente ($torneo, $categoria, $instancia, $orden);
 
 					if (isset($llave_oponente))
 					{
@@ -1793,17 +1834,15 @@ class Torneoscontroller extends CI_Controller {
 						
 						);
 									
-						$this->torneo_model->crear_partido($partido);
+						$id_partido = $this->torneo_model->crear_partido($partido);
 					}
 				}
 				else
 				{
 					//var_dump("entro por impar");exit;
-					$llave_oponente = $this-> torneo_model -> obtener_llave_oponente ($torneo, $categoria, 
-						$instancia, $orden+1);
+					$llave_oponente = $this-> torneo_model -> obtener_llave_oponente ($torneo, $categoria, $instancia, $orden+1);
 
-					$llave_rival = $this-> torneo_model -> obtener_llave_oponente ($torneo, $categoria, 
-						$instancia, $orden);
+					$llave_rival = $this-> torneo_model -> obtener_llave_oponente ($torneo, $categoria, $instancia, $orden);
 
 					if (isset($llave_oponente))
 					{
@@ -1821,10 +1860,176 @@ class Torneoscontroller extends CI_Controller {
 						'id_zona' => NULL,		
 						);
 									
+						$id_partido = $this->torneo_model->crear_partido($partido);
+					}
+				}
+
+				if (isset($llave_oponente))
+				{
+					//si alguno jugador pasa BYE resuelvo este partido automaticamente
+					if ($llave_oponente[0]->jugador == 0 or $llave_rival[0]->jugador == 0)
+					{
+						$this->computar_bye_automaticamente($id_partido, $llave_oponente[0]->jugador, $llave_rival[0]->jugador, $this->torneo_model->obtener_cant_set_instancia($torneo, $categoria,
+						 'LLAVE', $instancia)->first_row()->cant_set);
+					}
+				}
+				
+	}
+
+
+
+		public function computar_bye_automaticamente($id_partido, $jugador1, $jugador2, $cant_set)
+	{	
+
+		if ($jugador1 == 0)
+		{
+			$data = array(		    			
+			'id' => $this->input->post('id'),			
+			'set11' => 0,			
+			'set12' => 0,							
+			'set13' => 0,							
+			'set14' => 0,
+			'set15' => 0,
+			'resultado1' => 0,
+
+			'set21' => 11,
+			'set22' => 11,
+			'set23' => 11,
+			'set24' => 11,
+			'set25' => 11,
+			'resultado2' => $cant_set,
+
+			'estado' => 'FINALIZADO',
+			
+			);
+		}
+
+
+		if ($jugador1 == 0)
+		{
+			$data = array(		    			
+			'id' => $this->input->post('id'),			
+			'set11' => 11,			
+			'set12' => 11,							
+			'set13' => 11,							
+			'set14' => 11,
+			'set15' => 11,
+			'resultado1' => $cant_set,
+
+			'set21' => 0,
+			'set22' => 0,
+			'set23' => 0,
+			'set24' => 0,
+			'set25' => 0,
+			'resultado2' => 0,
+
+			'estado' => 'FINALIZADO',
+			
+			);
+		}
+
+			$tipo = "LLAVE";
+									
+			$this->torneo_model->guardarPartido($data);
+
+			//si es un partido de llave, se genera la llave siguiente
+			if ($tipo=='LLAVE')
+			{
+				$partido= $this->torneo_model->obtener_partido_por_id($id_partido);
+				$llave1 =$this -> torneo_model -> obtener_llave_por_id($partido[0]->id_llave1);
+				$llave2 =$this -> torneo_model -> obtener_llave_por_id($partido[0]->id_llave2);
+
+
+				if ($partido[0]->resultado1 > $partido[0]->resultado2) //si gano el 1
+				{
+					$llave = array(		    											
+					'jugador' => $partido[0]->id_jugador1,			
+					'resultado' => '11-11-11-11-11',					
+					'torneo'   => $partido[0]->torneo,
+					'instancia'=> ($llave2[0]->instancia) /2,
+					'categoria'     => $partido[0]->categoria,
+					'orden'  => ($llave2[0]->orden) /2,													
+					);
+							
+					$this->torneo_model->crear_llave($llave);
+				}
+				else //si gano el 2
+				{
+					$llave = array(		    											
+					'jugador' => $partido[0]->id_jugador2,			
+					'resultado' => '11-11-11-11-11',					
+					'torneo'   => $partido[0]->torneo,
+					'instancia'=> ($llave2[0]->instancia) /2,
+					'categoria'     => $partido[0]->categoria,
+					'orden'  => ($llave2[0]->orden) /2,													
+					);
+							
+					$this->torneo_model->crear_llave($llave);
+				}
+
+
+
+				//si encuentro creada la llave del rival, creo el partido entre ambos
+				if ($llave['orden'] %2 == 0)
+				{
+					//var_dump("entro por par");exit;
+					$llave_oponente = $this-> torneo_model -> obtener_llave_oponente ($llave['torneo'], $llave['categoria'], 
+						$llave['instancia'], $llave['orden']-1);
+
+					$llave_rival = $this-> torneo_model -> obtener_llave_oponente ($llave['torneo'], $llave['categoria'], 
+						$llave['instancia'], $llave['orden']);
+
+					if (isset($llave_oponente))
+					{
+						$partido = array(		    											
+						'jugador1' => $llave_oponente[0]->jugador,			
+						'jugador2' => $llave_rival[0]->jugador,
+						'cant_sets'=> $this->torneo_model->obtener_cant_set_instancia($llave['torneo'], $llave['categoria'], 'LLAVE', $llave['instancia'])->first_row()->cant_set,
+						'estado'   => 'SIN JUGAR',
+						'torneo'   => $llave['torneo'],
+						'categoria'=> $llave['categoria'],
+						'tipo'     => 'LLAVE',
+						'id_llave1'  => $llave_oponente[0]->id,								
+						'id_llave2'  => $llave_rival[0]->id,								
+						
+						);
+									
 						$this->torneo_model->crear_partido($partido);
 					}
 				}
+				else
+				{
+					//var_dump("entro por impar");exit;
+					$llave_oponente = $this-> torneo_model -> obtener_llave_oponente ($llave['torneo'], $llave['categoria'], 
+						$llave['instancia'], $llave['orden']+1);
+
+					$llave_rival = $this-> torneo_model -> obtener_llave_oponente ($llave['torneo'], $llave['categoria'], 
+						$llave['instancia'], $llave['orden']);
+
+					if (isset($llave_oponente))
+					{
+						$partido = array(		    											
+						'jugador1' => $llave_rival[0]->jugador,			
+						'jugador2' => $llave_oponente[0]->jugador,
+						'cant_sets'=> $this->torneo_model->obtener_cant_set_instancia($llave['torneo'], $llave['categoria'], 'LLAVE', $llave['instancia'])->first_row()->cant_set,
+						'estado'   => 'SIN JUGAR',
+						'torneo'   => $llave['torneo'],
+						'categoria'=> $llave['categoria'],
+						'tipo'     => 'LLAVE',
+						'id_llave1'  => $llave_rival[0]->id,					
+						'id_llave2'  => $llave_oponente[0]->id,				
+						);
+									
+						$this->torneo_model->crear_partido($partido);
+					}
+				}
+			
+			}
+
+					
+				
 	}
+
 
 
 
