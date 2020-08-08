@@ -39,13 +39,25 @@
     <div class="form-group col-md-6 offset-md-3">
     <label for="inputAddress">Categoría</label>
     <select onchange="this.form.submit();" name="categoria" class="custom-select">  
-        <option value="-1">Seleccionar</option>
-        <option value="0">SD</option>
-        <option value="1">Primera</option>
-        <option value="2">Segunda</option>
-        <option value="3">Tercera</option>
-        <option value="4">Cuarta</option>
-        <option value="5">Quinta</option>
+        <option value="-1">Seleccionar</option>        
+         <?php if ($juega_sd){?>
+          <option value="0">SD</option>
+        <?php } ?>
+          <?php if ($juega_primera){?>
+          <option value="1">Primera</option>
+          <?php } ?>
+          <?php if ($juega_segunda){?>
+          <option value="2">Segunda</option>
+          <?php } ?>
+          <?php if ($juega_tercera){?>
+          <option value="3">Tercera</option>
+          <?php } ?>
+          <?php if ($juega_cuarta){?>
+          <option value="4">Cuarta</option>
+          <?php } ?>
+          <?php if ($juega_quinta){?>
+          <option value="5">Quinta</option>
+          <?php } ?>
     </select>
   </div>
 </div>

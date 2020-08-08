@@ -29,6 +29,44 @@
    <input type="hidden" name="tipo" value="<?php echo $tipo; ?>"/>
    <input type="hidden" id="cant_sets" value="<?php echo $cant_sets; ?>"/>
 
+  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>Jugador</th>
+                      <th>Set 1</th>
+                      <th>Set 2</th>                      
+                      <th>Set 3</th>                                      
+                      <th>Set 4</th>
+                      <th>Set 5</th>       
+                      <th>Resultado</th>                      
+                      
+                    </tr>
+                  </thead>
+                 
+                  <tbody>
+
+                 
+                    <tr>
+                      <td><?php echo $jugador1;?></td>
+                      <td><?php echo $set11;?></td>
+                      <td><?php echo $set12;?></td>
+                      <td><?php echo $set13;?></td>
+                      <td><?php echo $set14;?></td>
+                      <td><?php echo $set15;?></td>     
+                      <td><?php echo $resultado1;?></td>                     
+                    </tr> 
+
+                    <tr>
+                      <td><?php echo $jugador2;?></td>
+                      <td><?php echo $set21;?></td>
+                      <td><?php echo $set22;?></td>
+                      <td><?php echo $set23;?></td>
+                      <td><?php echo $set24;?></td>
+                      <td><?php echo $set25;?></td>  
+                      <td><?php echo $resultado2;?></td>                        
+                    </tr>                                     
+                  </tbody>
+                </table>
 
 <div class="form-row">
   <div class="form-group col-md-5">
@@ -41,20 +79,20 @@
     </div>
     <div class="form-group col-md-1">
       <label for="inputPassword4">Set 2</label>
-      <input type="text" name="set12" id="set12" class="form-control" id="inputPassword4"  onfocusout="validacion()" tabindex="3">
+      <input type="text" name="set12" id="set12" class="form-control" id="inputPassword4" onfocusout="validacion()" tabindex="3">
     </div>   
     <div class="form-group col-md-1">
       <label for="inputPassword4">Set 3</label>
-      <input type="text" name="set13" id="set13" class="form-control" id="inputPassword4"  onfocusout="validacion()" tabindex="5">
+      <input type="text" name="set13" id="set13" class="form-control" id="inputPassword4" onfocusout="validacion()" tabindex="5">
     </div>   
     <?php if ($cant_sets > 3) { ?>
     <div class="form-group col-md-1">
       <label for="inputPassword4">Set 4</label>
-      <input type="text" name="set14" id="set14" class="form-control" id="inputPassword4"  onfocusout="validacion()" tabindex="7">
+      <input type="text" name="set14" id="set14" class="form-control" id="inputPassword4" onfocusout="validacion()" tabindex="7">
     </div>   
     <div class="form-group col-md-1">
       <label for="inputPassword4">Set 5</label>
-      <input type="text" name="set15" id="set15" class="form-control" id="inputPassword4"  onfocusout="validacion()" tabindex="9">
+      <input type="text" name="set15" id="set15" class="form-control" id="inputPassword4" onfocusout="validacion()" tabindex="9">
     </div>  
   <?php } ?>
     <div class="form-group col-md-2">
@@ -69,24 +107,24 @@
     </div>
     <div class="form-group col-md-1">
       <label for="inputEmail4">Set 1</label>
-      <input type="text" name="set21" id="set21" class="form-control" id="inputEmail4"  onfocusout="validacion()" tabindex="2">
+      <input type="text" name="set21" id="set21" class="form-control" id="inputEmail4" onfocusout="validacion()" tabindex="2">
     </div>
     <div class="form-group col-md-1">
       <label for="inputPassword4">Set 2</label>
-      <input type="text" name="set22" id="set22" class="form-control" id="inputPassword4"  onfocusout="validacion()" tabindex="4">
+      <input type="text" name="set22" id="set22" class="form-control" id="inputPassword4" onfocusout="validacion()" tabindex="4">
     </div>   
     <div class="form-group col-md-1">
       <label for="inputPassword4">Set 3</label>
-      <input type="text" name="set23" id="set23" class="form-control" id="inputPassword4"  onfocusout="validacion()" tabindex="6">
+      <input type="text" name="set23" id="set23" class="form-control" id="inputPassword4" onfocusout="validacion()" tabindex="6">
     </div>   
     <?php if ($cant_sets > 3) { ?>
     <div class="form-group col-md-1">
       <label for="inputPassword4">Set 4</label>
-      <input type="text" name="set24" id="set24" class="form-control" id="inputPassword4"  onfocusout="validacion()" tabindex="8">
+      <input type="text" name="set24" id="set24" class="form-control" id="inputPassword4" onfocusout="validacion()" tabindex="8">
     </div>   
     <div class="form-group col-md-1">
       <label for="inputPassword4">Set 5</label>
-      <input type="text" name="set25" id="set25" class="form-control" id="inputPassword4"  onfocusout="validacion()" tabindex="10">
+      <input type="text" name="set25" id="set25" class="form-control" id="inputPassword4" onfocusout="validacion()" tabindex="10">
     </div>   
     <?php } ?>
       <div class="form-group col-md-2">

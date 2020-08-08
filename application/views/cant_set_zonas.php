@@ -19,7 +19,7 @@
           <li class="breadcrumb-item">
             <a href="#">FEBATEM</a>
           </li>
-          <li class="breadcrumb-item active">Cantidad de sets a jugar en partidos de zona</li>
+          <li class="breadcrumb-item active">Cantidad de sets a jugar en partidos</li>
         </ol>
 
          
@@ -56,7 +56,7 @@
 
                     <tr>
                       <td><?php echo $lista_cant_set_zonas[$i]['categoria'];?></td>
-                      <td><?php echo $lista_cant_set_zonas[$i]['zona'] ;?></td>
+                      <td><?php echo $lista_cant_set_zonas[$i]['zona'];?></td>
                       <td><?php echo $lista_cant_set_zonas[$i]['trentidosavos'] ;?></td>
                       <td><?php echo $lista_cant_set_zonas[$i]['dieciseisavos'] ;?></td>
                       <td><?php echo $lista_cant_set_zonas[$i]['octavos'] ;?></td>
@@ -77,12 +77,24 @@
                       <label for="inputAddress">Categoría</label>
                       <select name="categoria" class="custom-select">  
                           <option value="-1">Seleccionar</option>
+                         <?php if ($juega_sd){?>
                           <option value="0">SD</option>
+                        <?php } ?>
+                          <?php if ($juega_primera){?>
                           <option value="1">Primera</option>
+                          <?php } ?>
+                          <?php if ($juega_segunda){?>
                           <option value="2">Segunda</option>
+                          <?php } ?>
+                          <?php if ($juega_tercera){?>
                           <option value="3">Tercera</option>
+                          <?php } ?>
+                          <?php if ($juega_cuarta){?>
                           <option value="4">Cuarta</option>
+                          <?php } ?>
+                          <?php if ($juega_quinta){?>
                           <option value="5">Quinta</option>
+                          <?php } ?>
                       </select>
                     </div>
 

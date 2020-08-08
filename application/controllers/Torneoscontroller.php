@@ -223,7 +223,11 @@ class Torneoscontroller extends CI_Controller {
              		}
              	}
              }
-         }			
+         }		
+         else{
+         	$this->session->set_flashdata('error', 'La inscripcion no fue aceptada, no ha indicado en que categoria inscribir al jugador');
+			redirect('Welcome/inscripcion');
+         }	
 
          	$this->session->set_flashdata('success', 'La inscripción fué procesada correctamente');
 			redirect('Welcome/inscripcion');
@@ -271,8 +275,8 @@ class Torneoscontroller extends CI_Controller {
 					{
 						$division = $cantPrimera / 3;
 						$cantZonas3 = $division;
-						$resumen= $resumen. "Para ". $cantPrimera." jugadores se armaron ". $cantZonas3." zonas de 3 y ". $cantZonas4." zonas de 4";
-						$resumen= $resumen. '</br>';
+						//$resumen= $resumen. "Para ". $cantPrimera." jugadores se armaron ". $cantZonas3." zonas de 3 y ". $cantZonas4." zonas de 4";
+						//$resumen= $resumen. '</br>';
 
 					}				
 					else
@@ -282,8 +286,8 @@ class Torneoscontroller extends CI_Controller {
 							$cantZonas3 = floor($division);
 							$cantZonas3 = $cantZonas3-1;
 							$cantZonas4 = 1; 
-							$resumen= $resumen. "Para ". $cantPrimera." jugadores se armaron ". $cantZonas3." zonas de 3 y ". $cantZonas4." zonas de 4";				
-							$resumen= $resumen. '</br>';
+							//$resumen= $resumen. "Para ". $cantPrimera." jugadores se armaron ". $cantZonas3." zonas de 3 y ". $cantZonas4." zonas de 4";				
+							//$resumen= $resumen. '</br>';
 						}
 						else
 							if ($modulo == 2)
@@ -292,22 +296,22 @@ class Torneoscontroller extends CI_Controller {
 								$cantZonas3 = floor($division);
 								$cantZonas3 = $cantZonas3-2;
 								$cantZonas4 = 2; 
-								$resumen= $resumen. "Para ". $cantPrimera." jugadores se armaron ". $cantZonas3." zonas de 3 y ". $cantZonas4." zonas de 4";	
-								$resumen= $resumen. '</br>';
+								//$resumen= $resumen. "Para ". $cantPrimera." jugadores se armaron ". $cantZonas3." zonas de 3 y ". $cantZonas4." zonas de 4";	
+								//$resumen= $resumen. '</br>';
 							}
 					
-		$resumen= $resumen. 'cantidad de cabezas de zona '. ($cantZonas3+$cantZonas4);
-		$resumen= $resumen. '</br>';
+		//$resumen= $resumen. 'cantidad de cabezas de zona '. ($cantZonas3+$cantZonas4);
+		//$resumen= $resumen. '</br>';
 
 		
 		$cabezas = $this->buscarCabezasDeZona($cantZonas3*3 + $cantZonas4*4, $inscriptos, $id_categoria);	
-	
+	/*
 		for($i=0; $i<sizeof($cabezas); $i++)
 			{
 				$resumen= $resumen. 'lista de cabezas '. $cabezas[$i]->jugador;
 				$resumen= $resumen. '</br>';
 			}				
-
+*/
 		$inscriptos_sin_cabezas= $this->eliminar_cabezas_inscriptos($cabezas, $cantZonas3+$cantZonas4);
 		
 
@@ -321,11 +325,13 @@ class Torneoscontroller extends CI_Controller {
 	}
 	else
 	{
-		$resumen="No se ha realizado ninguna accion";
+		//$resumen="No se ha realizado ninguna accion";
+		$this->session->set_flashdata('error', 'Algo ha salido mal, no se ha realizado ninguna accion');
+		redirect('Welcome/inscripcion');
 	}
 
-		$data['resumen']= $resumen;
-		$torneo = $this->torneo_model->obtenerTorneoActual();   
+		//$data['resumen']= $resumen;
+		/*$torneo = $this->torneo_model->obtenerTorneoActual();   
 	    if (isset($torneo))
 	      $t['nombre_torneo'] = $torneo->first_row()->nombre;
 	    else
@@ -333,7 +339,9 @@ class Torneoscontroller extends CI_Controller {
 		$this->load->view('menu');
     	$this->load->view('header', $t);
     	$this->load->view('cierre_inscripcion', $data); 
-
+		*/
+		$this->session->set_flashdata('success', 'Las zonas han sido creadas correctamente');
+		redirect('Welcome/zonas?categoria='. $id_categoria);
 	}
 
 

@@ -461,6 +461,14 @@ public function zonas()
 
     $categoria = $this->input->get('categoria');
 
+    $cat_en_juego= array();
+    if ($torneo->first_row()->superdivision) $data['juega_sd']=true;
+    if ($torneo->first_row()->primera) $data['juega_primera']=true;
+    if ($torneo->first_row()->segunda) $data['juega_segunda']=true;
+    if ($torneo->first_row()->tercera) $data['juega_tercera']=true;
+    if ($torneo->first_row()->cuarta) $data['juega_cuarta']=true;
+    if ($torneo->first_row()->quinta) $data['juega_quinta']=true;
+
     if (isset($torneo) & $categoria != -1)
     {
         $row = $torneo->first_row();  
@@ -1383,6 +1391,21 @@ public function editar_partido()
         $data['jugador2']= $partido_en_cuestion[0]->jugador2;
         $data['tipo']= $partido_en_cuestion[0]->tipo;
         $data['cant_sets']= $partido_en_cuestion[0]->cant_sets;
+
+        $data['set11']= $partido_en_cuestion[0]->set11;
+        $data['set12']= $partido_en_cuestion[0]->set12;
+        $data['set13']= $partido_en_cuestion[0]->set13;
+        $data['set14']= $partido_en_cuestion[0]->set14;
+        $data['set15']= $partido_en_cuestion[0]->set15;
+
+        $data['set21']= $partido_en_cuestion[0]->set21;
+        $data['set22']= $partido_en_cuestion[0]->set22;
+        $data['set23']= $partido_en_cuestion[0]->set23;
+        $data['set24']= $partido_en_cuestion[0]->set24;
+        $data['set25']= $partido_en_cuestion[0]->set25;
+
+        $data['resultado1']= $partido_en_cuestion[0]->resultado1;
+        $data['resultado2']= $partido_en_cuestion[0]->resultado2;
         //var_dump($data_id);exit;
 
         $torneo = $this->torneo_model->obtenerTorneoActual();  
@@ -1453,7 +1476,15 @@ public function resultados()
     $torneo = $this->torneo_model->obtenerTorneoActual();   
 
     $lista_cant_set_zonas=  $this->torneo_model->obtener_cant_set_completo($torneo->first_row()->id);
-    
+
+    $cat_en_juego= array();
+    if ($torneo->first_row()->superdivision) $data['juega_sd']=true;
+    if ($torneo->first_row()->primera) $data['juega_primera']=true;
+    if ($torneo->first_row()->segunda) $data['juega_segunda']=true;
+    if ($torneo->first_row()->tercera) $data['juega_tercera']=true;
+    if ($torneo->first_row()->cuarta) $data['juega_cuarta']=true;
+    if ($torneo->first_row()->quinta) $data['juega_quinta']=true;
+       
     if (isset($lista_cant_set_zonas))
       $data['lista_cant_set_zonas']= $lista_cant_set_zonas->result_array();
     

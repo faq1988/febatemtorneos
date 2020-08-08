@@ -80,12 +80,12 @@
                                             </td> 
                                             <td style="background-color:black;">-
                                             </td>
-                                            <td>-
+                                            <td><?php echo $partidos[0]->resultado1;?>
                                             </td>
-                                            <td>-
+                                            <td><?php echo $partidos[1]->resultado1;?>
                                             </td> 
                                             <?php if (isset($jugador4)){ ?>
-                                              <td>-
+                                              <td><?php echo $partidos[2]->resultado1;?>
                                             </td> 
                                             <?php } ?>
                                             <td><?php echo $puntos1;?>
@@ -97,11 +97,11 @@
                                         <tr>
                                             <td><?php echo $jugador2;?>
                                             </td>                                             
-                                            <td>-
+                                            <td><?php echo $partidos[0]->resultado2;?>
                                             </td>
                                             <td style="background-color:black;">-
                                             </td>
-                                            <td>-
+                                            <td><?php echo $partidos[2]->resultado1;?>
                                             </td> 
                                             <?php if (isset($jugador4)){ ?>
                                               <td>-
@@ -116,9 +116,9 @@
                                         <tr>
                                             <td><?php echo $jugador3;?>
                                             </td>                                            
-                                            <td>-
+                                            <td><?php echo $partidos[1]->resultado2;?>
                                             </td>
-                                            <td>-
+                                            <td><?php echo $partidos[2]->resultado2;?>
                                             </td>
                                             <td style="background-color:black;">-
                                             </td>

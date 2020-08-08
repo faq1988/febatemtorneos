@@ -27,13 +27,13 @@
   <div class="form-group row">
     <label for="inputEmail3" class="col-sm-4 col-form-label">Nombre</label>
     <div class="col-sm-6">
-      <input type="text" class="form-control" name="nombre" required>
+      <input type="text" class="form-control" name="nombre" maxlength="100" size="100" required>
     </div>
   </div>
   <div class="form-group row">
     <label for="inputEmail3" class="col-sm-4 col-form-label">Lugar</label>
     <div class="col-sm-6">
-      <input type="text" class="form-control" name="lugar" required>
+      <input type="text" class="form-control" name="lugar" maxlength="100" size="100" required>
     </div>
   </div>
   <div class="form-group row">
@@ -51,13 +51,13 @@
    <div class="form-group row">
     <label for="inputEmail3" class="col-sm-4 col-form-label">Cant de mesas</label>
     <div class="col-sm-6">
-      <input type="number" class="form-control" name="cant_mesas" required>
+      <input type="number" class="form-control" name="cant_mesas" min="0" required>
     </div>
   </div>
    <div class="form-group row">
     <label for="inputEmail3" class="col-sm-4 col-form-label">Marca de las mesas</label>
     <div class="col-sm-6">
-      <input type="text" class="form-control" name="marca_mesas" required>
+      <input type="text" class="form-control" name="marca_mesas" maxlength="100" size="100" required>
     </div>
   </div> 
   <div class="form-group row">
@@ -73,7 +73,7 @@
    <div class="form-group row">
     <label for="inputEmail3" class="col-sm-4 col-form-label">Marca de pelota</label>
     <div class="col-sm-6">
-      <input type="text" class="form-control" name="marca_pelotas" required>
+      <input type="text" class="form-control" name="marca_pelotas" maxlength="100" size="100" required>
     </div>
   </div> 
    <div class="form-group row">
@@ -85,13 +85,13 @@
    <div class="form-group row">
     <label for="inputEmail3" class="col-sm-4 col-form-label">Costo de inscripcion</label>
     <div class="col-sm-6">
-      <input type="text" class="form-control" name="costo_inscripcion" required>
+      <input type="number" class="form-control" name="costo_inscripcion" min="0" required>
     </div>
   </div> 
    <div class="form-group row">
     <label for="inputEmail3" class="col-sm-4 col-form-label">Costo de afiliacion</label>
     <div class="col-sm-6">
-      <input type="text" class="form-control" name="costo_afiliacion" required>
+      <input type="number" class="form-control" name="costo_afiliacion" min="0" required>
     </div>
   </div> 
   <div class="form-group row">
